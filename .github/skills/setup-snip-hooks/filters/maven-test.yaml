@@ -1,0 +1,27 @@
+name: "maven-test"
+version: 1
+description: "Condensed Maven test output: test failures and pass/fail summary"
+
+match:
+  command: "mvn"
+  subcommand: "test|verify"
+
+pipeline:
+  - action: "strip_ansi"
+  - action: "remove_lines"
+    pattern: "^\\[INFO\\]\\s+(Download|Downloading|Downloaded|Downloading from)"
+  - action: "remove_lines"
+    pattern: "^\\[INFO\\]\\s+(BUILD|Reactor Summary|Using the|Default locale)"
+  - action: "remove_lines"
+    pattern: "^\\[INFO\\] (Running|Surefire report directory)"
+  - action: "remove_lines"
+    pattern: "^\\[INFO\\] -------"
+  - action: "remove_lines"
+    pattern: "^\\s*$"
+  - action: "keep_lines"
+    pattern: "(^\\[ERROR\\]|Test run for|Tests run:|Failures:|Errors:|\\[FAILURE\\]|FAILURE|junit|at moon\\.mission)"
+  - action: "compact_path"
+  - action: "format_template"
+    template: "{{.lines}}"
+
+on_error: "passthrough"

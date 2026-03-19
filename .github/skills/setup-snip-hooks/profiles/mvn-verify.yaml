@@ -1,0 +1,21 @@
+name: "mvn-verify"
+version: 1
+description: "Maven Failsafe integration tests - filters out unnecessary output"
+
+match:
+  command: "mvn"
+  subcommand: "verify"
+
+pipeline:
+  - action: "remove_lines"
+    pattern: "^\\[INFO\\]\\s+(Downloading|Downloaded|Building|Scanning)"
+  - action: "remove_lines"
+    pattern: "^\\[DEBUG\\]"
+  - action: "keep_lines"
+    pattern: "Failsafe|Integration|BUILD|PASS|FAIL|SUCCESS|FAILURE|Tests run:|Failures:"
+  - action: "group_by"
+    pattern: "^\\[INFO\\] (\\w+) Tests|BUILD"
+  - action: "truncate_lines"
+    max: 50
+
+on_error: "passthrough"
