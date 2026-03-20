@@ -1,131 +1,147 @@
 # Copilot Primitives
 
-A curated collection of AI-assisted coding workflows, tools, and patterns for daily development. This repository contains reusable **instructions**, **skills**, and **hooks** designed to enhance productivity with GitHub Copilot and other AI tools.
+A curated collection of AI-assisted coding primitives for daily development with GitHub Copilot. Reusable **instructions**, **skills**, and **documentation** designed to maximize developer productivity and minimize LLM token consumption.
 
 ## 📦 What's Inside
 
-### 🏗️ Instructions
+### 🏗️ Instructions (`.github/instructions/`)
 Enforced guidelines for specific architectures and patterns:
-- **[Hexagonal Architecture](https://github.com/alallier/clean-architecture-manga)** — Strict enforcement of ports & adapters principles for Java projects
-  - Ensures domain independence, dependency inversion, and testability
-  - Apply to: `**/*.java`
+- **Hexagonal Architecture** — Strict enforcement of ports & adapters for Java (`**/*.java`)
+- **Follow-up Questions** — Confidence-based clarification before code generation (`**`)
 
-### 💡 Skills
-Domain-specific workflows and best practices for specialized tasks:
+### 💡 Skills (`.github/skills/`)
+17 domain-specific workflows organized into four families:
 
-#### 1. **Frontend Slides** 
-Create stunning, animation-rich HTML presentations from scratch or convert PowerPoint files into web-based slides.
-- Use for: Building presentations, converting PPT/PPTX to interactive HTML, creating talks/pitches
-- Features: Animation patterns, style presets, viewport-responsive CSS
-- Files: `SKILL.md`, `STYLE_PRESETS.md`, `animation-patterns.md`, HTML templates
+#### Token-Saving CLI Tools
+| Skill | Purpose | Token Savings |
+|-------|---------|---------------|
+| **fd** | Find files by name, extension, path | 40-60% |
+| **rg** | Search text content inside files | 30-98% |
+| **yq** | Extract YAML / TOML fields | 90-98% |
+| **xq** | Extract XML fields (pom.xml, .csproj) | 90-99% |
+| **jq** | Extract JSON fields | 90-99% |
 
-#### 2. **Hexagonal Architecture Audit**
-Comprehensive evaluation of Java project compliance with hexagonal architecture principles.
-- Analyzes: Domain independence, port definition, adapter isolation, dependency injection, application orchestration, testability, model immutability
-- Outputs: Detailed reports with percentage scores, violation listings, actionable recommendations
-- Use for: Architecture validation, refactoring guidance, compliance checking
+#### Synergy Patterns
+| Skill | Combination | Token Savings |
+|-------|-------------|---------------|
+| **batch-config-audit** | fd + yq/jq/xq — batch field extraction | 95-99% |
+| **structural-search** | fd + rg — bi-dimensional codebase search | 94-99% |
+| **java-investigation** | fd + jar + javap + rg — bytecode tracing | 87-95% |
 
-#### 3. **Setup Snip Hooks**
-Integration and configuration guide for [snip](https://github.com/edouard-claude/snip) — a token reduction CLI for Maven/Java projects.
-- Features: Pre-built Maven filter profiles, token savings tracking, automated setup
-- Includes: 5 ready-to-use profiles (`mvn-compile`, `mvn-test`, `mvn-verify`, `mvn-package`)
-- Use for: Reducing LLM token consumption in Maven workflows, optimizing CI/CD pipelines
-- Quick start: See [setup-snip-hooks README](./github/skills/setup-snip-hooks/README.md)
+#### Snip CLI (Output Filtering)
+| Skill | Scope |
+|-------|-------|
+| **snip-core** | Installation & setup of [snip](https://github.com/edouard-claude/snip) |
+| **snip-filters-setup** | Shared YAML filter installer |
+| **snip-jvm** | Maven / mvnd output reduction (80-95%) |
+| **snip-dotnet** | dotnet CLI output reduction |
+| **snip-npm** | npm CLI output reduction |
+| **setup-snip-hooks** | Full project hook scaffolding |
 
-### 🔗 Hooks
-Utility scripts and configuration for automation:
-- **snip-rewrite.sh** — Automated setup script for snip integration
-- **hooks.json** — Hook configuration
+#### Other Skills
+| Skill | Purpose |
+|-------|---------|
+| **javap** | JDK bytecode analysis (jar, javap, jdeps) |
+| **frontend-slides** | Animation-rich HTML presentations |
+| **hexagonal-architecture-audit** | Java architecture compliance scoring |
 
-### 📚 Snip CLI Documentation
-Complete reference documentation for snip integration:
-- [Quick Start YAML Filters](./snip/docs/QUICK_START_YAML_FILTERS.md) — 5-minute filter syntax tutorial
-- [SNIP YAML Reference](./snip/docs/SNIP_YAML_REFERENCE.md) — Comprehensive syntax documentation (21KB)
-- [SNIP YAML Filters Index](./snip/docs/SNIP_YAML_FILTERS_INDEX.md) — Navigation index
-- [Maven Filters Examples](./snip/docs/MAVEN_FILTERS_EXAMPLES.md) — 15+ ready-to-use examples
-- [Implementation Summary](./snip/docs/IMPLEMENTATION_SUMMARY.md) — Architecture and implementation details
-- [Snip Exploration Results](./snip/docs/SNIP_EXPLORATION_RESULTS.md) — Research findings
+### 📚 Documentation (`docs/`)
+Reference and training materials:
+
+- **`token-saving-skills/`** — Guides for fd, rg, yq, xq, batch-config-audit, structural-search
+- **`java-investigation/`** — Bytecode investigation guides (javap, pipeline, Blaze-Persistence case study)
+- **`snip/`** — snip CLI reference (YAML filters, Maven examples, implementation details)
+- **`snip-skills/`** — Snip skills architecture overview
+- **`prez/`** — HTML slide presentations
+  - `economie-de-tokens.html` — Token economy overview (French, Bold Signal theme)
+  - `investigation-java.html` — Java investigation techniques (French, Terminal Green theme)
 
 ## 🚀 Quick Start
 
-### Using Instructions in Your Project
-Add to your VS Code workspace settings or use with Copilot extensions:
+### Using Instructions
+Drop into any project's `.github/instructions/` or reference in VS Code:
 ```json
 {
-  "instructions": "./github/instructions/hexagonal-architecture.instructions.md"
+  "instructions": ".github/instructions/hexagonal-architecture.instructions.md"
 }
 ```
 
 ### Using Skills
-Reference skills in your GitHub Copilot instructions or agent configurations:
+Skills are discovered automatically by Copilot agents via description keywords. Reference them in your agent configuration:
 ```yaml
-# In your .instructions.md or AGENTS.md
 skills:
-  - frontend-slides
+  - fd
+  - rg
+  - yq
+  - snip-jvm
   - hexagonal-architecture-audit
-  - setup-snip-hooks
 ```
 
-### Setup Snip Hooks
+### Token-Saving Example
 ```bash
-# One-time setup for a Maven project
-bash .github/skills/setup-snip-hooks/templates/snip-rewrite.sh <project>
-
-# Use with Maven commands (automatically applies filters)
-snip mvn clean test
-snip mvn clean compile
-
-# Check token savings
-snip gain --daily
+# Instead of reading 42 pom.xml files (126k tokens)...
+fd -g "pom.xml" . -x yq -p xml -oy '.project.version' {}
+# → ~500 tokens total (-99.6%)
 ```
 
-## 🏛️ Architecture
+## 📁 Repository Structure
 
-The repository follows a modular structure:
-- **`.github/instructions/`** — Architectural rules and coding guidelines
-- **`.github/skills/`** — Domain-specific workflows with documentation
-- **`.github/hooks/`** — Automation utilities
-- **`snip/`** — CLI documentation and reference materials
-- **`LICENSE`** — MIT License
+```
+copilot-primitives/
+├── .github/
+│   ├── copilot-instructions.md          (workspace instructions)
+│   ├── instructions/
+│   │   ├── follow-up-question.instructions.md
+│   │   └── hexagonal-architecture.instructions.md
+│   └── skills/
+│       ├── fd/                          (file finder)
+│       ├── rg/                          (ripgrep)
+│       ├── yq/                          (YAML/TOML extractor)
+│       ├── xq/                          (XML extractor)
+│       ├── jq/                          (JSON extractor)
+│       ├── batch-config-audit/          (fd + yq/jq/xq synergy)
+│       ├── structural-search/           (fd + rg synergy)
+│       ├── java-investigation/          (bytecode pipeline)
+│       ├── javap/                       (JDK bytecode tools)
+│       ├── snip-core/                   (snip install/setup)
+│       ├── snip-filters-setup/          (shared filter installer)
+│       ├── snip-jvm/                    (Maven/mvnd filters)
+│       ├── snip-dotnet/                 (dotnet filters)
+│       ├── snip-npm/                    (npm filters)
+│       ├── setup-snip-hooks/            (project hook scaffolding)
+│       ├── frontend-slides/             (HTML presentations)
+│       └── hexagonal-architecture-audit/
+├── docs/
+│   ├── token-saving-skills/             (fd, rg, yq, xq guides)
+│   ├── java-investigation/              (bytecode guides)
+│   ├── snip/                            (snip reference docs)
+│   ├── snip-skills/                     (skills architecture)
+│   └── prez/                            (HTML slide decks)
+├── README.md
+└── LICENSE                              (MIT)
+```
 
-## 💻 Technologies & Tools
+## 💡 Key Concepts
 
-- **snip** — Token reduction CLI for Maven
-- **Hexagonal Architecture** — Clean architecture pattern for Java
-- **GitHub Copilot** — AI-powered code assistance
-- **HTML/CSS/JavaScript** — Frontend presentation framework
+### Skill Discovery
+Agents find skills by matching keywords in the `description` field:
+- ✅ `"Use when setting up snip CLI token reduction hooks..."`
+- ❌ `"Scaffolds hooks for token reduction"`
 
-## 📖 Documentation
+### SKILL.md vs README.md
+- **SKILL.md** — Comprehensive reference loaded by agents (theory, edge cases, troubleshooting)
+- **README.md** — Quick start for humans (2-3 minutes)
 
-Each skill includes comprehensive documentation:
-- `SKILL.md` — Detailed usage guide and best practices
-- `README.md` — Quick start guide
-- Domain-specific reference files for deep-dive learning
-
-## 👨‍💻 Author
-
-**knight_max** — Created as a personal toolkit for enhanced AI-assisted development workflows.
+### Layered Snip Architecture
+```
+snip-core → snip-filters-setup → snip-jvm / snip-dotnet / snip-npm
+```
+Each layer builds on the previous. `match.command` is exact: a `mvn` filter won't match `mvnd` — the shared installer handles aliases.
 
 ## 📄 License
 
-This project is licensed under the **MIT License** — see the [LICENSE](./LICENSE) file for details.
-
-## 🤝 Usage in Your Workflow
-
-This repository is designed to be:
-1. **Referenced** in your GitHub Copilot configuration for behavioral guidelines
-2. **Cloned/Submoduled** into other projects for instruction reuse
-3. **Extended** with your own custom skills and instructions
-4. **Iterated** as you discover new patterns and workflows
-
-## 🎯 Key Features
-
-- ✅ Pre-built skills for common development tasks
-- ✅ Strict architectural enforcement through instructions
-- ✅ Token optimization for LLM-driven development
-- ✅ Well-documented, production-ready patterns
-- ✅ MIT Licensed — free to use and extend
+**MIT License** — see [LICENSE](./LICENSE).
 
 ---
 
-**Built for daily development with AI assistance.** Optimize your coding workflow with proven patterns and reusable components.
+**Built for daily AI-assisted development.** 17 skills, 2 instructions, tested patterns for reducing LLM token consumption by 90-99%.

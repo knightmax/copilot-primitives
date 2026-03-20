@@ -3,7 +3,7 @@ version: 1
 description: "Maven package — filters JAR/WAR building output"
 
 match:
-  command: "mvn|mvnd"
+  command: "mvn"
   subcommand: "package"
 
 pipeline:

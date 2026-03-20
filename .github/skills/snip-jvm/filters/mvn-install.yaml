@@ -3,7 +3,7 @@ version: 1
 description: "Maven install — filters build and installation output"
 
 match:
-  command: "mvn|mvnd"
+  command: "mvn"
   subcommand: "install"
 
 pipeline:

@@ -3,7 +3,7 @@ version: 4
 description: "Maven Failsafe integration tests — keeps test results, errors, and build status"
 
 match:
-  command: "mvn|mvnd"
+  command: "mvn"
   subcommand: "verify"
 
 pipeline:

@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investigation Java — Le Bytecode Ne Ment Jamais</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&display=swap">
+    <style>
+        /* =========================================== */
+        /* RESET & CUSTOM PROPERTIES                   */
+        /* =========================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-card: #1c2128;
+            --border: #30363d;
+            --border-bright: #3d444d;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --text-dim: #484f58;
+            --green: #39d353;
+            --green-bright: #56d364;
+            --green-glow: rgba(57, 211, 83, 0.2);
+            --green-dim: rgba(57, 211, 83, 0.1);
+            --red: #f85149;
+            --red-dim: rgba(248, 81, 73, 0.15);
+            --yellow: #d29922;
+            --yellow-dim: rgba(210, 153, 34, 0.15);
+            --blue: #58a6ff;
+            --blue-dim: rgba(88, 166, 255, 0.15);
+            --purple: #bc8cff;
+            --purple-dim: rgba(188, 140, 255, 0.15);
+            --cyan: #39c5cf;
+            --font-mono: 'JetBrains Mono', monospace;
+            --title-size: clamp(1.8rem, 4.5vw, 3.5rem);
+            --h2-size: clamp(1.3rem, 3vw, 2.2rem);
+            --h3-size: clamp(0.9rem, 1.8vw, 1.3rem);
+            --body-size: clamp(0.7rem, 1.2vw, 0.95rem);
+            --small-size: clamp(0.6rem, 0.9vw, 0.78rem);
+            --code-size: clamp(0.62rem, 1vw, 0.82rem);
+            --slide-padding: clamp(1.5rem, 4vw, 4rem);
+            --content-gap: clamp(0.5rem, 1.5vw, 1.5rem);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* =========================================== */
+        /* VIEWPORT BASE                               */
+        /* =========================================== */
+        html, body { height: 100%; overflow-x: hidden; background: var(--bg-primary); }
+        html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+
+        .slide {
+            width: 100vw; height: 100vh; height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex; flex-direction: column;
+            position: relative;
+            background: var(--bg-primary);
+            font-family: var(--font-mono);
+            color: var(--text-primary);
+        }
+
+        /* Scan lines overlay */
+        .slide::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.06) 2px,
+                rgba(0, 0, 0, 0.06) 4px
+            );
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Grid pattern */
+        .slide::after {
+            content: '';
+            position: absolute; inset: 0;
+            background-image:
+                linear-gradient(rgba(57, 211, 83, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(57, 211, 83, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .slide-content {
+            flex: 1; display: flex; flex-direction: column;
+            justify-content: center;
+            max-height: 100%; overflow: hidden;
+            padding: var(--slide-padding);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* =========================================== */
+        /* TERMINAL PROMPT HEADER                      */
+        /* =========================================== */
+        .terminal-header {
+            position: absolute;
+            top: clamp(1rem, 2.5vw, 2rem);
+            left: clamp(1.5rem, 4vw, 4rem);
+            font-size: var(--small-size);
+            color: var(--text-dim);
+            z-index: 5;
+        }
+        .terminal-header .path { color: var(--green); }
+        .terminal-header .branch { color: var(--cyan); }
+
+        /* =========================================== */
+        /* SLIDE COUNTER                               */
+        /* =========================================== */
+        .slide-counter {
+            position: absolute;
+            top: clamp(1rem, 2.5vw, 2rem);
+            right: clamp(1.5rem, 4vw, 4rem);
+            font-size: var(--small-size);
+            color: var(--text-dim);
+            z-index: 5;
+        }
+        .slide-counter .current { color: var(--green); }
+
+        /* =========================================== */
+        /* TYPOGRAPHY                                  */
+        /* =========================================== */
+        h1 {
+            font-size: var(--title-size);
+            font-weight: 700;
+            color: var(--green);
+            text-shadow: 0 0 40px var(--green-glow), 0 0 80px rgba(57, 211, 83, 0.08);
+            line-height: 1.15;
+        }
+        h2 {
+            font-size: var(--h2-size);
+            font-weight: 700;
+            color: var(--green);
+            line-height: 1.2;
+            margin-bottom: clamp(0.5rem, 1.5vh, 1rem);
+        }
+        h3 {
+            font-size: var(--h3-size);
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.3;
+            margin-bottom: clamp(0.2rem, 0.5vh, 0.4rem);
+        }
+        p, li {
+            font-size: var(--body-size);
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        /* =========================================== */
+        /* BLINKING CURSOR                             */
+        /* =========================================== */
+        .cursor {
+            display: inline-block;
+            width: 0.55em; height: 1.1em;
+            background: var(--green);
+            margin-left: 0.15em;
+            vertical-align: text-bottom;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* =========================================== */
+        /* CODE / TERMINAL BLOCKS                      */
+        /* =========================================== */
+        .term {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: clamp(0.6rem, 1.5vw, 1.2rem);
+            overflow: hidden;
+            line-height: 1.7;
+            font-size: var(--code-size);
+        }
+        .term-header {
+            display: flex; align-items: center; gap: 0.5rem;
+            padding-bottom: clamp(0.3rem, 0.8vh, 0.5rem);
+            margin-bottom: clamp(0.3rem, 0.8vh, 0.5rem);
+            border-bottom: 1px solid var(--border);
+            font-size: var(--small-size);
+            color: var(--text-dim);
+        }
+        .term-dots {
+            display: flex; gap: 4px;
+        }
+        .term-dots span {
+            width: 8px; height: 8px; border-radius: 50%;
+        }
+        .term-dots .r { background: var(--red); }
+        .term-dots .y { background: var(--yellow); }
+        .term-dots .g { background: var(--green); }
+
+        .prompt { color: var(--green); }
+        .cmd { color: var(--text-primary); }
+        .flag { color: var(--blue); }
+        .string { color: var(--yellow); }
+        .comment { color: var(--text-dim); font-style: italic; }
+        .result { color: var(--green-bright); }
+        .result-red { color: var(--red); }
+        .opcode { color: var(--purple); }
+        .classname { color: var(--cyan); }
+        .keyword { color: var(--blue); }
+
+        /* =========================================== */
+        /* CARDS                                       */
+        /* =========================================== */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: clamp(0.8rem, 1.5vw, 1.5rem);
+        }
+        .card-green { border-left: 3px solid var(--green); }
+        .card-red { border-left: 3px solid var(--red); }
+        .card-blue { border-left: 3px solid var(--blue); }
+        .card-purple { border-left: 3px solid var(--purple); }
+        .card-yellow { border-left: 3px solid var(--yellow); }
+
+        /* =========================================== */
+        /* TAGS                                        */
+        /* =========================================== */
+        .tag {
+            display: inline-block;
+            padding: 0.2em 0.7em;
+            border-radius: 4px;
+            font-size: var(--small-size);
+            font-weight: 700;
+        }
+        .tag-green { background: var(--green-dim); color: var(--green); border: 1px solid rgba(57, 211, 83, 0.3); }
+        .tag-red { background: var(--red-dim); color: var(--red); border: 1px solid rgba(248, 81, 73, 0.3); }
+        .tag-blue { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(88, 166, 255, 0.3); }
+        .tag-yellow { background: var(--yellow-dim); color: var(--yellow); border: 1px solid rgba(210, 153, 34, 0.3); }
+        .tag-purple { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(188, 140, 255, 0.3); }
+        .tag-dim { background: var(--bg-card); color: var(--text-dim); border: 1px solid var(--border); }
+
+        /* =========================================== */
+        /* STAT                                        */
+        /* =========================================== */
+        .stat-big {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            font-weight: 700;
+            line-height: 1;
+        }
+        .stat-medium {
+            font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        /* =========================================== */
+        /* TABLES                                      */
+        /* =========================================== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: var(--body-size);
+        }
+        th, td {
+            padding: clamp(0.25rem, 0.6vh, 0.5rem) clamp(0.4rem, 0.8vw, 0.8rem);
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            color: var(--green);
+            font-weight: 700;
+            font-size: var(--small-size);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        td { color: var(--text-secondary); }
+
+        /* =========================================== */
+        /* LAYOUTS                                     */
+        /* =========================================== */
+        .split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            height: 100%;
+        }
+        .split > div {
+            display: flex; flex-direction: column;
+            justify-content: center;
+            padding: var(--slide-padding);
+            position: relative;
+            z-index: 1;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(0.5rem, 1.5vw, 1.5rem);
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(0.5rem, 1.5vw, 1rem);
+        }
+        .grid-6 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 1fr 1fr;
+            gap: clamp(0.4rem, 1vw, 0.8rem);
+        }
+
+        /* =========================================== */
+        /* PIPELINE VISUAL                             */
+        /* =========================================== */
+        .pipeline {
+            display: flex;
+            align-items: center;
+            gap: clamp(0.2rem, 0.5vw, 0.5rem);
+            flex-wrap: wrap;
+        }
+        .pipeline-step {
+            padding: clamp(0.3rem, 0.6vw, 0.5rem) clamp(0.5rem, 1vw, 1rem);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: var(--small-size);
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+        .pipeline-step.active { border-color: var(--green); color: var(--green); box-shadow: 0 0 10px var(--green-glow); }
+        .pipeline-arrow {
+            color: var(--text-dim);
+            font-size: var(--small-size);
+        }
+
+        /* =========================================== */
+        /* ANIMATIONS                                  */
+        /* =========================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+        }
+        .slide.visible .reveal { opacity: 1; transform: translateY(0); }
+        .reveal-d1 { transition-delay: 0.1s; }
+        .reveal-d2 { transition-delay: 0.2s; }
+        .reveal-d3 { transition-delay: 0.3s; }
+        .reveal-d4 { transition-delay: 0.4s; }
+        .reveal-d5 { transition-delay: 0.5s; }
+
+        /* =========================================== */
+        /* PROGRESS BAR                                */
+        /* =========================================== */
+        .progress-bar {
+            position: fixed; top: 0; left: 0;
+            height: 2px;
+            background: var(--green);
+            box-shadow: 0 0 8px var(--green-glow);
+            z-index: 100;
+            transition: width 0.3s ease;
+        }
+
+        /* =========================================== */
+        /* RESPONSIVE                                  */
+        /* =========================================== */
+        @media (max-height: 700px) {
+            :root {
+                --slide-padding: clamp(0.75rem, 3vw, 2rem);
+                --title-size: clamp(1.4rem, 4vw, 2.5rem);
+                --h2-size: clamp(1rem, 2.5vw, 1.6rem);
+            }
+        }
+        @media (max-height: 600px) {
+            :root {
+                --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
+                --title-size: clamp(1.1rem, 3.5vw, 2rem);
+                --body-size: clamp(0.65rem, 1vw, 0.85rem);
+            }
+            .terminal-header, .slide-counter, .decorative { display: none; }
+        }
+        @media (max-width: 768px) {
+            .split { grid-template-columns: 1fr; }
+            .grid-3, .grid-6 { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 600px) {
+            .grid-2, .grid-3, .grid-6 { grid-template-columns: 1fr; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.2s !important;
+            }
+            html { scroll-behavior: auto; }
+        }
+
+        /* =========================================== */
+        /* UTILITY                                     */
+        /* =========================================== */
+        .mt-1 { margin-top: clamp(0.3rem, 1vh, 0.75rem); }
+        .mt-2 { margin-top: clamp(0.5rem, 1.5vh, 1.25rem); }
+        .mt-3 { margin-top: clamp(0.8rem, 2vh, 2rem); }
+        .flex-col { display: flex; flex-direction: column; }
+        .gap-1 { gap: clamp(0.3rem, 0.6vh, 0.5rem); }
+        .gap-2 { gap: clamp(0.5rem, 1vh, 1rem); }
+        .text-green { color: var(--green); }
+        .text-red { color: var(--red); }
+        .text-blue { color: var(--blue); }
+        .text-yellow { color: var(--yellow); }
+        .text-purple { color: var(--purple); }
+        .text-cyan { color: var(--cyan); }
+        .text-dim { color: var(--text-dim); }
+        .fw-700 { font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- ==================== SLIDE 1: TITLE ==================== -->
+    <section class="slide">
+        <div class="terminal-header">
+            <span class="path">~/investigation</span> <span class="text-dim">on</span> <span class="branch">main</span>
+        </div>
+        <div class="slide-counter"><span class="current">01</span> / 14</div>
+        <div class="slide-content" style="align-items: center; text-align: center;">
+            <div class="reveal" style="font-size: var(--small-size); color: var(--text-dim); margin-bottom: clamp(0.5rem, 2vh, 1.5rem); letter-spacing: 0.1em;">
+                ~/copilot-primitives $ javap <span class="flag">-c</span> <span class="classname">FrameworkTrust</span>
+            </div>
+            <h1 class="reveal reveal-d1">Investigation Java<span class="cursor"></span></h1>
+            <p class="reveal reveal-d2" style="max-width: 600px; margin: clamp(0.5rem, 1.5vh, 1rem) auto 0;">
+                Le bytecode ne ment jamais.<br>
+                <span class="text-dim">fd · jar · javap · rg — des outils JDK pour tracer la vérité.</span>
+            </p>
+            <div class="reveal reveal-d3 mt-3 pipeline" style="justify-content: center;">
+                <span class="pipeline-step active">fd</span>
+                <span class="pipeline-arrow">→</span>
+                <span class="pipeline-step active">jar tf</span>
+                <span class="pipeline-arrow">→</span>
+                <span class="pipeline-step active">javap -c</span>
+                <span class="pipeline-arrow">→</span>
+                <span class="pipeline-step active">rg</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 2: LE PROBLÈME ==================== -->
+    <section class="slide">
+        <div class="terminal-header">
+            <span class="path">~/investigation</span> <span class="text-dim">$</span> <span class="text-dim">cat probleme.md</span>
+        </div>
+        <div class="slide-counter"><span class="current">02</span> / 14</div>
+        <div class="slide-content">
+            <h2 class="reveal">Le Problème</h2>
+            <p class="reveal reveal-d1" style="max-width: 650px;">Les frameworks Java ont parfois des <span class="text-red fw-700">APIs trompeuses</span>. La documentation peut être obsolète, incomplète, ou simplement fausse.</p>
+            <div class="grid-2 mt-2 reveal reveal-d2" style="max-width: 850px;">
+                <div class="card card-red">
+                    <h3 style="color: var(--red);">❌ Ce qu'on croit</h3>
+                    <div class="term mt-1">
+                        <div><span class="classname">stream</span> = <span class="keyword">query</span>.<span class="cmd">getResultStream</span>()</div>
+                        <div><span class="comment">// "Streaming lazy, curseur DB"</span></div>
+                    </div>
+                </div>
+                <div class="card card-green">
+                    <h3 style="color: var(--green);">✅ Ce qui se passe vraiment</h3>
+                    <div class="term mt-1">
+                        <div><span class="classname">list</span> = <span class="keyword">query</span>.<span class="cmd">getResultList</span>()</div>
+                        <div><span class="comment">// Charge TOUT en mémoire</span></div>
+                        <div><span class="keyword">return</span> <span class="classname">list</span>.<span class="cmd">stream</span>()</div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2" style="display: flex; align-items: center; gap: 1rem;">
+                <span class="tag tag-green">Bytecode = vérité absolue</span>
+                <span style="font-size: var(--small-size); color: var(--text-dim);">Un <code>new ArrayList</code> dans le bytecode ne peut pas mentir</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 3: L'ARSENAL ==================== -->
+    <section class="slide">
+        <div class="terminal-header">
+            <span class="path">~/investigation</span> <span class="text-dim">$</span> <span class="text-dim">which javap jar jdeps</span>
+        </div>
+        <div class="slide-counter"><span class="current">03</span> / 14</div>
+        <div class="slide-content">
+            <h2 class="reveal">L'Arsenal <span class="text-dim" style="font-size: var(--h3-size);">— Tout est dans le JDK</span></h2>
+            <div class="reveal reveal-d1 mt-1">
+                <table style="max-width: 800px;">
+                    <thead>
+                        <tr><th>Outil</th><th>Rôle</th><th>Flags clés</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="text-green fw-700">jar</span></td>
+                            <td>Lister/extraire le contenu d'un JAR</td>
+                            <td><span class="flag">jar tf</span> fichier.jar</td>
+                        </tr>
+                        <tr>
+                            <td><span class="text-green fw-700">javap</span></td>
+                            <td>Désassembler les .class → signatures</td>
+                            <td><span class="flag">-p</span> (privé) <span class="flag">-c</span> (bytecode)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="text-green fw-700">javap -c</span></td>
+                            <td>Décompiler le bytecode → opcodes JVM</td>
+                            <td><span class="flag">-c -p</span> (bytecode + privé)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="text-green fw-700">jdeps</span></td>
+                            <td>Analyser les dépendances entre classes</td>
+                            <td><span class="flag">-verbose:class</span> <span class="flag">-R</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="reveal reveal-d2 mt-2" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <span class="tag tag-blue">fd</span>
+                <span class="tag tag-blue">rg</span>
+                <span style="font-size: var(--small-size); color: var(--text-dim); align-self: center;">+ CLI compagnons pour localiser les JARs et filtrer le bytecode</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 4: fd – LOCALISER ==================== -->
+    <section class="slide">
+        <div class="terminal-header">
+            <span class="path">~/investigation</span> <span class="text-dim">$</span> <span class="cmd">fd</span> <span class="flag">--help</span>
+        </div>
+        <div class="slide-counter"><span class="current">04</span> / 14</div>
+        <div class="split">
+            <div>
+                <div class="reveal">
+                    <span class="tag tag-blue">Étape 1</span>
+                    <h2 class="mt-1">fd <span class="text-dim" style="font-size: var(--h3-size);">— Localiser les JARs</span></h2>
+                    <p>Trouver le bon JAR dans le cache Maven (<code>~/.m2</code>) ou les libs du projet.</p>
+                </div>
+                <div class="reveal reveal-d1 mt-2 card card-blue" style="max-width: 400px;">
+                    <div style="font-size: var(--small-size); color: var(--blue);">Pourquoi fd ?</div>
+                    <ul class="mt-1 flex-col gap-1" style="list-style: none;">
+                        <li style="font-size: var(--small-size);">🔍 Recherche récursive rapide dans ~/.m2</li>
+                        <li style="font-size: var(--small-size);">📁 Chemins relatifs = moins de tokens</li>
+                        <li style="font-size: var(--small-size);">🎯 Filtre par extension (<code class="text-blue">-e jar</code>)</li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="reveal reveal-d2 term" style="max-width: 500px;">
+                    <div class="term-header">
+                        <div class="term-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+                        <span>Terminal</span>
+                    </div>
+                    <div><span class="comment"># Trouver une lib spécifique</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">fd</span> <span class="string">"hibernate-core"</span> <span class="classname">~/.m2</span> <span class="flag">-e</span> <span class="string">jar</span></div>
+                    <div class="result" style="font-size: var(--small-size);">~/.m2/.../hibernate-core-6.2.2.Final.jar</div>
+                    <div style="margin-top: 0.6rem;"><span class="comment"># Toutes les versions d'une lib</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">fd</span> <span class="string">"blaze-persistence"</span> <span class="classname">~/.m2</span> <span class="flag">-e</span> <span class="string">jar</span></div>
+                    <div class="result" style="font-size: var(--small-size);">~/.m2/.../blaze-persistence-core-impl-1.6.17.jar</div>
+                    <div class="result" style="font-size: var(--small-size);">~/.m2/.../blaze-persistence-integration-hibernate6-base-1.6.17.jar</div>
+                    <div style="margin-top: 0.6rem;"><span class="comment"># Exclure sources et javadoc</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">fd</span> <span class="string">"spring"</span> <span class="classname">~/.m2</span> <span class="flag">-e</span> <span class="string">jar</span> <span class="cmd">|</span></div>
+                    <div>&nbsp;&nbsp;<span class="cmd">rg</span> <span class="flag">-v</span> <span class="string">"source|javadoc"</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 5: jar tf – LISTER ==================== -->
+    <section class="slide">
+        <div class="terminal-header">
+            <span class="path">~/investigation</span> <span class="text-dim">$</span> <span class="cmd">jar</span> <span class="flag">tf</span>
+        </div>
+        <div class="slide-counter"><span class="current">05</span> / 14</div>
+        <div class="split">
+            <div>
+                <div class="reveal">
+                    <span class="tag tag-blue">Étape 2</span>
+                    <h2 class="mt-1">jar tf <span class="text-dim" style="font-size: var(--h3-size);">— Lister les classes</span></h2>
+                    <p>Inspecter le contenu d'un JAR pour trouver la classe responsable.</p>
+                </div>
+                <div class="reveal reveal-d1 mt-2 card card-green" style="max-width: 380px;">
+                    <div style="font-size: var(--small-size); color: var(--green);">💡 Astuce</div>
+                    <p style="font-size: var(--small-size); margin-top: 0.3rem;">Combiner avec <code class="text-green">rg</code> pour filtrer directement. Un JAR peut contenir des centaines de classes.</p>
+                </div>
+            </div>
+            <div>
+                <div class="reveal reveal-d2 term" style="max-width: 500px;">
+                    <div class="term-header">
+                        <div class="term-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+                        <span>Terminal</span>
+                    </div>
+                    <div><span class="comment"># Lister et filtrer</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">jar</span> <span class="flag">tf</span> <span class="classname">lib.jar</span> <span class="cmd">|</span></div>
+                    <div>&nbsp;&nbsp;<span class="cmd">rg</span> <span class="string">"ExtendedQuerySupport"</span></div>
+                    <div class="result" style="font-size: var(--small-size);">com/blazebit/persistence/integration/</div>
+                    <div class="result" style="font-size: var(--small-size);">&nbsp;&nbsp;hibernate/base/HibernateExtendedQuerySupport.class</div>
+                    <div style="margin-top: 0.6rem;"><span class="comment"># Classes d'implémentation (pas les tests)</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">jar</span> <span class="flag">tf</span> <span class="classname">lib.jar</span> <span class="cmd">|</span></div>
+                    <div>&nbsp;&nbsp;<span class="cmd">rg</span> <span class="string">"impl/"</span> <span class="cmd">|</span> <span class="cmd">rg</span> <span class="flag">-v</span> <span class="string">"test|Test"</span></div>
+                    <div style="margin-top: 0.6rem;"><span class="comment"># Un package précis</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">jar</span> <span class="flag">tf</span> <span class="classname">lib.jar</span> <span class="cmd">|</span></div>
+                    <div>&nbsp;&nbsp;<span class="cmd">rg</span> <span class="string">"com/blazebit/persistence/impl/plan/"</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 6: javap – SIGNATURES ==================== -->
+    <section class="slide">
+        <div class="terminal-header">
+            <span class="path">~/investigation</span> <span class="text-dim">$</span> <span class="cmd">javap</span>
+        </div>
+        <div class="slide-counter"><span class="current">06</span> / 14</div>
+        <div class="split">
+            <div>
+                <div class="reveal">
+                    <span class="tag tag-green">Étape 3a</span>
+                    <h2 class="mt-1">javap <span class="text-dim" style="font-size: var(--h3-size);">— Signatures</span></h2>
+                    <p>Voir l'API surface d'une classe : méthodes publiques, types de retour, exceptions.</p>
+                </div>
+                <div class="reveal reveal-d1 mt-2">
+                    <div class="grid-2 gap-1" style="max-width: 400px;">
+                        <div class="card" style="padding: 0.5rem 0.8rem;">
+                            <span class="text-green" style="font-size: var(--small-size);"><code>javap</code></span>
+                            <p style="font-size: var(--small-size);">API publique</p>
+                        </div>
+                        <div class="card" style="padding: 0.5rem 0.8rem;">
+                            <span class="text-green" style="font-size: var(--small-size);"><code>javap -p</code></span>
+                            <p style="font-size: var(--small-size);">+ membres privés</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="reveal reveal-d2 term" style="max-width: 520px;">
+                    <div class="term-header">
+                        <div class="term-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+                        <span>Terminal</span>
+                    </div>
+                    <div><span class="prompt">$</span> <span class="cmd">javap</span> <span class="flag">-classpath</span> <span class="classname">lib.jar</span> \</div>
+                    <div>&nbsp;&nbsp;<span class="classname">com.blazebit...CustomSQLTypedQuery</span></div>
+                    <div style="margin-top: 0.4rem; color: var(--text-secondary); font-size: var(--small-size);">
+                        <div><span class="keyword">public class</span> <span class="classname">CustomSQLTypedQuery</span>&lt;<span class="cyan">X</span>&gt; {</div>
+                        <div>&nbsp;&nbsp;<span class="keyword">public</span> List&lt;X&gt; <span class="cmd">getResultList</span>();</div>
+                        <div>&nbsp;&nbsp;<span class="keyword">public</span> Stream&lt;X&gt; <span class="cmd">getResultStream</span>();</div>
+                        <div>&nbsp;&nbsp;<span class="keyword">public</span> X <span class="cmd">getSingleResult</span>();</div>
+                        <div>}</div>
+                    </div>
+                    <div style="margin-top: 0.4rem;"><span class="comment"># L'API a l'air correcte...</span></div>
+                    <div><span class="comment"># Mais que fait getResultStream() vraiment ?</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 7: javap -c – BYTECODE ==================== -->
+    <section class="slide">
+        <div class="terminal-header">
+            <span class="path">~/investigation</span> <span class="text-dim">$</span> <span class="cmd">javap</span> <span class="flag">-c</span>
+        </div>
+        <div class="slide-counter"><span class="current">07</span> / 14</div>
+        <div class="slide-content">
+            <div class="reveal">
+                <span class="tag tag-green">Étape 3b — Le pouvoir</span>
+                <h2 class="mt-1">javap -c <span class="text-dim" style="font-size: var(--h3-size);">— Bytecode</span></h2>
+                <p>Voir les instructions JVM réelles. C'est ici que la vérité se révèle.</p>
+            </div>
+            <div class="grid-2 mt-2 reveal reveal-d1" style="max-width: 900px;">
+                <div class="term">
+                    <div class="term-header">
+                        <div class="term-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+                        <span>Décompilation</span>
+                    </div>
+                    <div><span class="prompt">$</span> <span class="cmd">javap</span> <span class="flag">-c -p -classpath</span> <span class="classname">lib.jar</span> \</div>
+                    <div>&nbsp;&nbsp;<span class="classname">com.pkg.Class</span> <span class="cmd">|</span></div>
+                    <div>&nbsp;&nbsp;<span class="cmd">rg</span> <span class="string">"getResultStream|getResultList"</span></div>
+                </div>
+                <div class="card card-purple">
+                    <h3 style="color: var(--purple); font-size: var(--body-size);">Opcodes à surveiller</h3>
+                    <table class="mt-1" style="font-size: var(--small-size);">
+                        <tr><td><span class="opcode">invokevirtual</span></td><td>Appel de méthode</td></tr>
+                        <tr><td><span class="opcode">invokeinterface</span></td><td>Appel d'interface</td></tr>
+                        <tr><td><span class="opcode">invokespecial</span></td><td>Constructeur / super</td></tr>
+                        <tr><td><span class="opcode">new</span></td><td>Instanciation objet</td></tr>
+                        <tr style="border: none;"><td><span class="opcode">getfield</span></td><td>Accès à un champ</td></tr>
+                    </table>
+                </div>
+            </div>
+            <div class="reveal reveal-d2 mt-2" style="font-size: var(--small-size);">
+                <span class="text-red fw-700">🚨 new ArrayList</span> <span class="text-dim">dans le bytecode = charge TOUT en mémoire. Pas de streaming réel.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 8: rg – FILTRER ==================== -->
+    <section class="slide">
+        <div class="terminal-header">
+            <span class="path">~/investigation</span> <span class="text-dim">$</span> <span class="cmd">rg</span> <span class="flag">--help</span>
+        </div>
+        <div class="slide-counter"><span class="current">08</span> / 14</div>
+        <div class="split">
+            <div>
+                <div class="reveal">
+                    <span class="tag tag-blue">Étape 4</span>
+                    <h2 class="mt-1">rg <span class="text-dim" style="font-size: var(--h3-size);">— Filtrer le bytecode</span></h2>
+                    <p>Pipe <code>javap -c</code> dans <code>rg</code> pour isoler exactement les appels pertinents.</p>
+                </div>
+            </div>
+            <div>
+                <div class="reveal reveal-d1 term" style="max-width: 520px;">
+                    <div class="term-header">
+                        <div class="term-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+                        <span>Terminal</span>
+                    </div>
+                    <div><span class="comment"># Tracer un appel spécifique</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">javap</span> <span class="flag">-c -classpath</span> <span class="classname">lib.jar</span> \</div>
+                    <div>&nbsp;&nbsp;<span class="classname">com.pkg.Class</span> <span class="cmd">|</span></div>
+                    <div>&nbsp;&nbsp;<span class="cmd">rg</span> <span class="string">"getResultStream|getResultList|scroll"</span></div>
+                    <div style="margin-top: 0.6rem;"><span class="comment"># Chercher des instanciations mémoire</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">javap</span> <span class="flag">-c -classpath</span> <span class="classname">lib.jar</span> \</div>
+                    <div>&nbsp;&nbsp;<span class="classname">com.pkg.Class</span> <span class="cmd">|</span></div>
+                    <div>&nbsp;&nbsp;<span class="cmd">rg</span> <span class="string">"new.*ArrayList|new.*HashSet"</span></div>
+                    <div style="margin-top: 0.6rem;"><span class="comment"># Toutes les invocations</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">javap</span> <span class="flag">-c</span> ... <span class="cmd">|</span></div>
+                    <div>&nbsp;&nbsp;<span class="cmd">rg</span> <span class="string">"invoke(virtual|interface|special|static)"</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 9: LE PIPELINE COMPLET ==================== -->
+    <section class="slide">
+        <div class="terminal-header">
+            <span class="path">~/investigation</span> <span class="text-dim">$</span> <span class="text-dim">cat pipeline.md</span>
+        </div>
+        <div class="slide-counter"><span class="current">09</span> / 14</div>
+        <div class="slide-content" style="align-items: center; text-align: center;">
+            <h2 class="reveal">Le Pipeline Complet</h2>
+            <div class="reveal reveal-d1 mt-2 pipeline" style="justify-content: center; font-size: var(--body-size);">
+                <span class="pipeline-step active">fd</span>
+                <span class="pipeline-arrow">→</span>
+                <span class="pipeline-step active">jar tf</span>
+                <span class="pipeline-arrow">→</span>
+                <span class="pipeline-step active">javap -c</span>
+                <span class="pipeline-arrow">→</span>
+                <span class="pipeline-step active">rg</span>
+            </div>
+            <div class="grid-2 mt-3 reveal reveal-d2" style="max-width: 800px; text-align: left;">
+                <div class="card card-blue">
+                    <h3 style="color: var(--blue); font-size: var(--body-size);">fd</h3>
+                    <p style="font-size: var(--small-size);">"Où est le JAR ?"</p>
+                </div>
+                <div class="card card-blue">
+                    <h3 style="color: var(--blue); font-size: var(--body-size);">jar tf</h3>
+                    <p style="font-size: var(--small-size);">"Quelle classe contient le code ?"</p>
+                </div>
+                <div class="card card-green">
+                    <h3 style="color: var(--green); font-size: var(--body-size);">javap -c</h3>
+                    <p style="font-size: var(--small-size);">"Que fait le bytecode réellement ?"</p>
+                </div>
+                <div class="card card-green">
+                    <h3 style="color: var(--green); font-size: var(--body-size);">rg</h3>
+                    <p style="font-size: var(--small-size);">"Appelle-t-il la méthode X ou Y ?"</p>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2" style="display: flex; gap: 1.5rem; font-size: var(--small-size);">
+                <span><span class="text-dim">GitHub source :</span> <span class="text-red">~15 000 tokens</span></span>
+                <span><span class="text-dim">Ce pipeline :</span> <span class="text-green">~800 tokens</span></span>
+                <span class="tag tag-green">-95%</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 10: CAS RÉEL 1/2 ==================== -->
+    <section class="slide">
+        <div class="terminal-header">
+            <span class="path">~/investigation/blaze-persistence</span> <span class="text-dim">$</span>
+        </div>
+        <div class="slide-counter"><span class="current">10</span> / 14</div>
+        <div class="slide-content">
+            <div class="reveal">
+                <span class="tag tag-red">Cas réel</span>
+                <h2 class="mt-1">Blaze-Persistence : le faux streaming</h2>
+                <p><code class="text-yellow">getResultStream()</code> appelle secrètement <code class="text-red">getResultList()</code> — charge tout en mémoire.</p>
+            </div>
+            <div class="reveal reveal-d1 mt-2 term" style="max-width: 900px;">
+                <div class="term-header">
+                    <div class="term-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+                    <span>Investigation — étapes 1 à 3</span>
+                </div>
+                <div><span class="comment"># 1. Trouver le JAR d'intégration</span></div>
+                <div><span class="prompt">$</span> <span class="cmd">fd</span> <span class="string">"blaze-persistence-integration-hibernate6-base"</span> <span class="classname">~/.m2</span> <span class="flag">-e</span> <span class="string">jar</span></div>
+                <div class="result" style="font-size: var(--small-size);">~/.m2/.../blaze-persistence-integration-hibernate6-base-1.6.17.jar</div>
+                <div style="margin-top: 0.5rem;"><span class="comment"># 2. Trouver la classe suspecte</span></div>
+                <div><span class="prompt">$</span> <span class="cmd">jar</span> <span class="flag">tf</span> <span class="classname">~/.m2/.../jar</span> <span class="cmd">|</span> <span class="cmd">rg</span> <span class="string">"ExtendedQuerySupport"</span></div>
+                <div class="result" style="font-size: var(--small-size);">com/blazebit/.../HibernateExtendedQuerySupport.class</div>
+                <div style="margin-top: 0.5rem;"><span class="comment"># 3. Décompiler et tracer</span></div>
+                <div><span class="prompt">$</span> <span class="cmd">javap</span> <span class="flag">-c -p -classpath</span> <span class="classname">~/.m2/.../jar</span> \</div>
+                <div>&nbsp;&nbsp;<span class="classname">com.blazebit...HibernateExtendedQuerySupport</span> \</div>
+                <div>&nbsp;&nbsp;<span class="cmd">|</span> <span class="cmd">rg</span> <span class="string">"getResultStream|getResultList|scroll"</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 11: CAS RÉEL 2/2 ==================== -->
+    <section class="slide">
+        <div class="terminal-header">
+            <span class="path">~/investigation/blaze-persistence</span> <span class="text-dim">$</span>
+        </div>
+        <div class="slide-counter"><span class="current">11</span> / 14</div>
+        <div class="slide-content">
+            <div class="reveal">
+                <span class="tag tag-green">Preuve par le bytecode</span>
+                <h2 class="mt-1">La comparaison qui révèle tout</h2>
+            </div>
+            <div class="grid-2 mt-2 reveal reveal-d1" style="max-width: 900px;">
+                <div class="card card-red">
+                    <h3 style="color: var(--red); font-size: var(--body-size);">❌ Blaze-Persistence</h3>
+                    <div class="term mt-1">
+                        <div><span class="comment">// getResultStream() appelle :</span></div>
+                        <div><span class="opcode">invokevirtual</span></div>
+                        <div>&nbsp;&nbsp;<span class="text-red">→ getResultList()</span></div>
+                        <div><span class="comment">// Charge TOUT en mémoire</span></div>
+                        <div><span class="comment">// puis .stream()</span></div>
+                    </div>
+                    <div class="mt-1" style="font-size: var(--small-size); color: var(--red);">⚠️ Pas de curseur DB</div>
+                </div>
+                <div class="card card-green">
+                    <h3 style="color: var(--green); font-size: var(--body-size);">✅ Hibernate (correct)</h3>
+                    <div class="term mt-1">
+                        <div><span class="comment">// getResultStream() appelle :</span></div>
+                        <div><span class="opcode">invokevirtual</span></div>
+                        <div>&nbsp;&nbsp;<span class="text-green">→ scroll(FORWARD_ONLY)</span></div>
+                        <div><span class="comment">// Vrai curseur DB</span></div>
+                        <div><span class="comment">// Streaming lazy réel</span></div>
+                    </div>
+                    <div class="mt-1" style="font-size: var(--small-size); color: var(--green);">✓ Mémoire constante</div>
+                </div>
+            </div>
+            <div class="reveal reveal-d2 mt-2" style="display: flex; gap: 1.5rem; align-items: center;">
+                <div class="card" style="display: flex; align-items: center; gap: 0.8rem; padding: 0.5rem 1rem;">
+                    <span class="tag tag-green" style="font-size: var(--code-size);">5 commandes</span>
+                    <span class="tag tag-green" style="font-size: var(--code-size);">~800 tokens</span>
+                    <span style="font-size: var(--small-size); color: var(--text-dim);">vs ~15 000 tokens sur GitHub</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 12: jdeps ==================== -->
+    <section class="slide">
+        <div class="terminal-header">
+            <span class="path">~/investigation</span> <span class="text-dim">$</span> <span class="cmd">jdeps</span>
+        </div>
+        <div class="slide-counter"><span class="current">12</span> / 14</div>
+        <div class="split">
+            <div>
+                <div class="reveal">
+                    <span class="tag tag-purple">Outil bonus</span>
+                    <h2 class="mt-1">jdeps <span class="text-dim" style="font-size: var(--h3-size);">— Dépendances</span></h2>
+                    <p>Analyser les dépendances entre classes et modules. Utile pour comprendre les chaînes de délégation complexes.</p>
+                </div>
+            </div>
+            <div>
+                <div class="reveal reveal-d1 term" style="max-width: 520px;">
+                    <div class="term-header">
+                        <div class="term-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+                        <span>Terminal</span>
+                    </div>
+                    <div><span class="comment"># Dépendances d'une classe</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">jdeps</span> <span class="flag">--class-path</span> <span class="classname">lib.jar</span> \</div>
+                    <div>&nbsp;&nbsp;<span class="flag">-verbose:class</span> <span class="flag">-filter:none</span> \</div>
+                    <div>&nbsp;&nbsp;<span class="classname">com.blazebit...HibernateExtendedQuerySupport</span></div>
+                    <div style="margin-top: 0.6rem;"><span class="comment"># Résumé module-level</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">jdeps</span> <span class="flag">-s</span> <span class="classname">lib.jar</span></div>
+                    <div style="margin-top: 0.6rem;"><span class="comment"># Analyse récursive</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">jdeps</span> <span class="flag">-R</span> <span class="flag">--class-path</span> \</div>
+                    <div>&nbsp;&nbsp;<span class="string">"lib1.jar:lib2.jar"</span> <span class="classname">main.jar</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 13: PATTERNS DE DIAGNOSTIC ==================== -->
+    <section class="slide">
+        <div class="terminal-header">
+            <span class="path">~/investigation</span> <span class="text-dim">$</span> <span class="text-dim">cat patterns.md</span>
+        </div>
+        <div class="slide-counter"><span class="current">13</span> / 14</div>
+        <div class="slide-content">
+            <h2 class="reveal">Patterns de Diagnostic</h2>
+            <div class="reveal reveal-d1 mt-1">
+                <table style="max-width: 900px;">
+                    <thead>
+                        <tr><th>Question</th><th>Pipeline</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Où est la classe X ?</td>
+                            <td><code><span class="cmd">fd</span> <span class="string">"lib"</span> <span class="classname">~/.m2</span> → <span class="cmd">jar</span> <span class="flag">tf</span> <span class="cmd">|</span> <span class="cmd">rg</span></code></td>
+                        </tr>
+                        <tr>
+                            <td>La méthode X appelle-t-elle Y ?</td>
+                            <td><code><span class="cmd">javap</span> <span class="flag">-c</span> <span class="cmd">|</span> <span class="cmd">rg</span> <span class="string">"methodY"</span></code></td>
+                        </tr>
+                        <tr>
+                            <td>Le streaming est-il lazy ?</td>
+                            <td><code><span class="cmd">javap</span> <span class="flag">-c</span> <span class="cmd">|</span> <span class="cmd">rg</span> <span class="string">"scroll|getResultList|ArrayList"</span></code></td>
+                        </tr>
+                        <tr>
+                            <td>Chaîne de délégation ?</td>
+                            <td><code>Répéter <span class="cmd">javap -c</span> + <span class="cmd">rg</span> inter-JARs</code></td>
+                        </tr>
+                        <tr>
+                            <td>Utilise-t-il la réflexion ?</td>
+                            <td><code><span class="cmd">javap</span> <span class="flag">-c</span> <span class="cmd">|</span> <span class="cmd">rg</span> <span class="string">"java/lang/reflect"</span></code></td>
+                        </tr>
+                        <tr>
+                            <td>Quel SQL est généré ?</td>
+                            <td><code><span class="cmd">javap</span> <span class="flag">-v</span> <span class="cmd">|</span> <span class="cmd">rg</span> <span class="string">"String.*SELECT"</span></code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 14: CONCLUSION ==================== -->
+    <section class="slide">
+        <div class="terminal-header">
+            <span class="path">~/investigation</span> <span class="text-dim">$</span> <span class="text-dim">echo "done"</span>
+        </div>
+        <div class="slide-counter"><span class="current">14</span> / 14</div>
+        <div class="slide-content" style="align-items: center; text-align: center;">
+            <h1 class="reveal">Bytecode &gt; Documentation<span class="cursor"></span></h1>
+            <div class="reveal reveal-d1 mt-3 pipeline" style="justify-content: center;">
+                <span class="pipeline-step active">fd</span>
+                <span class="pipeline-arrow">→</span>
+                <span class="pipeline-step active">jar tf</span>
+                <span class="pipeline-arrow">→</span>
+                <span class="pipeline-step active">javap -c</span>
+                <span class="pipeline-arrow">→</span>
+                <span class="pipeline-step active">rg</span>
+            </div>
+            <div class="reveal reveal-d2 mt-3 grid-3" style="max-width: 700px; text-align: left;">
+                <div class="card card-green">
+                    <span class="stat-medium text-green">0</span>
+                    <p style="font-size: var(--small-size);">installation supplémentaire<br><span class="text-dim">Tout est dans le JDK</span></p>
+                </div>
+                <div class="card card-green">
+                    <span class="stat-medium text-green">5</span>
+                    <p style="font-size: var(--small-size);">commandes<br><span class="text-dim">pour tracer un bug framework</span></p>
+                </div>
+                <div class="card card-green">
+                    <span class="stat-medium text-green">-95%</span>
+                    <p style="font-size: var(--small-size);">de tokens<br><span class="text-dim">vs lire le source GitHub</span></p>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-3" style="font-size: var(--small-size); color: var(--text-dim);">
+                Copilot Primitives — github.com
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        class SlidePresentation {
+            constructor() {
+                this.slides = document.querySelectorAll('.slide');
+                this.currentSlide = 0;
+                this.setupIntersectionObserver();
+                this.setupKeyboardNav();
+                this.setupTouchNav();
+                this.setupProgressBar();
+            }
+
+            setupIntersectionObserver() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            this.currentSlide = [...this.slides].indexOf(entry.target);
+                            this.updateProgressBar();
+                            this.updateCounters();
+                        }
+                    });
+                }, { threshold: 0.5 });
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    if (['ArrowDown', 'ArrowRight', 'Space', 'PageDown'].includes(e.code)) {
+                        e.preventDefault();
+                        this.goToSlide(this.currentSlide + 1);
+                    } else if (['ArrowUp', 'ArrowLeft', 'PageUp'].includes(e.code)) {
+                        e.preventDefault();
+                        this.goToSlide(this.currentSlide - 1);
+                    } else if (e.code === 'Home') {
+                        e.preventDefault();
+                        this.goToSlide(0);
+                    } else if (e.code === 'End') {
+                        e.preventDefault();
+                        this.goToSlide(this.slides.length - 1);
+                    }
+                });
+            }
+
+            setupTouchNav() {
+                let startY = 0;
+                document.addEventListener('touchstart', (e) => { startY = e.touches[0].clientY; });
+                document.addEventListener('touchend', (e) => {
+                    const diff = startY - e.changedTouches[0].clientY;
+                    if (Math.abs(diff) > 50) {
+                        this.goToSlide(this.currentSlide + (diff > 0 ? 1 : -1));
+                    }
+                });
+            }
+
+            goToSlide(index) {
+                if (index >= 0 && index < this.slides.length) {
+                    this.slides[index].scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+
+            setupProgressBar() {
+                this.progressBar = document.getElementById('progressBar');
+                this.updateProgressBar();
+            }
+
+            updateProgressBar() {
+                if (this.progressBar) {
+                    const progress = ((this.currentSlide + 1) / this.slides.length) * 100;
+                    this.progressBar.style.width = progress + '%';
+                }
+            }
+
+            updateCounters() {
+                this.slides.forEach((slide, i) => {
+                    const counter = slide.querySelector('.slide-counter');
+                    if (counter) {
+                        const current = counter.querySelector('.current');
+                        if (current) current.textContent = String(i + 1).padStart(2, '0');
+                    }
+                });
+            }
+        }
+
+        new SlidePresentation();
+    </script>
+</body>
+</html>

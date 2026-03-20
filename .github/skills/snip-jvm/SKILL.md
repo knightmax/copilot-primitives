@@ -26,7 +26,7 @@ snip mvn -pl gateway test
 snip mvnd clean package -DskipTests
 snip mvnd -pl gateway test -Dtest=HeadersSecurityTest
 
-# ❌ FAUX — no snip
+# ❌ WRONG - no snip
 mvn clean test
 mvnd -pl gateway test
 ```
@@ -61,13 +61,17 @@ Applies to ALL goals: `compile`, `test`, `verify`, `package`, `install`, `clean`
 Get-Command snip -ErrorAction SilentlyContinue; Test-Path "$env:APPDATA\snip\filters\mvn.yaml"
 ```
 
-If snip is missing → load `snip-core` skill and follow its install instructions.
+If snip is missing: load `snip-core` skill and follow its install instructions.
 
-If filters are missing → run the setup script:
+If filters are missing: load and use `snip-filters-setup` skill with this profile:
 
-```powershell
-& '.\.github\skills\snip-jvm\setup-filters.ps1'
-```
+- `source-dir`: `.github/skills/snip-jvm/filters`
+- `tool-label`: `JVM`
+- `alias-from`: `mvn`
+- `alias-to`: `mvnd`
+- `legacy-file-to-remove`: `mvnd-mvn.yaml`
+
+The shared skill contains the canonical PowerShell/bash commands.
 
 ## Filters
 

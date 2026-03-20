@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style B — Neon Cyber</title>
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@700&f[]=satoshi@400,500,700&display=swap">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; overflow: hidden; }
+
+        :root {
+            --bg-primary: #0a0f1c;
+            --bg-card: #111827;
+            --text-primary: #f0f6fc;
+            --text-secondary: #7b8794;
+            --cyan: #00ffcc;
+            --magenta: #ff00aa;
+            --cyan-glow: rgba(0, 255, 204, 0.2);
+            --magenta-glow: rgba(255, 0, 170, 0.15);
+        }
+
+        .slide {
+            width: 100vw; height: 100vh; height: 100dvh;
+            overflow: hidden;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            background: var(--bg-primary);
+            font-family: 'Satoshi', sans-serif;
+            color: var(--text-primary);
+            position: relative;
+        }
+
+        /* Gradient mesh background */
+        .slide::before {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 80%, var(--cyan-glow) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, var(--magenta-glow) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(17, 24, 39, 0.8) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Grid overlay */
+        .slide::after {
+            content: '';
+            position: absolute; inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 255, 204, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 204, 0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        .content {
+            position: relative; z-index: 1;
+            text-align: center;
+            padding: clamp(1rem, 4vw, 4rem);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.3em 1em;
+            border: 1px solid var(--cyan);
+            border-radius: 100px;
+            font-size: clamp(0.6rem, 1vw, 0.8rem);
+            color: var(--cyan);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: clamp(1rem, 3vh, 2rem);
+            box-shadow: 0 0 15px var(--cyan-glow), inset 0 0 15px var(--cyan-glow);
+        }
+
+        h1 {
+            font-family: 'Clash Display', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 700;
+            line-height: 1.05;
+            margin-bottom: clamp(0.5rem, 2vh, 1rem);
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--text-primary) 50%, var(--magenta) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: clamp(0.85rem, 1.5vw, 1.2rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .subtitle em {
+            color: var(--cyan);
+            font-style: normal;
+            font-weight: 700;
+        }
+
+        .tools {
+            display: flex;
+            gap: clamp(0.5rem, 1.5vw, 1.2rem);
+            justify-content: center;
+            margin-top: clamp(1.5rem, 4vh, 3rem);
+            flex-wrap: wrap;
+        }
+
+        .tool-chip {
+            padding: 0.4em 1em;
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 255, 204, 0.15);
+            border-radius: 8px;
+            font-size: clamp(0.65rem, 1vw, 0.85rem);
+            color: var(--text-primary);
+            font-family: 'Satoshi', sans-serif;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .tool-chip:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px var(--cyan-glow);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <section class="slide">
+        <div class="content">
+            <span class="tag">Copilot Primitives</span>
+            <h1>Économie de Tokens</h1>
+            <p class="subtitle">Réduire de <em>95-99%</em> la consommation de contexte avec des outils CLI chirurgicaux</p>
+            <div class="tools">
+                <span class="tool-chip">fd</span>
+                <span class="tool-chip">rg</span>
+                <span class="tool-chip">yq</span>
+                <span class="tool-chip">xq</span>
+                <span class="tool-chip">snip</span>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

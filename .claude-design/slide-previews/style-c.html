@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style C — Bold Signal</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&display=swap">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; overflow: hidden; }
+
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-gradient: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            --card-bg: #FF5722;
+            --card-dark: #E64A19;
+            --text-primary: #ffffff;
+            --text-dim: #888888;
+            --text-on-card: #1a1a1a;
+        }
+
+        .slide {
+            width: 100vw; height: 100vh; height: 100dvh;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: var(--bg-gradient);
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--text-primary);
+            position: relative;
+        }
+
+        .left {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: clamp(2rem, 5vw, 5rem);
+        }
+
+        .section-num {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(4rem, 10vw, 10rem);
+            color: rgba(255, 255, 255, 0.04);
+            position: absolute;
+            top: clamp(1rem, 3vw, 3rem);
+            left: clamp(2rem, 5vw, 5rem);
+            line-height: 1;
+        }
+
+        h1 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(2rem, 4.5vw, 3.5rem);
+            line-height: 1.1;
+            margin-bottom: clamp(0.5rem, 1.5vh, 1rem);
+        }
+
+        .subtitle {
+            font-size: clamp(0.75rem, 1.3vw, 1rem);
+            color: var(--text-dim);
+            font-weight: 400;
+            max-width: 400px;
+        }
+
+        .right {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(2rem, 4vw, 4rem);
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: clamp(1.5rem, 3vw, 3rem);
+            width: 100%;
+            max-width: 420px;
+            color: var(--text-on-card);
+            position: relative;
+            box-shadow: 0 20px 60px rgba(255, 87, 34, 0.3);
+        }
+
+        .card-label {
+            font-size: clamp(0.55rem, 0.8vw, 0.7rem);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            opacity: 0.6;
+            margin-bottom: clamp(0.5rem, 1.5vh, 1rem);
+        }
+
+        .stat {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            line-height: 1;
+            margin-bottom: clamp(0.3rem, 1vh, 0.5rem);
+        }
+
+        .stat-desc {
+            font-size: clamp(0.7rem, 1.1vw, 0.9rem);
+            opacity: 0.7;
+            font-weight: 500;
+        }
+
+        .tool-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: clamp(1rem, 2.5vh, 2rem);
+            flex-wrap: wrap;
+        }
+
+        .tool-tag {
+            padding: 0.3em 0.8em;
+            background: rgba(26, 26, 26, 0.15);
+            border-radius: 6px;
+            font-size: clamp(0.6rem, 0.9vw, 0.75rem);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        /* Navigation dots on top-right */
+        .nav {
+            position: absolute;
+            top: clamp(2rem, 3vw, 3rem);
+            right: clamp(2rem, 3vw, 3rem);
+            display: flex;
+            gap: 0.5rem;
+            font-size: clamp(0.55rem, 0.8vw, 0.7rem);
+            color: var(--text-dim);
+        }
+        .nav .active { color: var(--text-primary); font-weight: 700; }
+    </style>
+</head>
+<body>
+    <section class="slide">
+        <span class="section-num">01</span>
+        <div class="nav">
+            <span class="active">Intro</span>
+            <span>·</span>
+            <span>Outils</span>
+            <span>·</span>
+            <span>Synergies</span>
+            <span>·</span>
+            <span>Snip</span>
+        </div>
+        <div class="left">
+            <h1>Économie<br>de Tokens</h1>
+            <p class="subtitle">Réduire de 95-99% la consommation de contexte avec des outils CLI chirurgicaux</p>
+        </div>
+        <div class="right">
+            <div class="card">
+                <div class="card-label">Réduction mesurée</div>
+                <div class="stat">-98%</div>
+                <div class="stat-desc">251k → 5k tokens sur 749 fichiers</div>
+                <div class="tool-row">
+                    <span class="tool-tag">fd</span>
+                    <span class="tool-tag">rg</span>
+                    <span class="tool-tag">yq</span>
+                    <span class="tool-tag">xq</span>
+                    <span class="tool-tag">snip</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

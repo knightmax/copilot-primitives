@@ -13,7 +13,7 @@ disable-model-invocation: false
 
 Provides snip CLI installation check and first-time setup. This skill is referenced by tool-specific snip skills (`snip-jvm`, `snip-dotnet`, etc.) when setup is needed.
 
-**This skill does NOT install filters.** Each tool-specific skill manages its own filters.
+**This skill does NOT install filters.** Filter installation is handled by `snip-filters-setup` using tool-specific `filters/*.yaml` profiles.
 
 ## Quick Check
 
@@ -36,6 +36,20 @@ scoop install snip
 **macOS:**
 ```bash
 brew install snip
+```
+
+## Setup Scripts
+
+Use the scripts in the skill `scripts/` folder:
+
+**Windows (PowerShell):**
+```powershell
+& '.\.github\skills\snip-core\scripts\setup-snip.ps1'
+```
+
+**macOS/Linux:**
+```bash
+bash .github/skills/snip-core/scripts/setup-snip.sh
 ```
 
 ## IMPORTANT — snip Produces NO Output Until the Command Finishes

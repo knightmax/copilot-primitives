@@ -3,7 +3,7 @@ version: 1
 description: "General Maven/mvnd output — fallback filter for all commands"
 
 match:
-  command: "mvn|mvnd"
+  command: "mvn"
 
 pipeline:
   - action: "remove_lines"

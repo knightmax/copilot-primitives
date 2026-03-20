@@ -1,6 +1,6 @@
 ---
 name: "Copilot Primitives"
-description: "This is a meta-repository for reusable AI-assisted coding workflows. It contains Instructions (architectural enforcement), Skills (domain-specific tasks), and Hooks (CLI automation). When working here, treat this as a package builder—focus on clarity, reusability, and test-driven validation of examples."
+description: "This is a meta-repository for reusable AI-assisted coding workflows. It contains Instructions (architectural enforcement), Skills (domain-specific tasks), and Documentation (training materials, presentations). When working here, treat this as a package builder—focus on clarity, reusability, and test-driven validation of examples."
 ---
 
 # Copilot Primitives Workspace Instructions
@@ -14,39 +14,51 @@ Enforced guidelines and rules that apply to specific code domains:
 - **`hexagonal-architecture.instructions.md`** — Strict enforcement of Hexagonal Architecture (Ports & Adapters) principles for Java projects
   - Applies to: `**/*.java`
   - Validates: Domain independence, dependency inversion, layer separation, testability
+- **`follow-up-question.instructions.md`** — Confidence-based clarification before code generation
+  - Applies to: `**`
 
 ### **Skills** (`.github/skills/`)
-Domain-specific workflows optimized for particular tasks. Each skill includes documentation, templates, and asset bundles:
+17 domain-specific workflows organized into four families:
 
-1. **`setup-snip-hooks/`** — Token reduction CLI integration
-   - Used for: Scaffolding snip hooks in Maven/Java projects, reducing LLM output token consumption
-   - Includes: Setup scripts (bash/PowerShell), Maven filter profiles, documentation
-   - Key files: `SKILL.md` (detailed guide), `README.md` (quick start), `templates/`, `profiles/`
+#### Token-Saving CLI Tools
+- **`fd/`** — Find files by name, extension, path (40-60% savings)
+- **`rg/`** — Search text content inside files with ripgrep (30-98% savings)
+- **`yq/`** — Extract YAML / TOML fields (90-98% savings)
+- **`xq/`** — Extract XML fields via `yq -p xml` (90-99% savings)
+- **`jq/`** — Extract JSON fields (90-99% savings)
 
-2. **`hexagonal-architecture-audit/`** — Architecture compliance evaluation
-   - Used for: Auditing Java projects for hexagonal architecture compliance
-   - Analyzes: Seven dimensions (domain independence, ports, adapters, DI, orchestration, testability, immutability)
-   - Output: Detailed reports with scores, violations, recommendations
-   - Key files: `SKILL.md`, `references/` (evaluation criteria)
+#### Synergy Patterns
+- **`batch-config-audit/`** — fd + yq/jq/xq: batch extraction of the same field from N config files (95-99% savings)
+- **`structural-search/`** — fd + rg: bi-dimensional search by structure AND content (94-99% savings)
+- **`java-investigation/`** — fd + jar + javap + rg: bytecode-level tracing pipeline (87-95% savings)
 
-3. **`frontend-slides/`** — Animation-rich HTML presentation builder
-   - Used for: Creating or converting presentations to interactive web-based slides
-   - Features: Zero-dependency, custom aesthetics, viewport-responsive design
-   - Key files: `SKILL.md`, `STYLE_PRESETS.md`, `animation-patterns.md`, `viewport-base.css`, HTML templates
+#### Snip CLI (Output Filtering)
+- **`snip-core/`** — Installation & verification of [snip](https://github.com/edouard-claude/snip)
+- **`snip-filters-setup/`** — Shared YAML filter installer, handles command aliases (mvn → mvnd)
+- **`snip-jvm/`** — Maven / mvnd output reduction (80-95%)
+- **`snip-dotnet/`** — dotnet CLI output reduction
+- **`snip-npm/`** — npm CLI output reduction
+- **`setup-snip-hooks/`** — Full project hook scaffolding for Maven/Java
 
-### **Hooks** (`.github/hooks/`)
-Automation scripts for CLI token reduction and project setup:
-- **`snip-rewrite.sh`** — Bash script for automating snip integration
-- **`hooks.json`** — Hook configuration (when applied to projects, sets up preToolUse event handlers)
+#### Other Skills
+- **`javap/`** — JDK bytecode analysis reference (jar, javap, jdeps)
+- **`frontend-slides/`** — Zero-dependency, viewport-responsive HTML presentations
+- **`hexagonal-architecture-audit/`** — Seven-dimension architecture compliance scoring
 
-### **Documentation** (`.snip/docs/`)
-Reference materials for the snip CLI tool:
-- Quick start guides, YAML filter syntax, Maven examples, implementation details
+### **Documentation** (`docs/`)
+Training materials, reference guides, and presentations:
+- **`token-saving-skills/`** — Guides for fd, rg, yq, xq, batch-config-audit, structural-search
+- **`java-investigation/`** — Bytecode investigation guides, Blaze-Persistence case study
+- **`snip/`** — snip CLI reference (YAML filters, Maven examples, implementation)
+- **`snip-skills/`** — Snip skills architecture overview
+- **`prez/`** — HTML slide presentations (French)
+  - `economie-de-tokens.html` — Token economy (Bold Signal theme, 15 slides)
+  - `investigation-java.html` — Java investigation (Terminal Green theme, 14 slides)
 
 ## 🎯 Core Principles
 
 ### 1. **Reusability Above All**
-Every skill, instruction, and hook must be:
+Every skill and instruction must be:
 - **Portable** — Can be dropped into other projects without modification
 - **Well-documented** — Includes SKILL.md, README.md, and practical examples
 - **Self-contained** — Includes all necessary templates, styles, and scripts
@@ -76,35 +88,36 @@ Especially for frontend skills (slides, aesthetics, design):
 ```
 copilot-primitives/
 ├── .github/
+│   ├── copilot-instructions.md
 │   ├── instructions/
+│   │   ├── follow-up-question.instructions.md
 │   │   └── hexagonal-architecture.instructions.md
-│   ├── skills/
-│   │   ├── setup-snip-hooks/
-│   │   │   ├── SKILL.md
-│   │   │   ├── README.md
-│   │   │   ├── profiles/        (Maven filter YAML files)
-│   │   │   ├── filters/         (snip filter definitions)
-│   │   │   └── templates/       (bash/PowerShell setup scripts)
-│   │   ├── hexagonal-architecture-audit/
-│   │   │   ├── SKILL.md
-│   │   │   ├── references/      (evaluation criteria docs)
-│   │   │   └── templates/       (report templates)
-│   │   └── frontend-slides/
-│   │       ├── SKILL.md
-│   │       ├── STYLE_PRESETS.md
-│   │       ├── animation-patterns.md
-│   │       ├── viewport-base.css
-│   │       ├── html-template.md
-│   │       └── LICENSE
-│   └── hooks/
-│       ├── hooks.json
-│       └── snip-rewrite.sh
-├── snip/
-│   ├── README.md               (snip CLI quick-start + links)
-│   └── docs/                   (reference documentation)
-├── README.md                    (project overview + usage)
-├── LICENSE                      (MIT)
-└── .git/
+│   └── skills/
+│       ├── fd/                          (file finder)
+│       ├── rg/                          (ripgrep)
+│       ├── yq/                          (YAML/TOML extractor)
+│       ├── xq/                          (XML extractor)
+│       ├── jq/                          (JSON extractor)
+│       ├── batch-config-audit/          (fd + yq/jq/xq synergy)
+│       ├── structural-search/           (fd + rg synergy)
+│       ├── java-investigation/          (bytecode pipeline)
+│       ├── javap/                       (JDK bytecode tools)
+│       ├── snip-core/                   (snip install/setup)
+│       ├── snip-filters-setup/          (shared filter installer)
+│       ├── snip-jvm/                    (Maven/mvnd filters)
+│       ├── snip-dotnet/                 (dotnet filters)
+│       ├── snip-npm/                    (npm filters)
+│       ├── setup-snip-hooks/            (project hook scaffolding)
+│       ├── frontend-slides/             (HTML presentations)
+│       └── hexagonal-architecture-audit/
+├── docs/
+│   ├── token-saving-skills/             (fd, rg, yq, xq guides)
+│   ├── java-investigation/              (bytecode guides)
+│   ├── snip/                            (snip reference docs)
+│   ├── snip-skills/                     (skills architecture)
+│   └── prez/                            (HTML slide decks)
+├── README.md
+└── LICENSE                              (MIT)
 ```
 
 ## 🚀 How to Work Here
@@ -137,15 +150,15 @@ copilot-primitives/
 4. Provide code examples showing compliance and violations
 5. Include layer diagrams or flowcharts if helpful
 
-### **Working with Hooks**
-Hooks live in `.github/hooks/` and are referenced by VS Code extensions:
-- **`snip-rewrite.sh`** — Executed via `preToolUse` event to rewrite CLI commands
-- **`hooks.json`** — Configures when and how hooks fire (hardcoded cwd required)
+### **Working with Documentation**
+Documentation lives in `docs/` and is organized by topic:
+- **`token-saving-skills/`** — One README + one guide per tool (fd, rg, yq, xq) + synergies
+- **`java-investigation/`** — README + javap reference + investigation pipeline guide
+- **`snip/`** — Complete snip CLI reference (YAML filters, Maven examples)
+- **`snip-skills/`** — Architecture overview of the layered snip skills
+- **`prez/`** — Self-contained single-file HTML presentations (viewport-responsive, no dependencies)
 
-When modifying hooks, ensure they are:
-- Platform-aware (bash for Unix/Mac, PowerShell for Windows)
-- Idempotent (can run multiple times safely)
-- Non-blocking (don't hang the agent)
+When updating docs, keep them aligned with the matching skill's SKILL.md.
 
 ## 💡 Key Concepts
 
@@ -153,8 +166,8 @@ When modifying hooks, ensure they are:
 Controls when instructions are loaded:
 - `**/*.java` — All Java files
 - `src/api/**/*.ts` — TypeScript in API folder
-- `.github/hooks/**` — All hooks (explicit loading)
-- Avoid `**/*` unless the instruction truly applies everywhere (burns context)
+- `**` — Universal (use sparingly, burns context)
+- Avoid `**/*` unless the instruction truly applies everywhere
 
 ### **Skill Discovery**
 Agents find skills by matching keywords in the `description` field:
@@ -187,7 +200,7 @@ For Java files, the hexagonal architecture instruction enforces:
 
 ### **Avoiding Bloat**
 - One skill per focused domain (don't merge unrelated features)
-- Move large reference docs to `/snip/docs/` or subdirectories
+- Move large reference docs to `docs/` or subdirectories
 - Keep SKILL.md under 100 lines when possible (detail in references/)
 - Link to external sources instead of embedding entire docs
 

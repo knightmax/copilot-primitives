@@ -26,7 +26,7 @@ snip dotnet test
 snip dotnet publish -c Release
 snip dotnet test --filter "FullyQualifiedName~MyTest"
 
-# ❌ FAUX — no snip
+# ❌ WRONG - no snip
 dotnet build
 dotnet test
 ```
@@ -61,13 +61,14 @@ Applies to ALL dotnet verbs: `build`, `test`, `run`, `publish`, `restore`, `clea
 Get-Command snip -ErrorAction SilentlyContinue; Test-Path "$env:APPDATA\snip\filters\dotnet-build.yaml"
 ```
 
-If snip is missing → load `snip-core` skill and follow its install instructions.
+If snip is missing: load `snip-core` skill and follow its install instructions.
 
-If filters are missing → run the setup script:
+If filters are missing: load and use `snip-filters-setup` skill with this profile:
 
-```powershell
-& '.\.github\skills\snip-dotnet\setup-filters.ps1'
-```
+- `source-dir`: `.github/skills/snip-dotnet/filters`
+- `tool-label`: `.NET`
+
+The shared skill contains the canonical PowerShell/bash commands.
 
 ## Filters
 

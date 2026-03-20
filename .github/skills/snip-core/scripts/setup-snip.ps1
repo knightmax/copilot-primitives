@@ -2,10 +2,10 @@
 # setup-snip.ps1 — snip-core
 # ===========================
 # Checks snip installation and creates the global filters directory.
-# Does NOT install any tool-specific filters — each snip-* skill does that.
+# Does NOT install any tool-specific filters - each snip-* skill does that.
 #
 # Usage:
-#   & '.\.github\skills\snip-core\setup-snip.ps1'
+#   & '.\.github\skills\snip-core\scripts\setup-snip.ps1'
 #
 
 $ErrorActionPreference = "Stop"

@@ -3,7 +3,7 @@ version: 4
 description: "Maven Surefire test — keeps test results, errors, and build status"
 
 match:
-  command: "mvn|mvnd"
+  command: "mvn"
   subcommand: "test"
 
 pipeline:

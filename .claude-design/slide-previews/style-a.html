@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style A — Terminal Green</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; overflow: hidden; }
+
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --text-primary: #c9d1d9;
+            --text-dim: #484f58;
+            --accent: #39d353;
+            --accent-glow: rgba(57, 211, 83, 0.25);
+            --accent-bright: #56d364;
+            --border: #30363d;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        .slide {
+            width: 100vw; height: 100vh; height: 100dvh;
+            overflow: hidden;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            background: var(--bg-primary);
+            font-family: var(--font-mono);
+            color: var(--text-primary);
+            position: relative;
+        }
+
+        /* Scan lines */
+        .slide::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.08) 2px,
+                rgba(0, 0, 0, 0.08) 4px
+            );
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Grid background */
+        .slide::after {
+            content: '';
+            position: absolute; inset: 0;
+            background-image:
+                linear-gradient(rgba(57, 211, 83, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(57, 211, 83, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .content { position: relative; z-index: 1; text-align: center; padding: clamp(1rem, 4vw, 4rem); }
+
+        .prompt {
+            font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+            color: var(--accent);
+            margin-bottom: clamp(0.5rem, 2vh, 1.5rem);
+            letter-spacing: 0.05em;
+        }
+        .prompt span { color: var(--text-dim); }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            color: var(--accent);
+            text-shadow: 0 0 40px var(--accent-glow), 0 0 80px rgba(57, 211, 83, 0.1);
+            line-height: 1.1;
+            margin-bottom: clamp(0.5rem, 2vh, 1rem);
+        }
+
+        .subtitle {
+            font-size: clamp(0.8rem, 1.5vw, 1.1rem);
+            color: var(--text-dim);
+            font-weight: 400;
+        }
+        .subtitle .highlight { color: var(--accent-bright); }
+
+        .cursor {
+            display: inline-block;
+            width: 0.6em; height: 1.1em;
+            background: var(--accent);
+            margin-left: 0.2em;
+            vertical-align: text-bottom;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .badge {
+            display: inline-block;
+            margin-top: clamp(1rem, 3vh, 2rem);
+            padding: 0.4em 1.2em;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: clamp(0.6rem, 1vw, 0.8rem);
+            color: var(--text-dim);
+            background: var(--bg-secondary);
+        }
+        .badge .green { color: var(--accent); }
+    </style>
+</head>
+<body>
+    <section class="slide">
+        <div class="content">
+            <div class="prompt">~/copilot-primitives <span>$</span> présenter --style=terminal</div>
+            <h1>Économie de Tokens<span class="cursor"></span></h1>
+            <p class="subtitle">Réduire de <span class="highlight">95-99%</span> la consommation de contexte</p>
+            <div class="badge"><span class="green">●</span> fd · rg · yq · xq · snip</div>
+        </div>
+    </section>
+</body>
+</html>

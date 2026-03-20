@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Économie de Tokens pour Agents IA</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
+    <style>
+        /* =========================================== */
+        /* RESET & CUSTOM PROPERTIES                   */
+        /* =========================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-gradient: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            --bg-card: #232323;
+            --card-accent: #FF5722;
+            --card-accent-dark: #E64A19;
+            --card-accent-glow: rgba(255, 87, 34, 0.25);
+            --green: #4CAF50;
+            --green-glow: rgba(76, 175, 80, 0.2);
+            --blue: #42A5F5;
+            --blue-glow: rgba(66, 165, 245, 0.15);
+            --cyan: #26C6DA;
+            --purple: #AB47BC;
+            --yellow: #FFC107;
+            --text-primary: #ffffff;
+            --text-secondary: #9e9e9e;
+            --text-dim: #666666;
+            --text-on-card: #1a1a1a;
+            --border: #333333;
+            --font-display: 'Archivo Black', sans-serif;
+            --font-body: 'Space Grotesk', sans-serif;
+            --title-size: clamp(2rem, 5vw, 4rem);
+            --h2-size: clamp(1.4rem, 3.5vw, 2.5rem);
+            --h3-size: clamp(1rem, 2vw, 1.5rem);
+            --body-size: clamp(0.75rem, 1.3vw, 1.05rem);
+            --small-size: clamp(0.6rem, 0.9vw, 0.8rem);
+            --code-size: clamp(0.65rem, 1vw, 0.85rem);
+            --slide-padding: clamp(1.5rem, 4vw, 4rem);
+            --content-gap: clamp(0.5rem, 2vw, 2rem);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* =========================================== */
+        /* VIEWPORT BASE                               */
+        /* =========================================== */
+        html, body { height: 100%; overflow-x: hidden; }
+        html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+
+        .slide {
+            width: 100vw; height: 100vh; height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex; flex-direction: column;
+            position: relative;
+            background: var(--bg-gradient);
+            font-family: var(--font-body);
+            color: var(--text-primary);
+        }
+
+        .slide-content {
+            flex: 1; display: flex; flex-direction: column;
+            justify-content: center;
+            max-height: 100%; overflow: hidden;
+            padding: var(--slide-padding);
+        }
+
+        /* =========================================== */
+        /* SECTION NUMBERS                             */
+        /* =========================================== */
+        .section-num {
+            font-family: var(--font-display);
+            font-size: clamp(4rem, 10vw, 10rem);
+            color: rgba(255, 255, 255, 0.03);
+            position: absolute;
+            top: clamp(0.5rem, 2vw, 2rem);
+            left: clamp(1.5rem, 4vw, 4rem);
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        /* =========================================== */
+        /* NAVIGATION                                  */
+        /* =========================================== */
+        .nav-bar {
+            position: absolute;
+            top: clamp(1.5rem, 3vw, 2.5rem);
+            right: clamp(1.5rem, 3vw, 3rem);
+            display: flex; gap: clamp(0.3rem, 0.5vw, 0.5rem);
+            font-size: var(--small-size);
+            color: var(--text-dim);
+            z-index: 5;
+        }
+        .nav-bar span { transition: color 0.3s; }
+        .nav-bar .active { color: var(--text-primary); font-weight: 700; }
+
+        /* =========================================== */
+        /* TYPOGRAPHY                                  */
+        /* =========================================== */
+        h1 {
+            font-family: var(--font-display);
+            font-size: var(--title-size);
+            line-height: 1.1;
+        }
+        h2 {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            line-height: 1.15;
+            margin-bottom: clamp(0.5rem, 1.5vh, 1.5rem);
+        }
+        h3 {
+            font-family: var(--font-display);
+            font-size: var(--h3-size);
+            line-height: 1.2;
+            margin-bottom: clamp(0.3rem, 1vh, 0.75rem);
+        }
+        p, li {
+            font-size: var(--body-size);
+            line-height: 1.5;
+            color: var(--text-secondary);
+        }
+
+        /* =========================================== */
+        /* CARDS                                       */
+        /* =========================================== */
+        .accent-card {
+            background: var(--card-accent);
+            border-radius: 16px;
+            padding: clamp(1.2rem, 2.5vw, 2.5rem);
+            color: var(--text-on-card);
+            box-shadow: 0 20px 60px var(--card-accent-glow);
+        }
+        .dark-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: clamp(1rem, 2vw, 2rem);
+        }
+
+        /* =========================================== */
+        /* CODE BLOCKS                                 */
+        /* =========================================== */
+        code, .code {
+            font-family: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', monospace;
+            font-size: var(--code-size);
+        }
+        .code-block {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: clamp(0.6rem, 1.5vw, 1.2rem);
+            overflow: hidden;
+            line-height: 1.6;
+        }
+        .code-block .prompt { color: #8b949e; }
+        .code-block .cmd { color: #c9d1d9; }
+        .code-block .flag { color: #79c0ff; }
+        .code-block .string { color: #a5d6ff; }
+        .code-block .comment { color: #8b949e; font-style: italic; }
+        .code-block .result { color: #39d353; }
+        .code-block .number { color: #FF5722; font-weight: 700; }
+
+        /* =========================================== */
+        /* TAGS / CHIPS                                */
+        /* =========================================== */
+        .tag {
+            display: inline-block;
+            padding: 0.25em 0.8em;
+            border-radius: 6px;
+            font-size: var(--small-size);
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+        .tag-orange { background: var(--card-accent); color: var(--text-on-card); }
+        .tag-green { background: var(--green); color: #fff; }
+        .tag-blue { background: var(--blue); color: #fff; }
+        .tag-dim { background: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border); }
+
+        /* =========================================== */
+        /* STAT DISPLAY                                */
+        /* =========================================== */
+        .stat-big {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1;
+        }
+        .stat-medium {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            line-height: 1;
+        }
+
+        /* =========================================== */
+        /* GRIDS                                       */
+        /* =========================================== */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(0.8rem, 2vw, 2rem);
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(0.6rem, 1.5vw, 1.5rem);
+        }
+        .split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            height: 100%;
+        }
+        .split > div {
+            display: flex; flex-direction: column;
+            justify-content: center;
+            padding: var(--slide-padding);
+        }
+
+        /* =========================================== */
+        /* TABLES                                      */
+        /* =========================================== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: var(--body-size);
+        }
+        th, td {
+            padding: clamp(0.3rem, 0.8vh, 0.6rem) clamp(0.5rem, 1vw, 1rem);
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: var(--small-size);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        td { color: var(--text-secondary); }
+
+        /* =========================================== */
+        /* COMPARISON BAR                              */
+        /* =========================================== */
+        .bar-container { margin: clamp(0.3rem, 0.8vh, 0.5rem) 0; }
+        .bar-label {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            margin-bottom: 0.2rem;
+            display: flex; justify-content: space-between;
+        }
+        .bar-track {
+            height: clamp(6px, 1vh, 10px);
+            background: var(--bg-card);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+        .bar-fill {
+            height: 100%;
+            border-radius: 100px;
+            transition: width 1.2s var(--ease-out-expo);
+        }
+        .bar-fill.orange { background: var(--card-accent); }
+        .bar-fill.green { background: var(--green); }
+
+        /* =========================================== */
+        /* DECISION TREE                               */
+        /* =========================================== */
+        .tree { list-style: none; }
+        .tree li {
+            padding: clamp(0.25rem, 0.5vh, 0.4rem) 0;
+            padding-left: clamp(1rem, 2vw, 1.5rem);
+            border-left: 2px solid var(--border);
+            position: relative;
+        }
+        .tree li::before {
+            content: '→';
+            position: absolute;
+            left: clamp(0.2rem, 0.5vw, 0.4rem);
+            color: var(--card-accent);
+            font-weight: 700;
+        }
+        .tree .tool { color: var(--card-accent); font-weight: 700; }
+
+        /* =========================================== */
+        /* ANIMATIONS                                  */
+        /* =========================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+        }
+        .slide.visible .reveal { opacity: 1; transform: translateY(0); }
+        .reveal-d1 { transition-delay: 0.1s; }
+        .reveal-d2 { transition-delay: 0.2s; }
+        .reveal-d3 { transition-delay: 0.3s; }
+        .reveal-d4 { transition-delay: 0.4s; }
+        .reveal-d5 { transition-delay: 0.5s; }
+
+        /* =========================================== */
+        /* PROGRESS BAR                                */
+        /* =========================================== */
+        .progress-bar {
+            position: fixed; top: 0; left: 0;
+            height: 3px;
+            background: var(--card-accent);
+            z-index: 100;
+            transition: width 0.3s ease;
+        }
+
+        /* =========================================== */
+        /* RESPONSIVE                                  */
+        /* =========================================== */
+        @media (max-height: 700px) {
+            :root {
+                --slide-padding: clamp(0.75rem, 3vw, 2rem);
+                --content-gap: clamp(0.4rem, 1.5vw, 1rem);
+                --title-size: clamp(1.5rem, 4.5vw, 2.5rem);
+                --h2-size: clamp(1.1rem, 3vw, 1.75rem);
+            }
+        }
+        @media (max-height: 600px) {
+            :root {
+                --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
+                --title-size: clamp(1.1rem, 4vw, 2rem);
+                --body-size: clamp(0.7rem, 1.2vw, 0.95rem);
+            }
+            .nav-bar, .decorative { display: none; }
+        }
+        @media (max-width: 768px) {
+            .split { grid-template-columns: 1fr; }
+            .grid-3 { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 600px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.2s !important;
+            }
+            html { scroll-behavior: auto; }
+        }
+
+        /* =========================================== */
+        /* UTILITY                                     */
+        /* =========================================== */
+        .mt-1 { margin-top: clamp(0.3rem, 1vh, 0.75rem); }
+        .mt-2 { margin-top: clamp(0.5rem, 1.5vh, 1.25rem); }
+        .mt-3 { margin-top: clamp(0.8rem, 2vh, 2rem); }
+        .gap-1 { gap: clamp(0.3rem, 0.8vh, 0.5rem); }
+        .gap-2 { gap: clamp(0.5rem, 1.5vh, 1rem); }
+        .flex-col { display: flex; flex-direction: column; }
+        .flex-row { display: flex; align-items: center; }
+        .text-accent { color: var(--card-accent); }
+        .text-green { color: var(--green); }
+        .text-blue { color: var(--blue); }
+        .text-white { color: var(--text-primary); }
+        .fw-700 { font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- ==================== SLIDE 1: TITLE ==================== -->
+    <section class="slide" data-nav="Intro">
+        <span class="section-num">01</span>
+        <div class="nav-bar">
+            <span class="active">Intro</span><span>·</span>
+            <span>Outils</span><span>·</span>
+            <span>Synergies</span><span>·</span>
+            <span>Snip</span><span>·</span>
+            <span>Recap</span>
+        </div>
+        <div class="split">
+            <div>
+                <h1 class="reveal" style="margin-bottom: clamp(0.5rem, 1.5vh, 1rem);">Économie<br>de Tokens</h1>
+                <p class="reveal reveal-d1" style="max-width: 420px;">Réduire la consommation de contexte de vos agents IA avec des outils CLI chirurgicaux</p>
+                <div class="reveal reveal-d2 mt-2" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <span class="tag tag-orange">fd</span>
+                    <span class="tag tag-orange">rg</span>
+                    <span class="tag tag-orange">yq</span>
+                    <span class="tag tag-orange">xq</span>
+                    <span class="tag tag-dim">snip</span>
+                </div>
+            </div>
+            <div style="align-items: center;">
+                <div class="accent-card reveal reveal-d2" style="max-width: 380px; width: 100%;">
+                    <div style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.2em; opacity: 0.6;">Réduction mesurée</div>
+                    <div class="stat-big" style="margin: clamp(0.3rem, 1vh, 0.5rem) 0;">-98%</div>
+                    <div style="font-size: var(--body-size); opacity: 0.7; font-weight: 500;">251k → 5k tokens sur 749 fichiers</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 2: LE PROBLÈME ==================== -->
+    <section class="slide" data-nav="Intro">
+        <span class="section-num">02</span>
+        <div class="slide-content">
+            <h2 class="reveal">Le Problème</h2>
+            <p class="reveal reveal-d1" style="max-width: 650px; margin-bottom: clamp(0.8rem, 2vh, 1.5rem);">La fenêtre de contexte d'un LLM est une <span class="text-accent fw-700">ressource finie</span>. Chaque token inutile :</p>
+            <div class="grid-2 reveal reveal-d2" style="max-width: 900px;">
+                <div class="dark-card flex-col gap-1">
+                    <h3 style="font-size: var(--body-size);">📉 Réduit la fenêtre</h3>
+                    <p style="font-size: var(--small-size);">Moins de place pour le raisonnement et le code pertinent</p>
+                </div>
+                <div class="dark-card flex-col gap-1">
+                    <h3 style="font-size: var(--body-size);">🔇 Dilue le signal</h3>
+                    <p style="font-size: var(--small-size);">L'info critique est noyée dans le bruit</p>
+                </div>
+                <div class="dark-card flex-col gap-1">
+                    <h3 style="font-size: var(--body-size);">🐢 Ralentit les itérations</h3>
+                    <p style="font-size: var(--small-size);">Plus de données à analyser = réponses plus lentes</p>
+                </div>
+                <div class="dark-card flex-col gap-1">
+                    <h3 style="font-size: var(--body-size);">💸 Augmente le coût</h3>
+                    <p style="font-size: var(--small-size);">Les tokens en entrée sont facturés par les providers</p>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2">
+                <p style="font-size: var(--small-size);">Exemple : lire 749 fichiers YAML = <span class="text-accent fw-700">~251 000 tokens</span> pour extraire juste un champ par fichier</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 3: L'APPROCHE ==================== -->
+    <section class="slide" data-nav="Intro">
+        <span class="section-num">03</span>
+        <div class="slide-content">
+            <h2 class="reveal">L'Approche : Extraction Chirurgicale</h2>
+            <p class="reveal reveal-d1 mt-1" style="max-width: 600px;">Au lieu de lire des fichiers entiers, <span class="text-accent fw-700">extraire uniquement les champs nécessaires</span> en ligne de commande.</p>
+            <div class="grid-2 mt-2 reveal reveal-d2" style="max-width: 900px;">
+                <div class="dark-card">
+                    <div style="font-size: var(--small-size); color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">❌ Sans optimisation</div>
+                    <div class="code-block">
+                        <div><span class="comment"># Lire le fichier complet</span></div>
+                        <div><span class="cmd">read_file</span> <span class="string">pom.xml</span></div>
+                        <div><span class="comment"># → ~3 000 tokens par fichier</span></div>
+                        <div><span class="comment"># × 42 modules = 126 000 tokens</span></div>
+                    </div>
+                </div>
+                <div class="dark-card">
+                    <div style="font-size: var(--small-size); color: var(--green); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">✅ Extraction chirurgicale</div>
+                    <div class="code-block">
+                        <div><span class="prompt">$</span> <span class="cmd">fd</span> <span class="flag">-g</span> <span class="string">"pom.xml"</span> <span class="cmd">.</span> <span class="flag">-x</span> \</div>
+                        <div>&nbsp;&nbsp;<span class="cmd">yq</span> <span class="flag">-p xml -oy</span> <span class="string">'.project.version'</span> {}</div>
+                        <div><span class="comment"># → ~500 tokens total</span></div>
+                        <div><span class="result"># Réduction : -99.6%</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2" style="display: flex; align-items: center; gap: clamp(0.5rem, 1vw, 1rem);">
+                <span class="tag tag-green">3 propriétés clés</span>
+                <span style="font-size: var(--small-size); color: var(--text-dim);">Chemins relatifs · Respect du .gitignore · Sortie compacte</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 4: LES OUTILS — VUE D'ENSEMBLE ==================== -->
+    <section class="slide" data-nav="Outils">
+        <span class="section-num">04</span>
+        <div class="slide-content">
+            <h2 class="reveal">4 Outils + 2 Synergies</h2>
+            <div class="reveal reveal-d1 mt-1">
+                <table>
+                    <thead>
+                        <tr><th>Outil</th><th>Rôle</th><th>Économie typique</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class="text-accent fw-700">fd</span></td><td>Trouver des fichiers par nom, extension, chemin</td><td><span class="tag tag-orange">40-60%</span></td></tr>
+                        <tr><td><span class="text-accent fw-700">rg</span></td><td>Chercher du texte dans les fichiers</td><td><span class="tag tag-orange">30-98%</span></td></tr>
+                        <tr><td><span class="text-accent fw-700">yq</span></td><td>Extraire des champs YAML / TOML</td><td><span class="tag tag-orange">90-98%</span></td></tr>
+                        <tr><td><span class="text-accent fw-700">xq</span></td><td>Extraire des champs XML (pom.xml, .csproj…)</td><td><span class="tag tag-orange">90-99%</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="reveal reveal-d2 mt-2">
+                <table>
+                    <thead>
+                        <tr><th>Synergie</th><th>Combinaison</th><th>Économie typique</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class="text-accent fw-700">batch-config-audit</span></td><td>fd + yq/jq/xq — extraction batch</td><td><span class="tag tag-green">95-99%</span></td></tr>
+                        <tr><td><span class="text-accent fw-700">structural-search</span></td><td>fd + rg — recherche bi-dimensionnelle</td><td><span class="tag tag-green">94-99%</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 5: fd ==================== -->
+    <section class="slide" data-nav="Outils">
+        <span class="section-num">05</span>
+        <div class="split">
+            <div>
+                <div class="reveal">
+                    <span class="tag tag-orange">Outil de base</span>
+                    <h2 class="mt-1">fd</h2>
+                    <p>Trouver des fichiers par nom, extension ou chemin. Chemins relatifs, filtre .gitignore automatique.</p>
+                </div>
+                <div class="reveal reveal-d1 mt-2">
+                    <div class="bar-container">
+                        <div class="bar-label"><span>find / Get-ChildItem</span><span class="text-dim">~65k tokens</span></div>
+                        <div class="bar-track"><div class="bar-fill orange" style="width: 100%;"></div></div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label"><span>fd</span><span class="text-green">~18k tokens</span></div>
+                        <div class="bar-track"><div class="bar-fill green" style="width: 28%;"></div></div>
+                    </div>
+                    <p class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">749 fichiers YAML — économie : <span class="text-green fw-700">-72%</span></p>
+                </div>
+            </div>
+            <div>
+                <div class="reveal reveal-d2 code-block" style="max-width: 480px;">
+                    <div><span class="comment"># Trouver tous les pom.xml</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">fd</span> <span class="flag">-g</span> <span class="string">"pom.xml"</span> <span class="cmd">.</span></div>
+                    <div class="result" style="margin: 0.2rem 0;">api/pom.xml</div>
+                    <div class="result">core/pom.xml</div>
+                    <div class="result">web/pom.xml</div>
+                    <div style="margin-top: 0.8rem;"><span class="comment"># Par extension + profondeur</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">fd</span> <span class="flag">-e</span> <span class="string">yaml</span> <span class="cmd">.</span> <span class="string">catalog/</span> <span class="flag">--max-depth</span> <span class="string">2</span></div>
+                    <div style="margin-top: 0.8rem;"><span class="comment"># Compter les résultats</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">fd</span> <span class="flag">-e</span> <span class="string">yaml</span> <span class="cmd">.</span> <span class="string">catalog/systems</span> <span class="cmd">|</span> <span class="cmd">wc</span> <span class="flag">-l</span></div>
+                    <div class="result">749</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 6: rg ==================== -->
+    <section class="slide" data-nav="Outils">
+        <span class="section-num">06</span>
+        <div class="split">
+            <div>
+                <div class="reveal">
+                    <span class="tag tag-orange">Outil de base</span>
+                    <h2 class="mt-1">rg <span style="font-family: var(--font-body); font-weight: 400; font-size: var(--h3-size); color: var(--text-dim);">(ripgrep)</span></h2>
+                    <p>Chercher du texte ou des patterns regex dans les fichiers. Ne retourne que les lignes pertinentes.</p>
+                </div>
+                <div class="reveal reveal-d1 mt-2">
+                    <div class="bar-container">
+                        <div class="bar-label"><span>read_file complet (2.6 Mo)</span><span class="text-dim">~692k tokens</span></div>
+                        <div class="bar-track"><div class="bar-fill orange" style="width: 100%;"></div></div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label"><span>rg "pattern" (415 matchs)</span><span class="text-green">~6k tokens</span></div>
+                        <div class="bar-track"><div class="bar-fill green" style="width: 1%;"></div></div>
+                    </div>
+                    <p class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">Fichier JSON 2.6 Mo — économie : <span class="text-green fw-700">-98%</span></p>
+                </div>
+            </div>
+            <div>
+                <div class="reveal reveal-d2 code-block" style="max-width: 480px;">
+                    <div><span class="comment"># Chercher une dépendance</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">rg</span> <span class="string">"spring-boot"</span> <span class="cmd">src/</span> <span class="flag">-l</span></div>
+                    <div class="result">src/main/java/AppConfig.java</div>
+                    <div class="result">src/test/java/IntTest.java</div>
+                    <div style="margin-top: 0.8rem;"><span class="comment"># Compter les occurrences</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">rg</span> <span class="flag">-c</span> <span class="string">"agreement_id"</span> <span class="cmd">event.json</span></div>
+                    <div class="result">event.json:415</div>
+                    <div style="margin-top: 0.8rem;"><span class="comment"># Extraire les patterns</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">rg</span> <span class="string">"^FROM"</span> <span class="cmd">Dockerfile</span> <span class="flag">-o</span></div>
+                    <div class="result">FROM eclipse-temurin:21-jre</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 7: yq ==================== -->
+    <section class="slide" data-nav="Outils">
+        <span class="section-num">07</span>
+        <div class="split">
+            <div>
+                <div class="reveal">
+                    <span class="tag tag-orange">Outil de base</span>
+                    <h2 class="mt-1">yq</h2>
+                    <p>Extraction YAML / TOML / JSON. Syntaxe jq, un seul outil pour tous les formats structurés.</p>
+                </div>
+                <div class="reveal reveal-d1 mt-2 dark-card" style="max-width: 400px;">
+                    <div style="font-size: var(--small-size); color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">Économie par fichier</div>
+                    <div style="display: flex; align-items: baseline; gap: 0.5rem;">
+                        <span class="stat-medium text-accent">5</span>
+                        <span style="font-size: var(--body-size); color: var(--text-secondary);">tokens au lieu de 335</span>
+                    </div>
+                    <p style="font-size: var(--small-size); color: var(--text-dim); margin-top: 0.3rem;">Par fichier YAML de catalogue</p>
+                </div>
+            </div>
+            <div>
+                <div class="reveal reveal-d2 code-block" style="max-width: 480px;">
+                    <div><span class="comment"># Extraire un champ YAML</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">yq</span> <span class="string">'.metadata.name'</span> <span class="cmd">entity.yaml</span></div>
+                    <div class="result">sa-1242-osmose</div>
+                    <div style="margin-top: 0.8rem;"><span class="comment"># Lister des clés</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">yq</span> <span class="string">'.services | keys'</span> <span class="cmd">docker-compose.yml</span></div>
+                    <div class="result">- api</div>
+                    <div class="result">- postgres</div>
+                    <div class="result">- redis</div>
+                    <div style="margin-top: 0.8rem;"><span class="comment"># Conversion YAML → JSON</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">yq</span> <span class="flag">-o json</span> <span class="cmd">docker-compose.yml</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 8: xq ==================== -->
+    <section class="slide" data-nav="Outils">
+        <span class="section-num">08</span>
+        <div class="split">
+            <div>
+                <div class="reveal">
+                    <span class="tag tag-orange">Outil de base</span>
+                    <h2 class="mt-1">xq <span style="font-family: var(--font-body); font-weight: 400; font-size: var(--h3-size); color: var(--text-dim);">(yq -p xml)</span></h2>
+                    <p>Extraction XML chirurgicale. Même syntaxe jq, pas d'installation supplémentaire. Idéal pour les <code class="text-accent">pom.xml</code>.</p>
+                </div>
+                <div class="reveal reveal-d1 mt-2">
+                    <div class="bar-container">
+                        <div class="bar-label"><span>pom.xml complet (50+ deps)</span><span class="text-dim">~3 000 tokens</span></div>
+                        <div class="bar-track"><div class="bar-fill orange" style="width: 100%;"></div></div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label"><span>xq '.project.version'</span><span class="text-green">~10 tokens</span></div>
+                        <div class="bar-track"><div class="bar-fill green" style="width: 0.3%;"></div></div>
+                    </div>
+                    <p class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">Économie : <span class="text-green fw-700">-99.7%</span></p>
+                </div>
+            </div>
+            <div>
+                <div class="reveal reveal-d2 code-block" style="max-width: 480px;">
+                    <div><span class="comment"># Version du projet</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">yq</span> <span class="flag">-p xml -oy</span> <span class="string">'.project.version'</span> <span class="cmd">pom.xml</span></div>
+                    <div class="result">3.2.1</div>
+                    <div style="margin-top: 0.8rem;"><span class="comment"># Lister les dépendances</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">yq</span> <span class="flag">-p xml -oy</span> \</div>
+                    <div>&nbsp;&nbsp;<span class="string">'.project.dependencies.dependency[].artifactId'</span> <span class="cmd">pom.xml</span></div>
+                    <div class="result">spring-boot-starter-web</div>
+                    <div class="result">postgresql</div>
+                    <div class="result">lombok</div>
+                    <div style="margin-top: 0.8rem;"><span class="comment"># Filtrer les deps de test</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">yq</span> <span class="flag">-p xml -oy</span> \</div>
+                    <div>&nbsp;&nbsp;<span class="string">'.project.dependencies.dependency[]</span></div>
+                    <div>&nbsp;&nbsp;<span class="string">| select(.scope == "test") | .artifactId'</span> <span class="cmd">pom.xml</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 9: BATCH-CONFIG-AUDIT ==================== -->
+    <section class="slide" data-nav="Synergies">
+        <span class="section-num">09</span>
+        <div class="slide-content">
+            <div class="reveal">
+                <span class="tag tag-green">Synergie</span>
+                <h2 class="mt-1">batch-config-audit</h2>
+                <p>fd + yq/jq/xq — extraire le <span class="text-accent fw-700">même champ</span> de N fichiers en une seule commande.</p>
+            </div>
+            <div class="grid-2 mt-2 reveal reveal-d1" style="max-width: 900px;">
+                <div class="dark-card">
+                    <div style="font-size: var(--small-size); color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em;">Le concept</div>
+                    <div class="mt-1" style="font-size: var(--body-size);">
+                        <div style="margin-bottom: 0.3rem;"><span class="text-dim">Sans :</span> <code>O(n × taille_fichier)</code></div>
+                        <div><span class="text-green">Avec :</span> <code>O(n × taille_champ)</code></div>
+                    </div>
+                </div>
+                <div class="accent-card">
+                    <div style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6;">Cas réel Maven</div>
+                    <div class="stat-medium" style="margin: 0.2rem 0;">-99%</div>
+                    <div style="font-size: var(--small-size); opacity: 0.7;">42 pom.xml → versions en 1 commande</div>
+                </div>
+            </div>
+            <div class="reveal reveal-d2 mt-2 code-block" style="max-width: 900px;">
+                <div><span class="comment"># ArtifactId + version de chaque module Maven</span></div>
+                <div><span class="prompt">$</span> <span class="cmd">fd</span> <span class="flag">-g</span> <span class="string">"pom.xml"</span> <span class="cmd">.</span> <span class="flag">-x</span> <span class="cmd">sh</span> <span class="flag">-c</span> <span class="string">'</span></div>
+                <div>&nbsp;&nbsp;<span class="string">aid=$(yq -p xml -oy ".project.artifactId" "$1")</span></div>
+                <div>&nbsp;&nbsp;<span class="string">ver=$(yq -p xml -oy ".project.version" "$1")</span></div>
+                <div>&nbsp;&nbsp;<span class="string">echo "$aid ($ver)"</span></div>
+                <div><span class="string">'</span> _ {}</div>
+                <div style="margin-top: 0.3rem;"><span class="result">osmose-api (3.2.1)</span></div>
+                <div><span class="result">osmose-core (3.2.1)</span></div>
+                <div><span class="result">osmose-web (3.2.0)</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 10: STRUCTURAL-SEARCH ==================== -->
+    <section class="slide" data-nav="Synergies">
+        <span class="section-num">10</span>
+        <div class="slide-content">
+            <div class="reveal">
+                <span class="tag tag-green">Synergie</span>
+                <h2 class="mt-1">structural-search</h2>
+                <p>fd + rg — recherche <span class="text-accent fw-700">bi-dimensionnelle</span> : par structure ET par contenu.</p>
+            </div>
+            <div class="grid-3 mt-2 reveal reveal-d1" style="max-width: 900px;">
+                <div class="dark-card">
+                    <div style="font-size: var(--small-size); color: var(--card-accent); font-weight: 600;">Pattern 1 : fd → rg</div>
+                    <p style="font-size: var(--small-size); margin-top: 0.3rem;">Trouver les fichiers, chercher dedans</p>
+                </div>
+                <div class="dark-card">
+                    <div style="font-size: var(--small-size); color: var(--card-accent); font-weight: 600;">Pattern 2 : rg → fd</div>
+                    <p style="font-size: var(--small-size); margin-top: 0.3rem;">Chercher du contenu, explorer la structure</p>
+                </div>
+                <div class="dark-card">
+                    <div style="font-size: var(--small-size); color: var(--card-accent); font-weight: 600;">Pattern 3 : parallèle</div>
+                    <p style="font-size: var(--small-size); margin-top: 0.3rem;">Les deux angles en simultané</p>
+                </div>
+            </div>
+            <div class="reveal reveal-d2 mt-2 code-block" style="max-width: 900px;">
+                <div><span class="comment"># Trouver les pom.xml utilisant Spring Boot</span></div>
+                <div><span class="prompt">$</span> <span class="cmd">fd</span> <span class="flag">-g</span> <span class="string">"pom.xml"</span> <span class="cmd">.</span> <span class="flag">-x</span> <span class="cmd">rg</span> <span class="string">"spring-boot-starter-web"</span> {}</div>
+                <div style="margin-top: 0.5rem;"><span class="comment"># Composants sans système mappé</span></div>
+                <div><span class="prompt">$</span> <span class="cmd">fd</span> <span class="flag">-g</span> <span class="string">"az-project.yaml"</span> <span class="cmd">catalog/</span> <span class="flag">-x</span> <span class="cmd">sh</span> <span class="flag">-c</span> <span class="string">'</span></div>
+                <div>&nbsp;&nbsp;<span class="string">rg -q "spec.system" "$1" || echo "UNMAPPED: $1"</span></div>
+                <div><span class="string">'</span> _ {}</div>
+            </div>
+            <div class="reveal reveal-d3 mt-1" style="display: flex; gap: 1rem; font-size: var(--small-size);">
+                <span><span class="text-dim">Naive :</span> <span class="text-accent">~150 000 tokens</span></span>
+                <span><span class="text-dim">fd + rg :</span> <span class="text-green">~1 000 tokens</span></span>
+                <span class="text-green fw-700">= -99%</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 11: SNIP ==================== -->
+    <section class="slide" data-nav="Snip">
+        <span class="section-num">11</span>
+        <div class="split">
+            <div>
+                <div class="reveal">
+                    <span class="tag tag-dim">Couche complémentaire</span>
+                    <h2 class="mt-1">snip</h2>
+                    <p>Filtrer la sortie CLI pour ne garder que <span class="text-accent fw-700">le signal utile</span>. Réduit la sortie de <code>mvn</code>, <code>dotnet</code>, <code>npm</code> de 80-95%.</p>
+                </div>
+                <div class="reveal reveal-d1 mt-2">
+                    <div class="bar-container">
+                        <div class="bar-label"><span>mvn test (brut)</span><span class="text-dim">~8 000 tokens</span></div>
+                        <div class="bar-track"><div class="bar-fill orange" style="width: 100%;"></div></div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label"><span>snip mvn test</span><span class="text-green">~800 tokens</span></div>
+                        <div class="bar-track"><div class="bar-fill green" style="width: 10%;"></div></div>
+                    </div>
+                    <p class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">Garde: erreurs, warnings, résumés. Supprime: téléchargements, progrès, bruit.</p>
+                </div>
+            </div>
+            <div>
+                <div class="reveal reveal-d2 code-block" style="max-width: 480px;">
+                    <div><span class="comment"># Utilisation simple</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">snip</span> <span class="cmd">mvn</span> <span class="string">test</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">snip</span> <span class="cmd">dotnet</span> <span class="string">build</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">snip</span> <span class="cmd">npm</span> <span class="string">test</span></div>
+                    <div style="margin-top: 0.8rem;"><span class="comment"># Comportement bufferisé :</span></div>
+                    <div><span class="comment"># → Rien pendant l'exécution</span></div>
+                    <div><span class="comment"># → Sortie filtrée à la fin</span></div>
+                    <div style="margin-top: 0.8rem;"><span class="comment"># Sortie vide ≠ erreur</span></div>
+                    <div><span class="comment"># → Attendre la fin du process</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 12: SNIP ARCHITECTURE ==================== -->
+    <section class="slide" data-nav="Snip">
+        <span class="section-num">12</span>
+        <div class="slide-content">
+            <h2 class="reveal">Architecture Snip</h2>
+            <p class="reveal reveal-d1">3 couches, zéro duplication. Les skills se chaînent automatiquement.</p>
+            <div class="grid-3 mt-2 reveal reveal-d2" style="max-width: 900px;">
+                <div class="dark-card" style="border-top: 3px solid var(--text-dim);">
+                    <h3 style="font-size: var(--body-size);">snip-core</h3>
+                    <p style="font-size: var(--small-size);">Vérification/installation de snip. Préparation du répertoire de filtres global.</p>
+                    <div class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">= Fondation</div>
+                </div>
+                <div class="dark-card" style="border-top: 3px solid var(--blue);">
+                    <h3 style="font-size: var(--body-size);">snip-filters-setup</h3>
+                    <p style="font-size: var(--small-size);">Installeur partagé de profils YAML. Gère les alias (mvn → mvnd).</p>
+                    <div class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">= Moteur d'installation</div>
+                </div>
+                <div class="dark-card" style="border-top: 3px solid var(--card-accent);">
+                    <h3 style="font-size: var(--body-size);">snip-jvm / dotnet / npm</h3>
+                    <p style="font-size: var(--small-size);">Règles d'usage par famille CLI + filtres YAML spécifiques.</p>
+                    <div class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">= Politique de domaine</div>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2 dark-card" style="max-width: 900px;">
+                <div style="font-size: var(--small-size); color: var(--text-dim);">⚡ Point clé : matching exact des commandes</div>
+                <p style="font-size: var(--small-size); margin-top: 0.3rem;">Un filtre <code class="text-accent">mvn</code> ne matche pas <code class="text-accent">mvnd</code>. L'installeur partagé génère les alias automatiquement.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 13: ARBRE DE DÉCISION ==================== -->
+    <section class="slide" data-nav="Recap">
+        <span class="section-num">13</span>
+        <div class="slide-content">
+            <h2 class="reveal">Quel outil pour quelle situation ?</h2>
+            <div class="reveal reveal-d1 mt-2" style="max-width: 700px;">
+                <ul class="tree">
+                    <li>Fichiers par nom, extension, chemin → <span class="tool">fd</span></li>
+                    <li>Texte à l'intérieur des fichiers → <span class="tool">rg</span></li>
+                    <li>Champ dans un YAML / TOML → <span class="tool">yq</span></li>
+                    <li>Champ dans un XML (pom.xml, .csproj…) → <span class="tool">xq</span> (yq -p xml)</li>
+                    <li>Même champ dans N fichiers de config → <span class="tool">batch-config-audit</span> (fd + yq/jq/xq)</li>
+                    <li>Fichiers d'un type contenant un texte → <span class="tool">structural-search</span> (fd + rg)</li>
+                    <li>Filtrer la sortie de commandes build/test → <span class="tool">snip</span></li>
+                </ul>
+            </div>
+            <div class="reveal reveal-d2 mt-2" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <span class="tag tag-dim" style="font-size: var(--small-size);">💡 Les skills se déclenchent automatiquement sur mots-clés dans la requête</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 14: INSTALLATION ==================== -->
+    <section class="slide" data-nav="Recap">
+        <span class="section-num">14</span>
+        <div class="slide-content">
+            <h2 class="reveal">Installation</h2>
+            <p class="reveal reveal-d1">Une ligne de commande par OS. <code class="text-accent">xq</code> = <code>yq -p xml</code>, pas d'installation séparée.</p>
+            <div class="grid-3 mt-2 reveal reveal-d2" style="max-width: 900px;">
+                <div class="dark-card">
+                    <h3 style="font-size: var(--body-size);">🍎 macOS</h3>
+                    <div class="code-block mt-1">
+                        <div><span class="cmd">brew install</span> <span class="string">fd ripgrep yq jq</span></div>
+                    </div>
+                </div>
+                <div class="dark-card">
+                    <h3 style="font-size: var(--body-size);">🐧 Linux</h3>
+                    <div class="code-block mt-1">
+                        <div><span class="cmd">sudo apt-get install</span> <span class="flag">-y</span></div>
+                        <div>&nbsp;&nbsp;<span class="string">fd-find ripgrep</span></div>
+                    </div>
+                </div>
+                <div class="dark-card">
+                    <h3 style="font-size: var(--body-size);">🪟 Windows</h3>
+                    <div class="code-block mt-1">
+                        <div><span class="cmd">winget install</span></div>
+                        <div>&nbsp;&nbsp;<span class="string">sharkdp.fd</span></div>
+                        <div>&nbsp;&nbsp;<span class="string">BurntSushi.ripgrep.MSVC</span></div>
+                        <div>&nbsp;&nbsp;<span class="string">MikeFarah.yq</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2 dark-card" style="max-width: 900px;">
+                <div style="font-size: var(--small-size); color: var(--text-dim);">⚠️ yq : toujours <span class="text-accent">mikefarah/yq</span> (Go), pas kislyuk/yq (Python). Vérifier : <code>yq (https://github.com/mikefarah/yq/)</code></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 15: CONCLUSION ==================== -->
+    <section class="slide" data-nav="Recap">
+        <span class="section-num">15</span>
+        <div class="split">
+            <div>
+                <h2 class="reveal">Récapitulatif</h2>
+                <div class="reveal reveal-d1 mt-2 flex-col gap-2" style="max-width: 420px;">
+                    <div class="dark-card" style="display: flex; align-items: center; gap: 1rem;">
+                        <span class="stat-medium text-accent">6</span>
+                        <div>
+                            <div class="text-white fw-700" style="font-size: var(--body-size);">Outils CLI</div>
+                            <p style="font-size: var(--small-size);">fd · rg · yq · xq · jq · snip</p>
+                        </div>
+                    </div>
+                    <div class="dark-card" style="display: flex; align-items: center; gap: 1rem;">
+                        <span class="stat-medium text-green">2</span>
+                        <div>
+                            <div class="text-white fw-700" style="font-size: var(--body-size);">Synergies</div>
+                            <p style="font-size: var(--small-size);">batch-config-audit · structural-search</p>
+                        </div>
+                    </div>
+                    <div class="dark-card" style="display: flex; align-items: center; gap: 1rem;">
+                        <span class="stat-medium text-accent">95%</span>
+                        <div>
+                            <div class="text-white fw-700" style="font-size: var(--body-size);">Des cas couverts</div>
+                            <p style="font-size: var(--small-size);">Recherche, extraction, audit, filtrage</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="align-items: center;">
+                <div class="accent-card reveal reveal-d2" style="max-width: 380px; width: 100%;">
+                    <div style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.2em; opacity: 0.6;">Impact global</div>
+                    <div class="stat-big" style="margin: clamp(0.3rem, 1vh, 0.5rem) 0;">-98%</div>
+                    <div style="font-size: var(--body-size); opacity: 0.7;">de tokens consommés</div>
+                    <div style="margin-top: 1rem; font-size: var(--small-size); opacity: 0.5; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 0.5rem;">Copilot Primitives — github.com</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        class SlidePresentation {
+            constructor() {
+                this.slides = document.querySelectorAll('.slide');
+                this.currentSlide = 0;
+                this.setupIntersectionObserver();
+                this.setupKeyboardNav();
+                this.setupTouchNav();
+                this.setupProgressBar();
+            }
+
+            setupIntersectionObserver() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            this.currentSlide = [...this.slides].indexOf(entry.target);
+                            this.updateProgressBar();
+                            this.updateNav();
+                        }
+                    });
+                }, { threshold: 0.5 });
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    if (['ArrowDown', 'ArrowRight', 'Space', 'PageDown'].includes(e.code)) {
+                        e.preventDefault();
+                        this.goToSlide(this.currentSlide + 1);
+                    } else if (['ArrowUp', 'ArrowLeft', 'PageUp'].includes(e.code)) {
+                        e.preventDefault();
+                        this.goToSlide(this.currentSlide - 1);
+                    } else if (e.code === 'Home') {
+                        e.preventDefault();
+                        this.goToSlide(0);
+                    } else if (e.code === 'End') {
+                        e.preventDefault();
+                        this.goToSlide(this.slides.length - 1);
+                    }
+                });
+            }
+
+            setupTouchNav() {
+                let startY = 0;
+                document.addEventListener('touchstart', (e) => { startY = e.touches[0].clientY; });
+                document.addEventListener('touchend', (e) => {
+                    const diff = startY - e.changedTouches[0].clientY;
+                    if (Math.abs(diff) > 50) {
+                        this.goToSlide(this.currentSlide + (diff > 0 ? 1 : -1));
+                    }
+                });
+            }
+
+            goToSlide(index) {
+                if (index >= 0 && index < this.slides.length) {
+                    this.slides[index].scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+
+            setupProgressBar() {
+                this.progressBar = document.getElementById('progressBar');
+                this.updateProgressBar();
+            }
+
+            updateProgressBar() {
+                if (this.progressBar) {
+                    const progress = ((this.currentSlide + 1) / this.slides.length) * 100;
+                    this.progressBar.style.width = progress + '%';
+                }
+            }
+
+            updateNav() {
+                const currentNav = this.slides[this.currentSlide]?.dataset.nav;
+                document.querySelectorAll('.nav-bar').forEach(nav => {
+                    nav.querySelectorAll('span').forEach(span => {
+                        if (span.textContent === '·') return;
+                        span.classList.toggle('active', span.textContent === currentNav);
+                    });
+                });
+            }
+        }
+
+        new SlidePresentation();
+    </script>
+</body>
+</html>

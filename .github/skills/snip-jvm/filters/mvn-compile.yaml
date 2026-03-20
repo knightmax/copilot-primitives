@@ -3,7 +3,7 @@ version: 1
 description: "Maven compile — filters download messages and verbose logging"
 
 match:
-  command: "mvn|mvnd"
+  command: "mvn"
   subcommand: "compile"
 
 pipeline:

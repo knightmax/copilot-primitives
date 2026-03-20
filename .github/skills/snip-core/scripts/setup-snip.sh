@@ -3,10 +3,10 @@
 # setup-snip.sh — snip-core
 # ==========================
 # Checks snip installation and creates the global filters directory.
-# Does NOT install any tool-specific filters — each snip-* skill does that.
+# Does NOT install any tool-specific filters - each snip-* skill does that.
 #
 # Usage:
-#   bash .github/skills/snip-core/setup-snip.sh
+#   bash .github/skills/snip-core/scripts/setup-snip.sh
 #
 
 set -euo pipefail
