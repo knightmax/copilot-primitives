@@ -1,0 +1,48 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://staging-db.internal:5432/demodb_staging
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USERNAME:demo_staging}
+    password: ${DB_PASSWORD:staging_secret}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 3
+      idle-timeout: 600000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          batch_size: 15
+
+  h2:
+    console:
+      enabled: false
+
+server:
+  port: 8080
+  tomcat:
+    max-threads: 100
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    root: INFO
+    com.demo: DEBUG
+    org.springframework.web: INFO
+  file:
+    name: /var/log/demo/application-staging.log
+    max-size: 25MB
+    max-history: 15

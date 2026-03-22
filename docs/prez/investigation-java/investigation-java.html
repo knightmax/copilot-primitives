@@ -241,6 +241,23 @@
         .tag-dim { background: var(--bg-card); color: var(--text-dim); border: 1px solid var(--border); }
 
         /* =========================================== */
+        /* CMD BLOCKS (copy-paste)                     */
+        /* =========================================== */
+        .cmd-block {
+            background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px;
+            padding: clamp(0.5rem, 1vw, 0.8rem) clamp(0.8rem, 1.5vw, 1.2rem);
+            display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+            cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; position: relative;
+        }
+        .cmd-block:hover { border-color: var(--green); box-shadow: 0 0 20px var(--green-glow); }
+        .cmd-block:active { transform: scale(0.995); }
+        .cmd-block code { color: var(--text-primary); font-size: var(--code-size); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
+        .cmd-block .copy-icon { color: var(--text-dim); font-size: var(--small-size); flex-shrink: 0; transition: color 0.2s; }
+        .cmd-block:hover .copy-icon { color: var(--green); }
+        .cmd-block.copied { border-color: var(--green); }
+        .cmd-block.copied .copy-icon { color: var(--green); }
+
+        /* =========================================== */
         /* STAT                                        */
         /* =========================================== */
         .stat-big {
@@ -796,6 +813,10 @@
                 <div>&nbsp;&nbsp;<span class="classname">com.blazebit...HibernateExtendedQuerySupport</span> \</div>
                 <div>&nbsp;&nbsp;<span class="cmd">|</span> <span class="cmd">rg</span> <span class="string">"getResultStream|getResultList|scroll"</span></div>
             </div>
+            <div class="reveal reveal-d2 mt-2" style="display: flex; align-items: center; gap: 0.8rem;">
+                <span class="tag tag-yellow">🎤 DÉMO LIVE</span>
+                <span style="font-size: var(--small-size); color: var(--yellow);">Lancer ces commandes dans le terminal sur le cas Blaze-Persistence</span>
+            </div>
         </div>
     </section>
 
@@ -922,12 +943,139 @@
         </div>
     </section>
 
-    <!-- ==================== SLIDE 14: CONCLUSION ==================== -->
+    <!-- ==================== SLIDE 14: DEMO — SETUP ==================== -->
+    <section class="slide">
+        <div class="terminal-header">
+            <span class="path">~/demo</span> <span class="text-dim">$</span> <span class="cmd">setup</span>
+        </div>
+        <div class="slide-counter"><span class="current">14</span> / 19</div>
+        <div class="slide-content">
+            <div class="reveal">
+                <span class="tag tag-yellow">Démo Live</span>
+                <h2 class="mt-1">Setup <span class="text-dim" style="font-size: var(--h3-size);">— Projet Spring Boot</span></h2>
+                <p>Prérequis : Java 17+, Maven, <code class="text-green">fd</code> et <code class="text-green">rg</code> installés.</p>
+            </div>
+            <div class="reveal reveal-d1 mt-2 flex-col gap-1" style="max-width: 700px;">
+                <div class="cmd-block" data-cmd="cd demo\token-economy-demo">
+                    <code>cd demo\token-economy-demo</code>
+                    <span class="copy-icon">📋 copier</span>
+                </div>
+                <div class="cmd-block" data-cmd="java -version">
+                    <code>java -version</code>
+                    <span class="copy-icon">📋 copier</span>
+                </div>
+                <div class="cmd-block" data-cmd="mvn compile">
+                    <code>mvn compile</code>
+                    <span class="copy-icon">📋 copier</span>
+                </div>
+            </div>
+            <div class="reveal reveal-d2 mt-2 card card-green" style="max-width: 700px;">
+                <p style="font-size: var(--small-size); color: var(--green);">💡 <code>mvn compile</code> télécharge les dépendances dans <code>$env:USERPROFILE\.m2</code> — c'est notre terrain d'investigation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 15: DEMO — fd ==================== -->
+    <section class="slide">
+        <div class="terminal-header">
+            <span class="path">~/demo/token-economy-demo</span> <span class="text-dim">$</span> <span class="cmd">fd</span>
+        </div>
+        <div class="slide-counter"><span class="current">15</span> / 19</div>
+        <div class="slide-content">
+            <div class="reveal">
+                <span class="tag tag-blue">Étape 1 — Démo</span>
+                <h2 class="mt-1">fd <span class="text-dim" style="font-size: var(--h3-size);">— Localiser les JARs du projet</span></h2>
+            </div>
+            <div class="reveal reveal-d1 mt-2 flex-col gap-1" style="max-width: 800px;">
+                <p style="font-size: var(--small-size); color: var(--text-dim);">Trouver Hibernate dans le cache Maven :</p>
+                <div class="cmd-block" data-cmd='fd "hibernate-core" "$env:USERPROFILE\.m2" -e jar'>
+                    <code>fd "hibernate-core" "$env:USERPROFILE\.m2" -e jar</code>
+                    <span class="copy-icon">📋 copier</span>
+                </div>
+                <p style="font-size: var(--small-size); color: var(--text-dim); margin-top: 0.5rem;">Trouver Spring Data JPA :</p>
+                <div class="cmd-block" data-cmd='fd "spring-data-jpa" "$env:USERPROFILE\.m2" -e jar'>
+                    <code>fd "spring-data-jpa" "$env:USERPROFILE\.m2" -e jar</code>
+                    <span class="copy-icon">📋 copier</span>
+                </div>
+                <p style="font-size: var(--small-size); color: var(--text-dim); margin-top: 0.5rem;">Filtrer les sources et javadocs :</p>
+                <div class="cmd-block" data-cmd='fd "hibernate" "$env:USERPROFILE\.m2" -e jar | rg -v "source|javadoc"'>
+                    <code>fd "hibernate" "$env:USERPROFILE\.m2" -e jar | rg -v "source|javadoc"</code>
+                    <span class="copy-icon">📋 copier</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 16: DEMO — jar tf ==================== -->
+    <section class="slide">
+        <div class="terminal-header">
+            <span class="path">~/demo/token-economy-demo</span> <span class="text-dim">$</span> <span class="cmd">jar tf</span>
+        </div>
+        <div class="slide-counter"><span class="current">16</span> / 19</div>
+        <div class="slide-content">
+            <div class="reveal">
+                <span class="tag tag-blue">Étape 2 — Démo</span>
+                <h2 class="mt-1">jar tf + rg <span class="text-dim" style="font-size: var(--h3-size);">— Trouver les classes</span></h2>
+            </div>
+            <div class="reveal reveal-d1 mt-2 flex-col gap-1" style="max-width: 800px;">
+                <p style="font-size: var(--small-size); color: var(--text-dim);">Stocker le JAR et lister les classes liées au streaming :</p>
+                <div class="cmd-block" data-cmd='$jar = fd "hibernate-core-6" "$env:USERPROFILE\.m2" -e jar | Select-Object -First 1'>
+                    <code>$jar = fd "hibernate-core-6" "$env:USERPROFILE\.m2" -e jar | Select-Object -First 1</code>
+                    <span class="copy-icon">📋 copier</span>
+                </div>
+                <div class="cmd-block" data-cmd='jar tf $jar | rg "Stream|TypedQuery|AbstractQuery"'>
+                    <code>jar tf $jar | rg "Stream|TypedQuery|AbstractQuery"</code>
+                    <span class="copy-icon">📋 copier</span>
+                </div>
+                <p style="font-size: var(--small-size); color: var(--text-dim); margin-top: 0.5rem;">Chercher les implémentations :</p>
+                <div class="cmd-block" data-cmd='jar tf $jar | rg "impl/" | rg -v "test|Test"'>
+                    <code>jar tf $jar | rg "impl/" | rg -v "test|Test"</code>
+                    <span class="copy-icon">📋 copier</span>
+                </div>
+            </div>
+            <div class="reveal reveal-d2 mt-2 card card-green" style="max-width: 800px;">
+                <p style="font-size: var(--small-size); color: var(--green);">💡 PowerShell : <code>Select-Object -First 1</code> remplace <code>head -1</code> pour récupérer le premier résultat.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 17: DEMO — javap -c ==================== -->
+    <section class="slide">
+        <div class="terminal-header">
+            <span class="path">~/demo/token-economy-demo</span> <span class="text-dim">$</span> <span class="cmd">javap -c</span>
+        </div>
+        <div class="slide-counter"><span class="current">17</span> / 19</div>
+        <div class="slide-content">
+            <div class="reveal">
+                <span class="tag tag-green">Étapes 3+4 — Démo</span>
+                <h2 class="mt-1">javap -c + rg <span class="text-dim" style="font-size: var(--h3-size);">— Tracer le comportement</span></h2>
+            </div>
+            <div class="reveal reveal-d1 mt-2 flex-col gap-1" style="max-width: 850px;">
+                <p style="font-size: var(--small-size); color: var(--text-dim);">Décompiler et tracer getResultStream :</p>
+                <div class="cmd-block" data-cmd='javap -c -p -classpath $jar org.hibernate.query.spi.AbstractQuery | rg "getResultStream|getResultList|scroll"'>
+                    <code>javap -c -p -classpath $jar org.hibernate.query.spi.AbstractQuery | rg "getResultStream|getResultList|scroll"</code>
+                    <span class="copy-icon">📋 copier</span>
+                </div>
+                <p style="font-size: var(--small-size); color: var(--text-dim); margin-top: 0.5rem;">Chercher des instanciations mémoire :</p>
+                <div class="cmd-block" data-cmd='javap -c -p -classpath $jar org.hibernate.query.spi.AbstractQuery | rg "new.*ArrayList|new.*HashSet|getResultList"'>
+                    <code>javap -c -p -classpath $jar ...AbstractQuery | rg "new.*ArrayList|new.*HashSet|getResultList"</code>
+                    <span class="copy-icon">📋 copier</span>
+                </div>
+                <p style="font-size: var(--small-size); color: var(--text-dim); margin-top: 0.5rem;">Voir toutes les invocations de méthode :</p>
+                <div class="cmd-block" data-cmd='javap -c -p -classpath $jar org.hibernate.query.spi.AbstractQuery | rg "invoke(virtual|interface|special|static)"'>
+                    <code>javap -c -p -classpath $jar ...AbstractQuery | rg "invoke(virtual|interface|...)"</code>
+                    <span class="copy-icon">📋 copier</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 18: CONCLUSION ==================== -->
     <section class="slide">
         <div class="terminal-header">
             <span class="path">~/investigation</span> <span class="text-dim">$</span> <span class="text-dim">echo "done"</span>
         </div>
-        <div class="slide-counter"><span class="current">14</span> / 14</div>
+        <div class="slide-counter"><span class="current">18</span> / 19</div>
         <div class="slide-content" style="align-items: center; text-align: center;">
             <h1 class="reveal">Bytecode &gt; Documentation<span class="cursor"></span></h1>
             <div class="reveal reveal-d1 mt-3 pipeline" style="justify-content: center;">
@@ -959,6 +1107,56 @@
         </div>
     </section>
 
+    <!-- ==================== SLIDE 19: INTÉGRATION IA ==================== -->
+    <section class="slide">
+        <div class="terminal-header">
+            <span class="path">~/investigation</span> <span class="text-dim">$</span> <span class="text-dim">cat integration.md</span>
+        </div>
+        <div class="slide-counter"><span class="current">19</span> / 19</div>
+        <div class="slide-content">
+            <h2 class="reveal">Intégrer dans votre Workflow IA</h2>
+            <p class="reveal reveal-d1" style="max-width: 700px;">3 mécanismes pour que vos agents utilisent ces CLI <span class="text-green fw-700">automatiquement</span>.</p>
+            <div class="grid-3 mt-2 reveal reveal-d2" style="max-width: 950px;">
+                <div class="card card-green">
+                    <h3 style="font-size: var(--body-size); color: var(--green);">Skills</h3>
+                    <p style="font-size: var(--small-size); color: var(--text-dim);">.github/skills/*.md</p>
+                    <div class="term mt-1" style="font-size: calc(var(--code-size) * 0.9);">
+                        <div><span class="comment"># L'agent découvre et charge</span></div>
+                        <div><span class="comment"># selon le contexte</span></div>
+                        <div><span class="string">"Use when investigating</span></div>
+                        <div><span class="string">&nbsp;Java bytecode..."</span></div>
+                    </div>
+                    <p class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">Copilot · Claude Code</p>
+                </div>
+                <div class="card card-blue">
+                    <h3 style="font-size: var(--body-size); color: var(--blue);">Hooks</h3>
+                    <p style="font-size: var(--small-size); color: var(--text-dim);">.github/hooks/*.json</p>
+                    <div class="term mt-1" style="font-size: calc(var(--code-size) * 0.9);">
+                        <div><span class="string">"PostToolUse"</span>: [{</div>
+                        <div>&nbsp;&nbsp;<span class="flag">"command"</span>:</div>
+                        <div>&nbsp;&nbsp;<span class="string">"./scripts/lint.sh"</span></div>
+                        <div>}]</div>
+                    </div>
+                    <p class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">VS Code · Claude Code</p>
+                </div>
+                <div class="card card-purple">
+                    <h3 style="font-size: var(--body-size); color: var(--purple);">Plugins</h3>
+                    <p style="font-size: var(--small-size); color: var(--text-dim);">plugin.json + skills/</p>
+                    <div class="term mt-1" style="font-size: calc(var(--code-size) * 0.9);">
+                        <div><span class="comment"># Bundle complet :</span></div>
+                        <div><span class="result">skills + MCP connectors</span></div>
+                        <div><span class="result">+ slash commands</span></div>
+                        <div><span class="result">+ sub-agents</span></div>
+                    </div>
+                    <p class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">Claude · Cowork</p>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2" style="font-size: var(--small-size); color: var(--text-dim);">
+                Copilot Primitives — github.com
+            </div>
+        </div>
+    </section>
+
     <!-- ==================== JAVASCRIPT ==================== -->
     <script>
         class SlidePresentation {
@@ -969,6 +1167,7 @@
                 this.setupKeyboardNav();
                 this.setupTouchNav();
                 this.setupProgressBar();
+                this.setupCopyButtons();
             }
 
             setupIntersectionObserver() {
@@ -1033,12 +1232,30 @@
             }
 
             updateCounters() {
+                const total = this.slides.length;
                 this.slides.forEach((slide, i) => {
                     const counter = slide.querySelector('.slide-counter');
                     if (counter) {
-                        const current = counter.querySelector('.current');
-                        if (current) current.textContent = String(i + 1).padStart(2, '0');
+                        counter.innerHTML = '<span class="current">' + String(i + 1).padStart(2, '0') + '</span> / ' + total;
                     }
+                });
+            }
+
+            setupCopyButtons() {
+                document.querySelectorAll('.cmd-block[data-cmd]').forEach(block => {
+                    block.addEventListener('click', () => {
+                        const cmd = block.dataset.cmd;
+                        navigator.clipboard.writeText(cmd).then(() => {
+                            block.classList.add('copied');
+                            const icon = block.querySelector('.copy-icon');
+                            const originalText = icon.textContent;
+                            icon.textContent = '✅ copié !';
+                            setTimeout(() => {
+                                block.classList.remove('copied');
+                                icon.textContent = originalText;
+                            }, 1500);
+                        });
+                    });
                 });
             }
         }

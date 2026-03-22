@@ -1,0 +1,2420 @@
+[
+  {
+    "id": "9f14f4fd-c647-4299-b56a-d11579783be8",
+    "name": "Microservices Patterns",
+    "description": "Design patterns and best practices for building microservice architectures",
+    "category": "Books",
+    "price": 25.2,
+    "stock": 425,
+    "available": true,
+    "tags": [
+      "reference",
+      "programming"
+    ],
+    "supplier": "PrimeWare Solutions",
+    "rating": 3.3
+  },
+  {
+    "id": "752fae04-436e-48ab-94b5-208cb5e90231",
+    "name": "Spice Collection Box",
+    "description": "20 organic single-origin spices in glass jars with wooden rack",
+    "category": "Food",
+    "price": 44.16,
+    "stock": 390,
+    "available": true,
+    "tags": [
+      "premium",
+      "gift-set",
+      "imported"
+    ],
+    "supplier": "Vanguard Wholesale",
+    "rating": 4.5
+  },
+  {
+    "id": "8c2f0de1-21ea-4b08-8080-379e85cd09f8",
+    "name": "Dollhouse Wooden",
+    "description": "Three-story wooden dollhouse with 15 furniture pieces",
+    "category": "Toys",
+    "price": 114.62,
+    "stock": 139,
+    "available": true,
+    "tags": [
+      "family",
+      "creative",
+      "ages-6+"
+    ],
+    "supplier": "Pacific Rim Imports",
+    "rating": 3.6
+  },
+  {
+    "id": "dc785169-8d85-447a-af6a-31b04154ac6d",
+    "name": "Herbal Tea Sampler",
+    "description": "48 individually wrapped herbal tea bags in 12 caffeine-free varieties",
+    "category": "Food",
+    "price": 49.56,
+    "stock": 220,
+    "available": true,
+    "tags": [
+      "organic",
+      "gift-set"
+    ],
+    "supplier": "NexGen Supply Co.",
+    "rating": 3.0
+  },
+  {
+    "id": "b85a4885-6710-4635-b2ed-651014dc91f3",
+    "name": "Protein Bar Variety Pack",
+    "description": "24-count box of high-protein low-sugar bars in assorted flavors",
+    "category": "Food",
+    "price": 69.73,
+    "stock": 254,
+    "available": true,
+    "tags": [
+      "organic",
+      "premium",
+      "imported"
+    ],
+    "supplier": "Atlantic Commerce Group",
+    "rating": 4.8
+  },
+  {
+    "id": "f1e84a44-8d04-4b60-9aa9-216802bc7723",
+    "name": "Clean Code Handbook",
+    "description": "A comprehensive guide to writing readable, maintainable, and efficient code",
+    "category": "Books",
+    "price": 40.59,
+    "stock": 283,
+    "available": true,
+    "tags": [
+      "career",
+      "non-fiction",
+      "reference",
+      "programming"
+    ],
+    "supplier": "GlobalSource Trading",
+    "rating": 2.7
+  },
+  {
+    "id": "3c88dd12-7319-47f2-b9ef-df6103ff2959",
+    "name": "Wooden Train Set",
+    "description": "60-piece wooden railway set with bridges, tunnels, and stations",
+    "category": "Toys",
+    "price": 184.55,
+    "stock": 401,
+    "available": true,
+    "tags": [
+      "STEM",
+      "educational",
+      "gift"
+    ],
+    "supplier": "NexGen Supply Co.",
+    "rating": 3.0
+  },
+  {
+    "id": "526439e6-4cef-4212-9da9-8a8fc9fec11b",
+    "name": "Ceramic Coffee Mug Set",
+    "description": "Set of 4 handcrafted ceramic mugs with matte glaze finish",
+    "category": "Home",
+    "price": 272.3,
+    "stock": 122,
+    "available": true,
+    "tags": [
+      "kitchen",
+      "minimalist"
+    ],
+    "supplier": "NexGen Supply Co.",
+    "rating": 4.1
+  },
+  {
+    "id": "59fef860-9c5c-44c9-8ddf-3c503d76d70a",
+    "name": "Portable Charger 20000mAh",
+    "description": "High-capacity power bank with USB-C PD and dual USB-A ports",
+    "category": "Electronics",
+    "price": 2373.07,
+    "stock": 196,
+    "available": true,
+    "tags": [
+      "tech",
+      "portable",
+      "gadget",
+      "smart"
+    ],
+    "supplier": "Atlantic Commerce Group",
+    "rating": 3.6
+  },
+  {
+    "id": "bdd9a7f3-c3ed-44cc-a706-a44231146dc3",
+    "name": "Robot Vacuum",
+    "description": "Smart robot vacuum with LiDAR navigation and automatic emptying station",
+    "category": "Electronics",
+    "price": 2319.75,
+    "stock": 148,
+    "available": true,
+    "tags": [
+      "wireless",
+      "USB",
+      "bluetooth"
+    ],
+    "supplier": "Harbor Logistics Inc.",
+    "rating": 2.9
+  },
+  {
+    "id": "21995d9e-263d-4ef7-9a8f-cc06f7561bae",
+    "name": "Wool Overcoat",
+    "description": "Tailored double-breasted overcoat in Italian wool blend",
+    "category": "Clothing",
+    "price": 80.64,
+    "stock": 397,
+    "available": true,
+    "tags": [
+      "cotton",
+      "casual",
+      "fashion",
+      "premium"
+    ],
+    "supplier": "Harbor Logistics Inc.",
+    "rating": 4.3
+  },
+  {
+    "id": "cd09d0ab-3ae0-4992-9dd5-94a1498909f1",
+    "name": "Musical Instrument Set",
+    "description": "Toddler music set with xylophone, tambourine, maracas, and recorder",
+    "category": "Toys",
+    "price": 64.73,
+    "stock": 401,
+    "available": true,
+    "tags": [
+      "gift",
+      "family",
+      "educational"
+    ],
+    "supplier": "Pacific Rim Imports",
+    "rating": 4.4
+  },
+  {
+    "id": "286f292c-f261-45ad-a254-b3cd7e4a8279",
+    "name": "Robot Building Kit",
+    "description": "Programmable robot kit with sensors and block-based coding",
+    "category": "Toys",
+    "price": 44.78,
+    "stock": 138,
+    "available": true,
+    "tags": [
+      "creative",
+      "educational"
+    ],
+    "supplier": "Continental Goods Ltd.",
+    "rating": 3.9
+  },
+  {
+    "id": "c4a1c985-fccd-41d2-b7e1-fbd117291418",
+    "name": "Webcam 1080p",
+    "description": "Full HD webcam with auto-focus, built-in microphone, and privacy shutter",
+    "category": "Electronics",
+    "price": 833.23,
+    "stock": 92,
+    "available": true,
+    "tags": [
+      "portable",
+      "wireless",
+      "tech",
+      "USB"
+    ],
+    "supplier": "EcoFirst Distributors",
+    "rating": 3.3
+  },
+  {
+    "id": "bbbbdbba-d3b8-4812-8429-cf1789f49037",
+    "name": "Smart Home Speaker",
+    "description": "Voice-controlled speaker with multi-room audio and smart home integration",
+    "category": "Electronics",
+    "price": 1736.32,
+    "stock": 458,
+    "available": true,
+    "tags": [
+      "USB",
+      "gadget",
+      "smart"
+    ],
+    "supplier": "Atlantic Commerce Group",
+    "rating": 4.8
+  },
+  {
+    "id": "2e3635ca-73e6-4e0f-ba9e-14fe937ff0a3",
+    "name": "Yoga Mat Premium",
+    "description": "Extra-thick 6mm non-slip TPE yoga mat with alignment guides",
+    "category": "Sports",
+    "price": 54.55,
+    "stock": 59,
+    "available": true,
+    "tags": [
+      "outdoor",
+      "recovery",
+      "performance",
+      "equipment"
+    ],
+    "supplier": "Summit Manufacturing",
+    "rating": 3.6
+  },
+  {
+    "id": "70d2d82a-fad5-4b79-9869-81a12243d135",
+    "name": "Running Shorts",
+    "description": "Lightweight moisture-wicking running shorts with built-in brief",
+    "category": "Clothing",
+    "price": 143.21,
+    "stock": 23,
+    "available": true,
+    "tags": [
+      "casual",
+      "sustainable"
+    ],
+    "supplier": "Continental Goods Ltd.",
+    "rating": 3.8
+  },
+  {
+    "id": "5f25fc51-6505-4d8c-81df-12a8e208ccbe",
+    "name": "Denim Jacket",
+    "description": "Classic medium-wash denim jacket with brass button closure",
+    "category": "Clothing",
+    "price": 77.55,
+    "stock": 76,
+    "available": true,
+    "tags": [
+      "cotton",
+      "casual",
+      "outdoor",
+      "comfortable"
+    ],
+    "supplier": "Pinnacle Distribution",
+    "rating": 4.3
+  },
+  {
+    "id": "ecec3a51-1bee-4a13-b437-4849acb5bd1e",
+    "name": "Board Game Strategy",
+    "description": "Award-winning civilization-building board game for 2-4 players",
+    "category": "Toys",
+    "price": 186.38,
+    "stock": 460,
+    "available": true,
+    "tags": [
+      "STEM",
+      "outdoor-play",
+      "educational",
+      "creative"
+    ],
+    "supplier": "Atlantic Commerce Group",
+    "rating": 2.5
+  },
+  {
+    "id": "b847f9ef-bd91-4216-9072-8bcc2f9ad524",
+    "name": "Japanese Rice",
+    "description": "Premium short-grain Koshihikari rice from Niigata prefecture",
+    "category": "Food",
+    "price": 78.44,
+    "stock": 189,
+    "available": true,
+    "tags": [
+      "imported",
+      "organic",
+      "natural"
+    ],
+    "supplier": "Vanguard Wholesale",
+    "rating": 2.9
+  },
+  {
+    "id": "01d5f74f-6ac0-464a-bc29-f96fd627d0de",
+    "name": "Soccer Ball",
+    "description": "FIFA-approved match ball with thermal bonding construction",
+    "category": "Sports",
+    "price": 42.96,
+    "stock": 455,
+    "available": true,
+    "tags": [
+      "outdoor",
+      "exercise"
+    ],
+    "supplier": "Pinnacle Distribution",
+    "rating": 2.6
+  },
+  {
+    "id": "ac01fbf5-52ca-41e1-93da-e94b8311feb6",
+    "name": "Picture Frame Set",
+    "description": "Gallery wall set of 7 frames in mixed sizes with templates",
+    "category": "Home",
+    "price": 56.03,
+    "stock": 280,
+    "available": true,
+    "tags": [
+      "decor",
+      "modern",
+      "minimalist",
+      "gift"
+    ],
+    "supplier": "Meridian Trading Co.",
+    "rating": 3.8
+  },
+  {
+    "id": "af3746cb-f549-4d7b-9a4d-8a63ccb96393",
+    "name": "Throw Blanket",
+    "description": "Ultra-soft microfiber throw blanket with sherpa lining",
+    "category": "Home",
+    "price": 173.83,
+    "stock": 448,
+    "available": true,
+    "tags": [
+      "kitchen",
+      "organization"
+    ],
+    "supplier": "GlobalSource Trading",
+    "rating": 4.8
+  },
+  {
+    "id": "a0fbd484-6c19-4037-bb89-a21e933210a9",
+    "name": "Table Tennis Set",
+    "description": "Retractable table tennis net with 4 paddles and 6 balls",
+    "category": "Sports",
+    "price": 484.21,
+    "stock": 439,
+    "available": true,
+    "tags": [
+      "outdoor",
+      "equipment",
+      "fitness",
+      "recovery"
+    ],
+    "supplier": "Summit Manufacturing",
+    "rating": 3.8
+  },
+  {
+    "id": "a57b408a-ac00-42ac-8867-7cccb4c53c75",
+    "name": "Tennis Racket",
+    "description": "Graphite composite tennis racket with vibration dampening technology",
+    "category": "Sports",
+    "price": 75.16,
+    "stock": 469,
+    "available": true,
+    "tags": [
+      "equipment",
+      "fitness",
+      "performance"
+    ],
+    "supplier": "Meridian Trading Co.",
+    "rating": 3.4
+  },
+  {
+    "id": "d6358e39-f2f9-4f37-b86f-86d4448ebec6",
+    "name": "Camping Hammock",
+    "description": "Lightweight parachute nylon hammock with tree straps rated to 400lbs",
+    "category": "Sports",
+    "price": 496.8,
+    "stock": 386,
+    "available": true,
+    "tags": [
+      "outdoor",
+      "performance"
+    ],
+    "supplier": "NexGen Supply Co.",
+    "rating": 4.5
+  },
+  {
+    "id": "a978f688-d5b2-4a7d-86b4-102b68d5dccc",
+    "name": "Adjustable Dumbbells",
+    "description": "Quick-change adjustable dumbbells from 5 to 52.5 lbs per hand",
+    "category": "Sports",
+    "price": 134.67,
+    "stock": 344,
+    "available": true,
+    "tags": [
+      "recovery",
+      "fitness",
+      "equipment"
+    ],
+    "supplier": "TechVision Industries",
+    "rating": 4.4
+  },
+  {
+    "id": "91f3d584-ccfb-4fc4-afdb-dbc4018feb49",
+    "name": "Swimming Goggles",
+    "description": "Anti-fog UV protection swim goggles with adjustable nose bridge",
+    "category": "Sports",
+    "price": 102.35,
+    "stock": 126,
+    "available": true,
+    "tags": [
+      "training",
+      "outdoor",
+      "exercise"
+    ],
+    "supplier": "Horizon Enterprises",
+    "rating": 4.3
+  },
+  {
+    "id": "de8f1379-3aac-4f98-8294-16922ca26768",
+    "name": "Gaming Headset",
+    "description": "7.1 surround sound gaming headset with retractable microphone",
+    "category": "Electronics",
+    "price": 728.22,
+    "stock": 134,
+    "available": true,
+    "tags": [
+      "digital",
+      "gadget",
+      "portable"
+    ],
+    "supplier": "Horizon Enterprises",
+    "rating": 5.0
+  },
+  {
+    "id": "4cea3a45-3ace-42bf-bc81-ccd87b1d8bb6",
+    "name": "Scented Soy Candle",
+    "description": "Hand-poured soy wax candle with essential oils and 60-hour burn time",
+    "category": "Home",
+    "price": 281.48,
+    "stock": 18,
+    "available": true,
+    "tags": [
+      "gift",
+      "eco-friendly",
+      "decor"
+    ],
+    "supplier": "Meridian Trading Co.",
+    "rating": 4.8
+  },
+  {
+    "id": "08f65b92-79e9-4344-b5df-f4c8403cf9f4",
+    "name": "Smart Watch",
+    "description": "Fitness tracking smartwatch with GPS, heart rate monitor, and 7-day battery",
+    "category": "Electronics",
+    "price": 605.26,
+    "stock": 311,
+    "available": true,
+    "tags": [
+      "digital",
+      "tech",
+      "gadget",
+      "bluetooth"
+    ],
+    "supplier": "Harbor Logistics Inc.",
+    "rating": 3.4
+  },
+  {
+    "id": "bfed0f6d-3b0b-4edd-96af-942dba927263",
+    "name": "Essential Oil Diffuser",
+    "description": "Ultrasonic aromatherapy diffuser with color-changing LED and timer",
+    "category": "Home",
+    "price": 143.89,
+    "stock": 120,
+    "available": true,
+    "tags": [
+      "minimalist",
+      "kitchen"
+    ],
+    "supplier": "PrimeWare Solutions",
+    "rating": 3.5
+  },
+  {
+    "id": "ce6d3489-2174-4969-92fa-a645e9c5ffee",
+    "name": "Badminton Set",
+    "description": "Complete badminton set with 4 rackets, net, and shuttlecocks",
+    "category": "Sports",
+    "price": 219.32,
+    "stock": 466,
+    "available": true,
+    "tags": [
+      "recovery",
+      "exercise"
+    ],
+    "supplier": "Continental Goods Ltd.",
+    "rating": 2.6
+  },
+  {
+    "id": "0893b367-f1dc-4a4f-9666-188784e45965",
+    "name": "Refactoring",
+    "description": "Improving the design of existing code through systematic transformations",
+    "category": "Books",
+    "price": 30.82,
+    "stock": 333,
+    "available": true,
+    "tags": [
+      "learning",
+      "reference"
+    ],
+    "supplier": "Harbor Logistics Inc.",
+    "rating": 2.6
+  },
+  {
+    "id": "e1787f77-f334-4315-b92f-261f07a1772a",
+    "name": "Wall Clock",
+    "description": "Silent quartz wall clock with minimalist Scandinavian design",
+    "category": "Home",
+    "price": 33.32,
+    "stock": 312,
+    "available": true,
+    "tags": [
+      "eco-friendly",
+      "gift",
+      "modern",
+      "organization"
+    ],
+    "supplier": "Harbor Logistics Inc.",
+    "rating": 2.7
+  },
+  {
+    "id": "dd74f00c-26c4-492a-9742-52e294e06578",
+    "name": "Hiking Backpack 40L",
+    "description": "Ventilated back panel hiking pack with rain cover and hydration sleeve",
+    "category": "Sports",
+    "price": 207.1,
+    "stock": 306,
+    "available": true,
+    "tags": [
+      "recovery",
+      "fitness",
+      "outdoor",
+      "exercise"
+    ],
+    "supplier": "NexGen Supply Co.",
+    "rating": 3.8
+  },
+  {
+    "id": "e718a16e-9637-48ea-b887-e9bb96efee90",
+    "name": "The Art of War",
+    "description": "Ancient Chinese military treatise with modern leadership applications",
+    "category": "Books",
+    "price": 57.42,
+    "stock": 442,
+    "available": true,
+    "tags": [
+      "education",
+      "learning"
+    ],
+    "supplier": "Alpine Supply Chain",
+    "rating": 3.9
+  },
+  {
+    "id": "60429f4b-d5ef-433a-a494-a714568f30da",
+    "name": "Basketball",
+    "description": "Official size indoor/outdoor composite leather basketball",
+    "category": "Sports",
+    "price": 215.42,
+    "stock": 57,
+    "available": true,
+    "tags": [
+      "exercise",
+      "recovery"
+    ],
+    "supplier": "Alpine Supply Chain",
+    "rating": 4.8
+  },
+  {
+    "id": "ec8b6f14-13f4-41d4-b3e1-fcfa62c27ee2",
+    "name": "Athletic Socks 6-Pack",
+    "description": "Cushioned performance socks with arch support and moisture control",
+    "category": "Clothing",
+    "price": 286.38,
+    "stock": 152,
+    "available": true,
+    "tags": [
+      "outdoor",
+      "comfortable"
+    ],
+    "supplier": "Vanguard Wholesale",
+    "rating": 4.3
+  },
+  {
+    "id": "93570047-0c31-4b7b-9e65-66e9748a640a",
+    "name": "Drone Mini",
+    "description": "Beginner-friendly mini drone with altitude hold and one-key takeoff",
+    "category": "Toys",
+    "price": 27.65,
+    "stock": 352,
+    "available": true,
+    "tags": [
+      "educational",
+      "STEM",
+      "ages-6+",
+      "gift"
+    ],
+    "supplier": "NexGen Supply Co.",
+    "rating": 4.6
+  },
+  {
+    "id": "de43ba19-bdb0-4888-b93a-1e38160c3b10",
+    "name": "Stuffed Animal Bear",
+    "description": "Ultra-soft plush teddy bear handmade with recycled polyester",
+    "category": "Toys",
+    "price": 66.15,
+    "stock": 106,
+    "available": true,
+    "tags": [
+      "creative",
+      "outdoor-play",
+      "family",
+      "educational"
+    ],
+    "supplier": "Pinnacle Distribution",
+    "rating": 3.1
+  },
+  {
+    "id": "d8cd6782-0674-4ee6-8b9a-f0c2812528ea",
+    "name": "Atomic Habits",
+    "description": "Proven framework for building good habits and breaking bad ones",
+    "category": "Books",
+    "price": 35.74,
+    "stock": 440,
+    "available": true,
+    "tags": [
+      "non-fiction",
+      "programming",
+      "career"
+    ],
+    "supplier": "GlobalSource Trading",
+    "rating": 3.3
+  },
+  {
+    "id": "6af34563-2a5d-4893-86e6-b662283d6f82",
+    "name": "Air Purifier",
+    "description": "HEPA air purifier covering up to 500 sq ft with quiet sleep mode",
+    "category": "Home",
+    "price": 275.83,
+    "stock": 41,
+    "available": true,
+    "tags": [
+      "eco-friendly",
+      "modern",
+      "organization",
+      "kitchen"
+    ],
+    "supplier": "GlobalSource Trading",
+    "rating": 2.7
+  },
+  {
+    "id": "be433227-9955-4ad3-be0e-635ecefd0acf",
+    "name": "Telescope Starter",
+    "description": "70mm refractor telescope with tripod and star map for beginners",
+    "category": "Toys",
+    "price": 161.42,
+    "stock": 348,
+    "available": true,
+    "tags": [
+      "outdoor-play",
+      "family",
+      "educational",
+      "ages-6+"
+    ],
+    "supplier": "Vanguard Wholesale",
+    "rating": 2.7
+  },
+  {
+    "id": "b7390b7a-c288-4d00-8a33-afddba53d2ad",
+    "name": "Action Camera",
+    "description": "Waterproof 4K action camera with image stabilization and wide-angle lens",
+    "category": "Electronics",
+    "price": 203.64,
+    "stock": 102,
+    "available": true,
+    "tags": [
+      "wireless",
+      "bluetooth"
+    ],
+    "supplier": "PrimeWare Solutions",
+    "rating": 4.7
+  },
+  {
+    "id": "027fce26-c2d4-4091-b394-556e01dc1868",
+    "name": "Linen Button-Down Shirt",
+    "description": "Relaxed-fit linen shirt perfect for warm weather layering",
+    "category": "Clothing",
+    "price": 392.25,
+    "stock": 8,
+    "available": true,
+    "tags": [
+      "outdoor",
+      "sustainable",
+      "fashion"
+    ],
+    "supplier": "Pinnacle Distribution",
+    "rating": 3.3
+  },
+  {
+    "id": "79abc9bf-18eb-47df-ad1b-5cdb533ff4c8",
+    "name": "Wireless Bluetooth Headphones",
+    "description": "Premium over-ear headphones with active noise cancellation and 30-hour battery life",
+    "category": "Electronics",
+    "price": 2452.42,
+    "stock": 173,
+    "available": true,
+    "tags": [
+      "wireless",
+      "bluetooth",
+      "USB",
+      "smart"
+    ],
+    "supplier": "Continental Goods Ltd.",
+    "rating": 4.1
+  },
+  {
+    "id": "e6b34f96-3fe5-4eb0-b55b-03a6d33db897",
+    "name": "Wireless Mouse",
+    "description": "Ergonomic wireless mouse with 16000 DPI sensor and silent clicks",
+    "category": "Electronics",
+    "price": 215.73,
+    "stock": 265,
+    "available": true,
+    "tags": [
+      "gadget",
+      "USB",
+      "smart"
+    ],
+    "supplier": "Pinnacle Distribution",
+    "rating": 5.0
+  },
+  {
+    "id": "8b8c2ab0-ace8-48ea-828f-64315efa438d",
+    "name": "Marble Run Deluxe",
+    "description": "150-piece marble run construction set with spiral towers and jumps",
+    "category": "Toys",
+    "price": 139.89,
+    "stock": 371,
+    "available": true,
+    "tags": [
+      "creative",
+      "STEM",
+      "outdoor-play",
+      "gift"
+    ],
+    "supplier": "PrimeWare Solutions",
+    "rating": 2.8
+  },
+  {
+    "id": "032fa24c-8280-40a1-88c2-c1e007807248",
+    "name": "Data Structures Illustrated",
+    "description": "Visual approach to understanding fundamental data structures and algorithms",
+    "category": "Books",
+    "price": 48.45,
+    "stock": 203,
+    "available": true,
+    "tags": [
+      "bestseller",
+      "non-fiction",
+      "reference",
+      "learning"
+    ],
+    "supplier": "Meridian Trading Co.",
+    "rating": 3.9
+  },
+  {
+    "id": "658be360-edf5-43e9-849c-7c2862baeed9",
+    "name": "Truffle Salt",
+    "description": "French black truffle infused Fleur de Sel from Camargue",
+    "category": "Food",
+    "price": 17.94,
+    "stock": 133,
+    "available": true,
+    "tags": [
+      "natural",
+      "gift-set",
+      "imported",
+      "artisan"
+    ],
+    "supplier": "Atlantic Commerce Group",
+    "rating": 3.1
+  },
+  {
+    "id": "ff2e2d74-de50-415d-9c2c-3392c3bc3d66",
+    "name": "Pull-Up Bar",
+    "description": "Doorway pull-up bar with multiple grip positions and padding",
+    "category": "Sports",
+    "price": 39.86,
+    "stock": 338,
+    "available": true,
+    "tags": [
+      "outdoor",
+      "equipment",
+      "training",
+      "performance"
+    ],
+    "supplier": "Pinnacle Distribution",
+    "rating": 4.7
+  },
+  {
+    "id": "db76e868-7075-4b8d-a768-d2753278e46c",
+    "name": "Science Experiment Kit",
+    "description": "50 experiments covering chemistry, physics, and biology for ages 8+",
+    "category": "Toys",
+    "price": 24.78,
+    "stock": 326,
+    "available": true,
+    "tags": [
+      "outdoor-play",
+      "creative"
+    ],
+    "supplier": "Meridian Trading Co.",
+    "rating": 3.6
+  },
+  {
+    "id": "99bfd280-f52e-47fc-a0a9-ed4bc390fe38",
+    "name": "Merino Wool Sweater",
+    "description": "Fine-gauge merino wool crewneck sweater with ribbed cuffs",
+    "category": "Clothing",
+    "price": 246.94,
+    "stock": 285,
+    "available": true,
+    "tags": [
+      "comfortable",
+      "casual",
+      "sustainable"
+    ],
+    "supplier": "Pacific Rim Imports",
+    "rating": 3.8
+  },
+  {
+    "id": "af094ac4-b250-4608-9f1c-60c0fe9add59",
+    "name": "Swim Trunks",
+    "description": "Quick-dry board shorts with mesh lining and side pockets",
+    "category": "Clothing",
+    "price": 302.72,
+    "stock": 40,
+    "available": true,
+    "tags": [
+      "premium",
+      "sustainable",
+      "outdoor"
+    ],
+    "supplier": "NexGen Supply Co.",
+    "rating": 3.0
+  },
+  {
+    "id": "3d948ca7-482f-4cb8-9437-38ee258c1da2",
+    "name": "Effective Java",
+    "description": "Best practices and idioms for writing high-quality Java programs",
+    "category": "Books",
+    "price": 19.48,
+    "stock": 416,
+    "available": true,
+    "tags": [
+      "reference",
+      "bestseller",
+      "career"
+    ],
+    "supplier": "PrimeWare Solutions",
+    "rating": 3.7
+  },
+  {
+    "id": "57770957-0481-446d-97e4-b3790d392e32",
+    "name": "Mechanical Keyboard",
+    "description": "RGB mechanical keyboard with Cherry MX Blue switches and aluminum frame",
+    "category": "Electronics",
+    "price": 802.67,
+    "stock": 103,
+    "available": true,
+    "tags": [
+      "smart",
+      "tech"
+    ],
+    "supplier": "EcoFirst Distributors",
+    "rating": 3.8
+  },
+  {
+    "id": "65db7e32-d154-4151-b246-e4c7efd1ed23",
+    "name": "Site Reliability Engineering",
+    "description": "How Google runs production systems with reliability at scale",
+    "category": "Books",
+    "price": 52.35,
+    "stock": 305,
+    "available": true,
+    "tags": [
+      "bestseller",
+      "non-fiction",
+      "career",
+      "education"
+    ],
+    "supplier": "Pacific Rim Imports",
+    "rating": 2.8
+  },
+  {
+    "id": "375a541d-cfa4-4755-9620-5dcb66b910aa",
+    "name": "Extra Virgin Olive Oil",
+    "description": "Cold-pressed extra virgin olive oil from Andalusian olive groves",
+    "category": "Food",
+    "price": 20.98,
+    "stock": 308,
+    "available": true,
+    "tags": [
+      "gift-set",
+      "organic"
+    ],
+    "supplier": "Alpine Supply Chain",
+    "rating": 4.0
+  },
+  {
+    "id": "a944ce9e-cae6-45b7-ae00-79ff38b18084",
+    "name": "Bamboo Cutting Board Set",
+    "description": "Set of 3 organic bamboo cutting boards with juice grooves",
+    "category": "Home",
+    "price": 265.61,
+    "stock": 479,
+    "available": true,
+    "tags": [
+      "decor",
+      "eco-friendly"
+    ],
+    "supplier": "PrimeWare Solutions",
+    "rating": 4.8
+  },
+  {
+    "id": "7d55f137-f31c-471c-81c0-a6ea71cd87a1",
+    "name": "Dried Fruit Medley",
+    "description": "Sun-dried organic fruit mix: mango, pineapple, cranberry, and apricot",
+    "category": "Food",
+    "price": 76.31,
+    "stock": 328,
+    "available": true,
+    "tags": [
+      "natural",
+      "organic"
+    ],
+    "supplier": "GlobalSource Trading",
+    "rating": 4.9
+  },
+  {
+    "id": "7012bcc0-24ae-46f6-90ae-d813c096cc38",
+    "name": "Aged Balsamic Vinegar",
+    "description": "12-year aged traditional balsamic vinegar from Modena",
+    "category": "Food",
+    "price": 31.21,
+    "stock": 144,
+    "available": true,
+    "tags": [
+      "imported",
+      "natural",
+      "artisan"
+    ],
+    "supplier": "Atlantic Commerce Group",
+    "rating": 3.8
+  },
+  {
+    "id": "1dae7aea-867e-4f24-bbfd-459767d1a3bc",
+    "name": "Waterproof Hiking Jacket",
+    "description": "Breathable three-layer waterproof jacket with sealed seams",
+    "category": "Clothing",
+    "price": 166.64,
+    "stock": 319,
+    "available": true,
+    "tags": [
+      "cotton",
+      "fashion",
+      "casual",
+      "sustainable"
+    ],
+    "supplier": "Alpine Supply Chain",
+    "rating": 5.0
+  },
+  {
+    "id": "42b0de01-6d8c-4c9e-8a54-74170c682bfc",
+    "name": "Artisan Coffee Beans",
+    "description": "Single-origin Ethiopian Yirgacheffe medium roast whole beans 1kg",
+    "category": "Food",
+    "price": 30.76,
+    "stock": 343,
+    "available": true,
+    "tags": [
+      "gourmet",
+      "imported",
+      "gift-set",
+      "artisan"
+    ],
+    "supplier": "Horizon Enterprises",
+    "rating": 2.5
+  },
+  {
+    "id": "62884ee1-bf6d-4afc-830a-64e3f05f5dca",
+    "name": "Wireless Charging Pad",
+    "description": "Qi-certified 15W fast wireless charging pad with LED indicator",
+    "category": "Electronics",
+    "price": 799.67,
+    "stock": 39,
+    "available": true,
+    "tags": [
+      "wireless",
+      "portable",
+      "digital",
+      "smart"
+    ],
+    "supplier": "EcoFirst Distributors",
+    "rating": 3.1
+  },
+  {
+    "id": "37c06170-1ae0-46bb-8f31-2c5ce4a61c75",
+    "name": "USB Microphone",
+    "description": "Condenser USB microphone with cardioid pattern for podcasting and streaming",
+    "category": "Electronics",
+    "price": 1704.93,
+    "stock": 326,
+    "available": true,
+    "tags": [
+      "USB",
+      "portable",
+      "digital"
+    ],
+    "supplier": "TechVision Industries",
+    "rating": 2.9
+  },
+  {
+    "id": "72c99ed9-ac87-44e3-ae29-017ee58cc22e",
+    "name": "Climbing Chalk Bag",
+    "description": "Drawstring chalk bag with fleece lining and belt loop",
+    "category": "Sports",
+    "price": 242.01,
+    "stock": 192,
+    "available": true,
+    "tags": [
+      "exercise",
+      "performance"
+    ],
+    "supplier": "Meridian Trading Co.",
+    "rating": 3.1
+  },
+  {
+    "id": "42f98ec0-03a8-4550-988a-e42e6616cd01",
+    "name": "Portable SSD 1TB",
+    "description": "NVMe external SSD with USB 3.2 Gen 2 for ultra-fast file transfers",
+    "category": "Electronics",
+    "price": 1103.63,
+    "stock": 443,
+    "available": true,
+    "tags": [
+      "USB",
+      "wireless",
+      "tech",
+      "bluetooth"
+    ],
+    "supplier": "Pacific Rim Imports",
+    "rating": 4.4
+  },
+  {
+    "id": "913cb57a-4862-4d13-8f3e-c019afb601f3",
+    "name": "Rain Boots",
+    "description": "Waterproof natural rubber boots with cushioned insole",
+    "category": "Clothing",
+    "price": 383.31,
+    "stock": 339,
+    "available": true,
+    "tags": [
+      "cotton",
+      "premium",
+      "outdoor"
+    ],
+    "supplier": "Continental Goods Ltd.",
+    "rating": 4.8
+  },
+  {
+    "id": "5a1f860f-076f-45d1-97b1-1185ad74be97",
+    "name": "Stainless Steel Water Bottle",
+    "description": "Double-wall vacuum insulated bottle keeping drinks cold 24hrs or hot 12hrs",
+    "category": "Home",
+    "price": 75.8,
+    "stock": 393,
+    "available": true,
+    "tags": [
+      "minimalist",
+      "modern"
+    ],
+    "supplier": "Vanguard Wholesale",
+    "rating": 4.3
+  },
+  {
+    "id": "899b49e9-a8f4-4cb7-b6ae-d639a9d6e9b8",
+    "name": "Indoor Plant Pot Set",
+    "description": "Set of 3 minimalist ceramic planters with bamboo saucers",
+    "category": "Home",
+    "price": 161.09,
+    "stock": 171,
+    "available": true,
+    "tags": [
+      "eco-friendly",
+      "minimalist",
+      "modern"
+    ],
+    "supplier": "Horizon Enterprises",
+    "rating": 4.8
+  },
+  {
+    "id": "198fed58-0a1e-4e61-815d-bd1c7b649c63",
+    "name": "Fleece Pullover",
+    "description": "Mid-weight recycled fleece pullover with quarter-zip neck",
+    "category": "Clothing",
+    "price": 173.98,
+    "stock": 9,
+    "available": true,
+    "tags": [
+      "outdoor",
+      "premium",
+      "casual"
+    ],
+    "supplier": "NexGen Supply Co.",
+    "rating": 3.5
+  },
+  {
+    "id": "ffb7c499-030c-473b-b74c-7ca32c3f797e",
+    "name": "Sourdough Starter Kit",
+    "description": "Live sourdough starter with flour, guide, and proofing basket",
+    "category": "Food",
+    "price": 36.71,
+    "stock": 34,
+    "available": true,
+    "tags": [
+      "gourmet",
+      "organic",
+      "gift-set",
+      "imported"
+    ],
+    "supplier": "Pinnacle Distribution",
+    "rating": 4.1
+  },
+  {
+    "id": "849b0b28-e589-4e2c-9660-825b8bbfd083",
+    "name": "Insulated Winter Gloves",
+    "description": "Touchscreen-compatible insulated gloves with fleece lining",
+    "category": "Clothing",
+    "price": 126.81,
+    "stock": 194,
+    "available": true,
+    "tags": [
+      "comfortable",
+      "outdoor",
+      "casual"
+    ],
+    "supplier": "EcoFirst Distributors",
+    "rating": 4.9
+  },
+  {
+    "id": "aa32ad0c-2de9-4796-bb60-de49d7b2e179",
+    "name": "Laptop Stand",
+    "description": "Adjustable aluminum laptop stand with ventilation for heat dissipation",
+    "category": "Electronics",
+    "price": 2450.46,
+    "stock": 466,
+    "available": true,
+    "tags": [
+      "bluetooth",
+      "wireless",
+      "USB"
+    ],
+    "supplier": "TechVision Industries",
+    "rating": 2.7
+  },
+  {
+    "id": "03fa3d18-fa56-4328-bc42-894771dd1a7b",
+    "name": "Kinetic Sand Kit",
+    "description": "2 lbs of kinetic sand with molds, tools, and play tray",
+    "category": "Toys",
+    "price": 189.1,
+    "stock": 162,
+    "available": true,
+    "tags": [
+      "educational",
+      "gift",
+      "outdoor-play"
+    ],
+    "supplier": "Continental Goods Ltd.",
+    "rating": 3.4
+  },
+  {
+    "id": "5dc2baa3-ef5a-4a1f-8b46-2c7014ac9588",
+    "name": "Cashmere Scarf",
+    "description": "Luxuriously soft pure cashmere scarf with fringe detail",
+    "category": "Clothing",
+    "price": 89.01,
+    "stock": 175,
+    "available": true,
+    "tags": [
+      "outdoor",
+      "sustainable",
+      "comfortable",
+      "premium"
+    ],
+    "supplier": "NexGen Supply Co.",
+    "rating": 3.2
+  },
+  {
+    "id": "9333732a-acd5-42cc-959a-008701f03e96",
+    "name": "Streaming Device",
+    "description": "4K HDR streaming stick with voice remote and all major apps",
+    "category": "Electronics",
+    "price": 607.1,
+    "stock": 185,
+    "available": true,
+    "tags": [
+      "smart",
+      "tech",
+      "gadget",
+      "USB"
+    ],
+    "supplier": "Continental Goods Ltd.",
+    "rating": 2.6
+  },
+  {
+    "id": "880be18f-37db-495c-8e35-ae986ef44043",
+    "name": "The Phoenix Project",
+    "description": "A novel about IT, DevOps, and helping your business win",
+    "category": "Books",
+    "price": 53.06,
+    "stock": 104,
+    "available": true,
+    "tags": [
+      "reference",
+      "programming",
+      "career"
+    ],
+    "supplier": "Atlantic Commerce Group",
+    "rating": 4.3
+  },
+  {
+    "id": "7e6f633a-4dfb-4e90-9a91-c41a45abf7f9",
+    "name": "Designing Data-Intensive Apps",
+    "description": "Architecture patterns for reliable and scalable data systems",
+    "category": "Books",
+    "price": 22.23,
+    "stock": 455,
+    "available": true,
+    "tags": [
+      "reference",
+      "career",
+      "bestseller",
+      "non-fiction"
+    ],
+    "supplier": "Alpine Supply Chain",
+    "rating": 4.2
+  },
+  {
+    "id": "12824713-ba86-48e9-8a40-fba145b5617a",
+    "name": "Building Block Set 1000pc",
+    "description": "Classic interlocking building blocks in 15 colors with baseplate",
+    "category": "Toys",
+    "price": 66.29,
+    "stock": 207,
+    "available": true,
+    "tags": [
+      "STEM",
+      "creative",
+      "outdoor-play"
+    ],
+    "supplier": "Meridian Trading Co.",
+    "rating": 4.6
+  },
+  {
+    "id": "58747dd8-8c90-477e-b553-c017ccaa9c3a",
+    "name": "Remote Control Car",
+    "description": "1:16 scale off-road RC car with 2.4GHz remote and rechargeable battery",
+    "category": "Toys",
+    "price": 81.43,
+    "stock": 334,
+    "available": true,
+    "tags": [
+      "gift",
+      "educational",
+      "outdoor-play",
+      "family"
+    ],
+    "supplier": "Summit Manufacturing",
+    "rating": 3.7
+  },
+  {
+    "id": "0b9b3f6c-0889-47db-acad-524e4dd5a8b3",
+    "name": "LED Desk Lamp",
+    "description": "Adjustable LED desk lamp with wireless charging base and color temperature control",
+    "category": "Home",
+    "price": 101.77,
+    "stock": 243,
+    "available": true,
+    "tags": [
+      "minimalist",
+      "decor",
+      "organization"
+    ],
+    "supplier": "Harbor Logistics Inc.",
+    "rating": 2.6
+  },
+  {
+    "id": "219290e1-951c-4416-b177-d9f79026e048",
+    "name": "Cargo Jogger Pants",
+    "description": "Stretch twill joggers with cargo pockets and elastic cuffs",
+    "category": "Clothing",
+    "price": 214.68,
+    "stock": 396,
+    "available": true,
+    "tags": [
+      "premium",
+      "sustainable",
+      "fashion",
+      "casual"
+    ],
+    "supplier": "Summit Manufacturing",
+    "rating": 3.3
+  },
+  {
+    "id": "69d235dc-48f2-479f-8d15-4b94543ba42f",
+    "name": "Noise Cancelling Earbuds",
+    "description": "True wireless earbuds with ANC and transparency mode",
+    "category": "Electronics",
+    "price": 891.83,
+    "stock": 308,
+    "available": true,
+    "tags": [
+      "bluetooth",
+      "gadget",
+      "USB",
+      "smart"
+    ],
+    "supplier": "TechVision Industries",
+    "rating": 4.3
+  },
+  {
+    "id": "0e940ad1-616d-4cf6-924f-caedc21cf95f",
+    "name": "Puzzle 1000 Pieces",
+    "description": "Premium jigsaw puzzle featuring world landmarks with poster guide",
+    "category": "Toys",
+    "price": 185.5,
+    "stock": 444,
+    "available": true,
+    "tags": [
+      "STEM",
+      "family",
+      "ages-6+",
+      "educational"
+    ],
+    "supplier": "Harbor Logistics Inc.",
+    "rating": 4.8
+  },
+  {
+    "id": "1c6f00fe-8012-456c-8ac9-5b5dac846b6d",
+    "name": "Leather Belt",
+    "description": "Full-grain Italian leather belt with brushed nickel buckle",
+    "category": "Clothing",
+    "price": 125.79,
+    "stock": 162,
+    "available": true,
+    "tags": [
+      "outdoor",
+      "cotton",
+      "comfortable"
+    ],
+    "supplier": "Pinnacle Distribution",
+    "rating": 4.2
+  },
+  {
+    "id": "205ef70b-3ec4-4637-8137-c5663183a495",
+    "name": "Learning Python",
+    "description": "Beginner-friendly introduction to Python programming with hands-on exercises",
+    "category": "Books",
+    "price": 40.71,
+    "stock": 100,
+    "available": true,
+    "tags": [
+      "reference",
+      "career",
+      "programming",
+      "bestseller"
+    ],
+    "supplier": "GlobalSource Trading",
+    "rating": 3.8
+  },
+  {
+    "id": "f28259f1-d13d-4fa0-8950-8d5034043c86",
+    "name": "Formal Dress Shirt",
+    "description": "Non-iron cotton dress shirt with spread collar and French cuffs",
+    "category": "Clothing",
+    "price": 67.84,
+    "stock": 275,
+    "available": true,
+    "tags": [
+      "cotton",
+      "sustainable",
+      "outdoor"
+    ],
+    "supplier": "Pinnacle Distribution",
+    "rating": 4.4
+  },
+  {
+    "id": "a936bea4-5087-49d2-83e8-3e8a08b2ee0d",
+    "name": "27-inch 4K Monitor",
+    "description": "IPS panel with 99% sRGB coverage and adjustable ergonomic stand",
+    "category": "Electronics",
+    "price": 729.55,
+    "stock": 417,
+    "available": true,
+    "tags": [
+      "digital",
+      "wireless",
+      "tech",
+      "gadget"
+    ],
+    "supplier": "Meridian Trading Co.",
+    "rating": 4.5
+  },
+  {
+    "id": "363f7b3a-c5ad-42ed-aeb8-fddf800ce7a5",
+    "name": "Kitchen Scale",
+    "description": "Digital kitchen scale with tare function and precision to 1g",
+    "category": "Home",
+    "price": 173.78,
+    "stock": 131,
+    "available": true,
+    "tags": [
+      "decor",
+      "kitchen",
+      "organization",
+      "modern"
+    ],
+    "supplier": "Alpine Supply Chain",
+    "rating": 3.0
+  },
+  {
+    "id": "d7c388fc-5d79-46f8-b59b-1332c8b9dc6e",
+    "name": "Cycling Jersey",
+    "description": "Moisture-wicking cycling jersey with rear pockets and reflective elements",
+    "category": "Sports",
+    "price": 419.05,
+    "stock": 91,
+    "available": true,
+    "tags": [
+      "equipment",
+      "performance",
+      "outdoor",
+      "recovery"
+    ],
+    "supplier": "Alpine Supply Chain",
+    "rating": 2.6
+  },
+  {
+    "id": "78f73f11-8036-490c-81cc-86deb8f45f80",
+    "name": "Domain-Driven Design Guide",
+    "description": "Strategic and tactical patterns for complex software modeling",
+    "category": "Books",
+    "price": 31.62,
+    "stock": 449,
+    "available": true,
+    "tags": [
+      "bestseller",
+      "reference",
+      "programming",
+      "learning"
+    ],
+    "supplier": "Horizon Enterprises",
+    "rating": 4.7
+  },
+  {
+    "id": "e7596a76-21c8-41bc-ad00-d4d3afb07216",
+    "name": "French Press Coffee Maker",
+    "description": "Borosilicate glass French press with stainless steel frame",
+    "category": "Home",
+    "price": 104.55,
+    "stock": 435,
+    "available": true,
+    "tags": [
+      "eco-friendly",
+      "organization",
+      "decor",
+      "kitchen"
+    ],
+    "supplier": "Vanguard Wholesale",
+    "rating": 3.6
+  },
+  {
+    "id": "fb5b40ff-31b9-4408-b98f-daadb4ef9bad",
+    "name": "Non-Stick Bakeware Set",
+    "description": "5-piece carbon steel bakeware set with silicone grips",
+    "category": "Home",
+    "price": 115.31,
+    "stock": 257,
+    "available": true,
+    "tags": [
+      "gift",
+      "organization",
+      "kitchen",
+      "minimalist"
+    ],
+    "supplier": "NexGen Supply Co.",
+    "rating": 3.0
+  },
+  {
+    "id": "3bd97f95-348c-4a8d-9e88-2e8198b47945",
+    "name": "Smoked Salmon",
+    "description": "Wild-caught Alaskan sockeye salmon cold-smoked over alder wood",
+    "category": "Food",
+    "price": 5.55,
+    "stock": 478,
+    "available": true,
+    "tags": [
+      "imported",
+      "premium",
+      "gift-set",
+      "organic"
+    ],
+    "supplier": "Summit Manufacturing",
+    "rating": 3.5
+  },
+  {
+    "id": "8b4a0af4-214d-4f66-9ab9-b2da4d72c606",
+    "name": "Shower Curtain",
+    "description": "Mildew-resistant polyester shower curtain with modern geometric pattern",
+    "category": "Home",
+    "price": 84.14,
+    "stock": 71,
+    "available": true,
+    "tags": [
+      "organization",
+      "decor",
+      "kitchen"
+    ],
+    "supplier": "NexGen Supply Co.",
+    "rating": 3.6
+  },
+  {
+    "id": "c83dadfa-cd94-4485-ad17-d8570510ca7e",
+    "name": "Digital Drawing Tablet",
+    "description": "Pressure-sensitive graphics tablet with 8192 levels for digital art",
+    "category": "Electronics",
+    "price": 1304.0,
+    "stock": 58,
+    "available": true,
+    "tags": [
+      "wireless",
+      "smart"
+    ],
+    "supplier": "Horizon Enterprises",
+    "rating": 3.9
+  },
+  {
+    "id": "f6a34796-522a-4874-b777-00b9af9f1d8b",
+    "name": "Lightweight Down Vest",
+    "description": "Packable 700-fill down vest with water-resistant shell",
+    "category": "Clothing",
+    "price": 287.85,
+    "stock": 153,
+    "available": true,
+    "tags": [
+      "outdoor",
+      "cotton",
+      "sustainable",
+      "premium"
+    ],
+    "supplier": "EcoFirst Distributors",
+    "rating": 3.7
+  },
+  {
+    "id": "a3569656-b715-4736-8375-7485ba146fa4",
+    "name": "Magnetic Tiles Set",
+    "description": "100-piece magnetic building tiles with translucent colors",
+    "category": "Toys",
+    "price": 194.05,
+    "stock": 174,
+    "available": true,
+    "tags": [
+      "gift",
+      "STEM",
+      "outdoor-play",
+      "family"
+    ],
+    "supplier": "Atlantic Commerce Group",
+    "rating": 2.6
+  },
+  {
+    "id": "8dd8687f-aae0-416e-a97e-bd566c2a9c50",
+    "name": "Head First Design Patterns",
+    "description": "Brain-friendly guide to software design patterns with visual learning",
+    "category": "Books",
+    "price": 22.4,
+    "stock": 484,
+    "available": true,
+    "tags": [
+      "learning",
+      "reference",
+      "non-fiction"
+    ],
+    "supplier": "Meridian Trading Co.",
+    "rating": 4.8
+  },
+  {
+    "id": "e1b26a00-b7cb-4d01-a5c5-6ce91718dfd9",
+    "name": "Yoga Leggings",
+    "description": "High-waist compression leggings with hidden pocket and four-way stretch",
+    "category": "Clothing",
+    "price": 117.22,
+    "stock": 460,
+    "available": true,
+    "tags": [
+      "comfortable",
+      "sustainable",
+      "fashion",
+      "premium"
+    ],
+    "supplier": "Harbor Logistics Inc.",
+    "rating": 4.5
+  },
+  {
+    "id": "a2642a76-8ca0-4583-8a06-176e2e53365a",
+    "name": "Sea Salt Caramels",
+    "description": "Hand-dipped caramels with Brittany sea salt in a gift tin",
+    "category": "Food",
+    "price": 72.56,
+    "stock": 269,
+    "available": true,
+    "tags": [
+      "gift-set",
+      "artisan",
+      "premium"
+    ],
+    "supplier": "GlobalSource Trading",
+    "rating": 3.4
+  },
+  {
+    "id": "7da14756-1ba8-4767-9082-f062b986767a",
+    "name": "Kubernetes in Action",
+    "description": "Practical guide to deploying and managing containerized applications",
+    "category": "Books",
+    "price": 17.89,
+    "stock": 152,
+    "available": true,
+    "tags": [
+      "education",
+      "bestseller",
+      "learning"
+    ],
+    "supplier": "Pacific Rim Imports",
+    "rating": 3.7
+  },
+  {
+    "id": "0aeaa289-3b2d-4fa3-8837-4ca8a984e7d1",
+    "name": "Organic Green Tea Collection",
+    "description": "Assorted box of 60 organic green tea bags from Japanese gardens",
+    "category": "Food",
+    "price": 33.06,
+    "stock": 198,
+    "available": true,
+    "tags": [
+      "artisan",
+      "gourmet"
+    ],
+    "supplier": "GlobalSource Trading",
+    "rating": 4.8
+  },
+  {
+    "id": "eb71ce88-83e6-49a7-bd95-eec07c9f570e",
+    "name": "Storage Basket Set",
+    "description": "Handwoven seagrass baskets with handles for organizing",
+    "category": "Home",
+    "price": 11.33,
+    "stock": 136,
+    "available": true,
+    "tags": [
+      "organization",
+      "modern",
+      "minimalist"
+    ],
+    "supplier": "Harbor Logistics Inc.",
+    "rating": 3.4
+  },
+  {
+    "id": "4530a73c-e3dc-44e3-a27f-d8bcb89647e9",
+    "name": "Cast Iron Skillet 12-inch",
+    "description": "Pre-seasoned cast iron skillet with heat-resistant handle",
+    "category": "Home",
+    "price": 126.81,
+    "stock": 70,
+    "available": true,
+    "tags": [
+      "modern",
+      "decor"
+    ],
+    "supplier": "Horizon Enterprises",
+    "rating": 4.7
+  },
+  {
+    "id": "1efe4009-96da-459c-b051-a2f57689cc54",
+    "name": "Resistance Band Set",
+    "description": "5-level latex resistance bands with handles and door anchor",
+    "category": "Sports",
+    "price": 233.82,
+    "stock": 28,
+    "available": true,
+    "tags": [
+      "outdoor",
+      "performance",
+      "equipment"
+    ],
+    "supplier": "TechVision Industries",
+    "rating": 3.9
+  },
+  {
+    "id": "bf0add25-66e6-4b4f-8806-61550fa5c823",
+    "name": "Magic Trick Set",
+    "description": "Professional magic kit with 75 tricks and instructional video access",
+    "category": "Toys",
+    "price": 40.93,
+    "stock": 154,
+    "available": true,
+    "tags": [
+      "family",
+      "creative",
+      "educational"
+    ],
+    "supplier": "EcoFirst Distributors",
+    "rating": 3.6
+  },
+  {
+    "id": "5e2c1c1c-68a6-4aa6-ba5e-df70329af8ec",
+    "name": "Fitness Tracker Band",
+    "description": "Water-resistant fitness band with step counter and sleep tracking",
+    "category": "Sports",
+    "price": 126.07,
+    "stock": 374,
+    "available": true,
+    "tags": [
+      "training",
+      "performance",
+      "recovery",
+      "exercise"
+    ],
+    "supplier": "Horizon Enterprises",
+    "rating": 2.9
+  },
+  {
+    "id": "00a25a3e-0121-4cae-8bd9-437c0ab304a0",
+    "name": "Staff Engineer",
+    "description": "Leadership beyond the management track in software engineering",
+    "category": "Books",
+    "price": 11.15,
+    "stock": 263,
+    "available": true,
+    "tags": [
+      "non-fiction",
+      "career",
+      "learning"
+    ],
+    "supplier": "Pacific Rim Imports",
+    "rating": 3.8
+  },
+  {
+    "id": "f846c126-a968-464f-877a-a2186668dd4b",
+    "name": "Hot Sauce Trio",
+    "description": "Set of 3 small-batch hot sauces ranging from mild to extra hot",
+    "category": "Food",
+    "price": 40.04,
+    "stock": 342,
+    "available": true,
+    "tags": [
+      "gift-set",
+      "organic"
+    ],
+    "supplier": "Meridian Trading Co.",
+    "rating": 4.1
+  },
+  {
+    "id": "87f9d083-7f2c-4a6f-b241-059ca065da6e",
+    "name": "Dinosaur Figure Set",
+    "description": "12 detailed hand-painted dinosaur figures with fact cards",
+    "category": "Toys",
+    "price": 189.34,
+    "stock": 247,
+    "available": true,
+    "tags": [
+      "ages-6+",
+      "gift"
+    ],
+    "supplier": "Vanguard Wholesale",
+    "rating": 4.1
+  },
+  {
+    "id": "728310d2-7480-48aa-8015-ac577810ce0a",
+    "name": "The Pragmatic Programmer",
+    "description": "Timeless lessons on software craftsmanship and practical development",
+    "category": "Books",
+    "price": 33.28,
+    "stock": 64,
+    "available": true,
+    "tags": [
+      "bestseller",
+      "education",
+      "non-fiction"
+    ],
+    "supplier": "Summit Manufacturing",
+    "rating": 3.4
+  },
+  {
+    "id": "d0c79b26-e200-42f8-bc25-38d566b6c312",
+    "name": "Cotton Crew Neck T-Shirt",
+    "description": "100% organic cotton t-shirt with reinforced shoulder seams",
+    "category": "Clothing",
+    "price": 169.21,
+    "stock": 135,
+    "available": true,
+    "tags": [
+      "outdoor",
+      "premium",
+      "comfortable",
+      "fashion"
+    ],
+    "supplier": "Pinnacle Distribution",
+    "rating": 3.9
+  },
+  {
+    "id": "e919b8a3-b574-4433-89f7-719f64cf6eae",
+    "name": "Memory Foam Pillow",
+    "description": "Contour memory foam pillow with cooling gel layer and bamboo cover",
+    "category": "Home",
+    "price": 217.46,
+    "stock": 26,
+    "available": true,
+    "tags": [
+      "eco-friendly",
+      "organization"
+    ],
+    "supplier": "GlobalSource Trading",
+    "rating": 4.2
+  },
+  {
+    "id": "d5b09e4e-8841-4eaf-bd35-0bc4e953cc79",
+    "name": "System Design Interview",
+    "description": "Comprehensive preparation guide for system design technical interviews",
+    "category": "Books",
+    "price": 54.74,
+    "stock": 363,
+    "available": true,
+    "tags": [
+      "career",
+      "reference"
+    ],
+    "supplier": "Meridian Trading Co.",
+    "rating": 2.7
+  },
+  {
+    "id": "1aca668b-1bbd-411c-b557-52cdfea5b233",
+    "name": "Boxing Gloves",
+    "description": "12oz synthetic leather boxing gloves with wrist support",
+    "category": "Sports",
+    "price": 217.81,
+    "stock": 152,
+    "available": true,
+    "tags": [
+      "recovery",
+      "exercise",
+      "performance"
+    ],
+    "supplier": "Pacific Rim Imports",
+    "rating": 4.6
+  },
+  {
+    "id": "9ca0da16-07ae-470d-a1bb-5091df249f9f",
+    "name": "Outdoor Explorer Set",
+    "description": "Kids nature kit with binoculars, compass, magnifying glass, and field guide",
+    "category": "Toys",
+    "price": 76.59,
+    "stock": 262,
+    "available": true,
+    "tags": [
+      "educational",
+      "gift",
+      "outdoor-play"
+    ],
+    "supplier": "GlobalSource Trading",
+    "rating": 4.0
+  },
+  {
+    "id": "f265ce87-699a-481b-bda0-57c7fa35cad7",
+    "name": "Slim Fit Chino Pants",
+    "description": "Stretch cotton chinos with tapered leg and hidden flex waistband",
+    "category": "Clothing",
+    "price": 309.29,
+    "stock": 185,
+    "available": true,
+    "tags": [
+      "outdoor",
+      "fashion",
+      "premium",
+      "cotton"
+    ],
+    "supplier": "EcoFirst Distributors",
+    "rating": 4.6
+  },
+  {
+    "id": "e364d7e1-1279-43c6-b21d-c3d05f9735a1",
+    "name": "The Lean Startup",
+    "description": "How today's entrepreneurs use continuous innovation to build businesses",
+    "category": "Books",
+    "price": 27.63,
+    "stock": 494,
+    "available": true,
+    "tags": [
+      "programming",
+      "reference"
+    ],
+    "supplier": "TechVision Industries",
+    "rating": 3.2
+  },
+  {
+    "id": "4b988e29-c8f0-4b14-afb4-e0c08b3cd46a",
+    "name": "E-Reader",
+    "description": "6.8-inch e-ink display reader with adjustable warm light and 32GB storage",
+    "category": "Electronics",
+    "price": 881.6,
+    "stock": 227,
+    "available": true,
+    "tags": [
+      "USB",
+      "digital"
+    ],
+    "supplier": "GlobalSource Trading",
+    "rating": 3.9
+  },
+  {
+    "id": "90e996b1-45a5-4ac6-9c7a-5e936fa0a737",
+    "name": "Turkish Bath Towel Set",
+    "description": "Set of 4 quick-dry Turkish cotton towels with hanging loops",
+    "category": "Home",
+    "price": 117.09,
+    "stock": 68,
+    "available": true,
+    "tags": [
+      "decor",
+      "eco-friendly",
+      "modern"
+    ],
+    "supplier": "Vanguard Wholesale",
+    "rating": 3.9
+  },
+  {
+    "id": "b09387c0-42d7-4430-82eb-bf3a89f37f90",
+    "name": "Jump Rope",
+    "description": "Speed jump rope with ball bearings and adjustable steel cable",
+    "category": "Sports",
+    "price": 178.81,
+    "stock": 296,
+    "available": true,
+    "tags": [
+      "fitness",
+      "equipment"
+    ],
+    "supplier": "GlobalSource Trading",
+    "rating": 3.9
+  },
+  {
+    "id": "489365b5-fcf5-4a8c-aae8-43f16f67a6c8",
+    "name": "Art Supply Kit",
+    "description": "150-piece art set with colored pencils, markers, pastels, and sketchpad",
+    "category": "Toys",
+    "price": 82.3,
+    "stock": 427,
+    "available": true,
+    "tags": [
+      "outdoor-play",
+      "STEM",
+      "ages-6+"
+    ],
+    "supplier": "Vanguard Wholesale",
+    "rating": 2.8
+  },
+  {
+    "id": "2ba11019-1854-4137-b426-6ecd8550dcc7",
+    "name": "Mixed Nuts Premium",
+    "description": "Roasted and salted premium mix of cashews, almonds, pecans, and macadamias",
+    "category": "Food",
+    "price": 82.78,
+    "stock": 124,
+    "available": true,
+    "tags": [
+      "natural",
+      "premium",
+      "gourmet",
+      "imported"
+    ],
+    "supplier": "Summit Manufacturing",
+    "rating": 3.3
+  },
+  {
+    "id": "d7a80a3a-952b-4dcd-b4cb-cabb064d321e",
+    "name": "Manuka Honey",
+    "description": "UMF 15+ New Zealand Manuka honey in raw unfiltered form",
+    "category": "Food",
+    "price": 68.47,
+    "stock": 479,
+    "available": true,
+    "tags": [
+      "premium",
+      "organic"
+    ],
+    "supplier": "Alpine Supply Chain",
+    "rating": 3.7
+  },
+  {
+    "id": "b6b00fee-75ec-436a-9a24-4230d7a6dd47",
+    "name": "Organic Pasta Set",
+    "description": "Artisan bronze-die extruded pasta in 6 classic Italian shapes",
+    "category": "Food",
+    "price": 60.63,
+    "stock": 291,
+    "available": true,
+    "tags": [
+      "imported",
+      "natural"
+    ],
+    "supplier": "Harbor Logistics Inc.",
+    "rating": 3.3
+  },
+  {
+    "id": "bbab4c98-e7d3-4f1b-aa22-729fd7ca23ae",
+    "name": "Card Game Collection",
+    "description": "Set of 5 popular family card games in a travel-friendly box",
+    "category": "Toys",
+    "price": 158.71,
+    "stock": 137,
+    "available": true,
+    "tags": [
+      "family",
+      "outdoor-play"
+    ],
+    "supplier": "PrimeWare Solutions",
+    "rating": 4.3
+  },
+  {
+    "id": "ef409c1e-7220-4f36-baf1-e1a1e4b49c6b",
+    "name": "Matcha Powder",
+    "description": "Ceremonial grade stone-ground matcha from Uji, Kyoto",
+    "category": "Food",
+    "price": 46.5,
+    "stock": 86,
+    "available": true,
+    "tags": [
+      "premium",
+      "natural"
+    ],
+    "supplier": "Horizon Enterprises",
+    "rating": 4.7
+  },
+  {
+    "id": "bb4ba41e-2bbb-4904-bbae-b18517d8c2c5",
+    "name": "Foam Roller",
+    "description": "High-density EVA foam roller for deep tissue massage and recovery",
+    "category": "Sports",
+    "price": 150.66,
+    "stock": 30,
+    "available": true,
+    "tags": [
+      "equipment",
+      "fitness"
+    ],
+    "supplier": "PrimeWare Solutions",
+    "rating": 4.4
+  },
+  {
+    "id": "15ab4486-e49b-428d-9e3a-9867813b29c5",
+    "name": "Ski Goggles",
+    "description": "Dual-layer anti-fog ski goggles with OTG design for glasses wearers",
+    "category": "Sports",
+    "price": 351.18,
+    "stock": 176,
+    "available": true,
+    "tags": [
+      "recovery",
+      "equipment",
+      "performance",
+      "training"
+    ],
+    "supplier": "Pacific Rim Imports",
+    "rating": 2.9
+  },
+  {
+    "id": "2b724487-2b5e-4657-8a02-f3b04e521ceb",
+    "name": "Running Shoes",
+    "description": "Lightweight cushioned running shoes with responsive foam midsole",
+    "category": "Sports",
+    "price": 496.49,
+    "stock": 392,
+    "available": true,
+    "tags": [
+      "recovery",
+      "exercise",
+      "equipment",
+      "training"
+    ],
+    "supplier": "Pacific Rim Imports",
+    "rating": 3.6
+  },
+  {
+    "id": "531af8ad-770b-4020-a9b0-4103cce16a3a",
+    "name": "Dark Chocolate Assortment",
+    "description": "Selection of 24 premium dark chocolates from 70% to 90% cacao",
+    "category": "Food",
+    "price": 9.37,
+    "stock": 433,
+    "available": true,
+    "tags": [
+      "organic",
+      "natural",
+      "gourmet"
+    ],
+    "supplier": "Pacific Rim Imports",
+    "rating": 4.2
+  },
+  {
+    "id": "5a348111-8450-4422-bedf-a2081ad581c5",
+    "name": "USB-C Charging Hub",
+    "description": "7-port USB-C hub with 100W power delivery and 4K HDMI output",
+    "category": "Electronics",
+    "price": 1944.94,
+    "stock": 415,
+    "available": true,
+    "tags": [
+      "gadget",
+      "USB"
+    ],
+    "supplier": "Continental Goods Ltd.",
+    "rating": 2.6
+  },
+  {
+    "id": "4de9e193-6a42-4e3b-960d-1c4b727c14b4",
+    "name": "Knife Block Set",
+    "description": "8-piece German steel knife set with natural acacia wood block",
+    "category": "Home",
+    "price": 206.65,
+    "stock": 241,
+    "available": true,
+    "tags": [
+      "gift",
+      "minimalist",
+      "decor",
+      "modern"
+    ],
+    "supplier": "Pinnacle Distribution",
+    "rating": 4.7
+  },
+  {
+    "id": "ff6804b1-c2a7-4084-b9ab-87453c7d14c1",
+    "name": "Algorithms to Live By",
+    "description": "Computer science concepts applied to everyday human decisions",
+    "category": "Books",
+    "price": 22.39,
+    "stock": 238,
+    "available": true,
+    "tags": [
+      "career",
+      "non-fiction"
+    ],
+    "supplier": "GlobalSource Trading",
+    "rating": 2.6
+  },
+  {
+    "id": "6a1d38d8-b76f-42a3-b628-36a9268e615c",
+    "name": "JavaScript: The Good Parts",
+    "description": "Essential guide to the most reliable features of JavaScript",
+    "category": "Books",
+    "price": 52.12,
+    "stock": 86,
+    "available": true,
+    "tags": [
+      "reference",
+      "programming",
+      "bestseller",
+      "career"
+    ],
+    "supplier": "Pinnacle Distribution",
+    "rating": 2.6
+  },
+  {
+    "id": "03216eec-49be-46fa-a2ee-f409c371f1f6",
+    "name": "Granola",
+    "description": "Crunchy handmade granola with oats, honey, coconut, and dark chocolate",
+    "category": "Food",
+    "price": 6.45,
+    "stock": 8,
+    "available": true,
+    "tags": [
+      "premium",
+      "artisan",
+      "natural",
+      "gift-set"
+    ],
+    "supplier": "Meridian Trading Co.",
+    "rating": 4.2
+  },
+  {
+    "id": "b2d4331c-2b77-43e2-9103-314b7b6cfd52",
+    "name": "Quick-Dry Polo Shirt",
+    "description": "Performance polo with UPF 50 sun protection and moisture management",
+    "category": "Clothing",
+    "price": 27.14,
+    "stock": 396,
+    "available": true,
+    "tags": [
+      "casual",
+      "sustainable",
+      "comfortable"
+    ],
+    "supplier": "Vanguard Wholesale",
+    "rating": 2.8
+  },
+  {
+    "id": "43c51c79-edfd-4ee6-8000-50bcd47a6d70",
+    "name": "Air Purifier — Limited Edition",
+    "description": "HEPA air purifier covering up to 500 sq ft with quiet sleep mode",
+    "category": "Home",
+    "price": 312.37,
+    "stock": 94,
+    "available": true,
+    "tags": [
+      "eco-friendly",
+      "modern",
+      "organization",
+      "kitchen"
+    ],
+    "supplier": "GlobalSource Trading",
+    "rating": 2.7
+  },
+  {
+    "id": "54944fad-9b10-404a-87e6-2263334deeed",
+    "name": "Waterproof Hiking Jacket — Limited Edition",
+    "description": "Breathable three-layer waterproof jacket with sealed seams",
+    "category": "Clothing",
+    "price": 171.47,
+    "stock": 70,
+    "available": true,
+    "tags": [
+      "cotton",
+      "fashion",
+      "casual",
+      "sustainable"
+    ],
+    "supplier": "Alpine Supply Chain",
+    "rating": 5.0
+  },
+  {
+    "id": "4ad356d4-5b12-4778-9cb4-4a933e62c537",
+    "name": "Stuffed Animal Bear — Limited Edition",
+    "description": "Ultra-soft plush teddy bear handmade with recycled polyester",
+    "category": "Toys",
+    "price": 65.01,
+    "stock": 54,
+    "available": true,
+    "tags": [
+      "creative",
+      "outdoor-play",
+      "family",
+      "educational"
+    ],
+    "supplier": "Pinnacle Distribution",
+    "rating": 3.1
+  },
+  {
+    "id": "1a58a632-cfef-4c6b-85cb-70d0d7782eaf",
+    "name": "Outdoor Explorer Set — Limited Edition",
+    "description": "Kids nature kit with binoculars, compass, magnifying glass, and field guide",
+    "category": "Toys",
+    "price": 73.37,
+    "stock": 51,
+    "available": true,
+    "tags": [
+      "educational",
+      "gift",
+      "outdoor-play"
+    ],
+    "supplier": "GlobalSource Trading",
+    "rating": 4.0
+  },
+  {
+    "id": "1fd03156-b262-4d35-a623-aff34ff4f7e2",
+    "name": "Wireless Mouse — Limited Edition",
+    "description": "Ergonomic wireless mouse with 16000 DPI sensor and silent clicks",
+    "category": "Electronics",
+    "price": 204.21,
+    "stock": 84,
+    "available": true,
+    "tags": [
+      "gadget",
+      "USB",
+      "smart"
+    ],
+    "supplier": "Pinnacle Distribution",
+    "rating": 5.0
+  },
+  {
+    "id": "e7433084-95c1-462f-8b71-c3d4819cfdb1",
+    "name": "Staff Engineer — Limited Edition",
+    "description": "Leadership beyond the management track in software engineering",
+    "category": "Books",
+    "price": 11.14,
+    "stock": 94,
+    "available": true,
+    "tags": [
+      "non-fiction",
+      "career",
+      "learning"
+    ],
+    "supplier": "Pacific Rim Imports",
+    "rating": 3.8
+  },
+  {
+    "id": "1197e340-134b-4f90-a909-ad59a3b1e270",
+    "name": "Truffle Salt — Limited Edition",
+    "description": "French black truffle infused Fleur de Sel from Camargue",
+    "category": "Food",
+    "price": 18.16,
+    "stock": 54,
+    "available": true,
+    "tags": [
+      "natural",
+      "gift-set",
+      "imported",
+      "artisan"
+    ],
+    "supplier": "Atlantic Commerce Group",
+    "rating": 3.1
+  },
+  {
+    "id": "8963add2-8c9c-4157-9fd2-6e18b9511f89",
+    "name": "Magnetic Tiles Set — Limited Edition",
+    "description": "100-piece magnetic building tiles with translucent colors",
+    "category": "Toys",
+    "price": 174.86,
+    "stock": 27,
+    "available": true,
+    "tags": [
+      "gift",
+      "STEM",
+      "outdoor-play",
+      "family"
+    ],
+    "supplier": "Atlantic Commerce Group",
+    "rating": 2.6
+  },
+  {
+    "id": "ce210718-19f9-4705-a100-151ad7864ddc",
+    "name": "Science Experiment Kit — Limited Edition",
+    "description": "50 experiments covering chemistry, physics, and biology for ages 8+",
+    "category": "Toys",
+    "price": 24.03,
+    "stock": 90,
+    "available": true,
+    "tags": [
+      "outdoor-play",
+      "creative"
+    ],
+    "supplier": "Meridian Trading Co.",
+    "rating": 3.6
+  },
+  {
+    "id": "212a9995-9b15-4681-9d21-cbeb7ac6807a",
+    "name": "Running Shorts — Limited Edition",
+    "description": "Lightweight moisture-wicking running shorts with built-in brief",
+    "category": "Clothing",
+    "price": 149.56,
+    "stock": 68,
+    "available": true,
+    "tags": [
+      "casual",
+      "sustainable"
+    ],
+    "supplier": "Continental Goods Ltd.",
+    "rating": 3.8
+  }
+]

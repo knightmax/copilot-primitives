@@ -205,6 +205,11 @@
             grid-template-columns: repeat(3, 1fr);
             gap: clamp(0.6rem, 1.5vw, 1.5rem);
         }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: clamp(0.5rem, 1.2vw, 1.2rem);
+        }
         .split {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -329,9 +334,10 @@
         @media (max-width: 768px) {
             .split { grid-template-columns: 1fr; }
             .grid-3 { grid-template-columns: 1fr 1fr; }
+            .grid-4 { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 600px) {
-            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
         }
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
@@ -423,9 +429,76 @@
         </div>
     </section>
 
-    <!-- ==================== SLIDE 3: L'APPROCHE ==================== -->
+    <!-- ==================== SLIDE 3: PIPELINE — LE VOYAGE D'UN PROMPT ==================== -->
     <section class="slide" data-nav="Intro">
         <span class="section-num">03</span>
+        <div class="slide-content">
+            <h2 class="reveal">Sous le Capot : le Voyage d'un Prompt</h2>
+            <p class="reveal reveal-d1" style="max-width: 700px; margin-bottom: clamp(0.5rem, 1.5vh, 1rem);">Chaque message parcourt <span class="text-accent fw-700">4 étapes</span> avant qu'un seul mot ne soit généré.</p>
+            <div class="grid-4 reveal reveal-d2" style="max-width: 960px;">
+                <div class="dark-card flex-col gap-1" style="border-top: 3px solid var(--card-accent);">
+                    <div style="font-size: clamp(1.2rem, 2vw, 1.8rem);">①</div>
+                    <h3 style="font-size: var(--body-size); color: var(--card-accent);">Tokenisation</h3>
+                    <p style="font-size: var(--small-size);">Texte → sous-mots → IDs entiers via <strong>BPE</strong> (GPT) ou SentencePiece. C'est ici que le <em>coût</em> se décide : <span class="text-accent fw-700">~1 token ≈ 4 caractères</span></p>
+                </div>
+                <div class="dark-card flex-col gap-1" style="border-top: 3px solid var(--blue);">
+                    <div style="font-size: clamp(1.2rem, 2vw, 1.8rem);">②</div>
+                    <h3 style="font-size: var(--body-size); color: var(--blue);">Embedding</h3>
+                    <p style="font-size: var(--small-size);">Chaque ID → vecteur haute dimension (ex : 4 096d). Un <strong>encodage positionnel</strong> (RoPE) est ajouté pour que le modèle connaisse l'ordre des mots.</p>
+                </div>
+                <div class="dark-card flex-col gap-1" style="border-top: 3px solid var(--purple);">
+                    <div style="font-size: clamp(1.2rem, 2vw, 1.8rem);">③</div>
+                    <h3 style="font-size: var(--body-size); color: var(--purple);">Self-Attention</h3>
+                    <p style="font-size: var(--small-size);">Chaque token « regarde » tous les autres via matrices <strong>Q·K·V</strong> (multi-head). <span class="text-accent fw-700">Complexité O(n²)</span> — doubler les tokens = 4× le coût.</p>
+                </div>
+                <div class="dark-card flex-col gap-1" style="border-top: 3px solid var(--green);">
+                    <div style="font-size: clamp(1.2rem, 2vw, 1.8rem);">④</div>
+                    <h3 style="font-size: var(--body-size); color: var(--green);">Génération</h3>
+                    <p style="font-size: var(--small-size);">Softmax → probabilités sur le vocabulaire → 1 token choisi. Ajouté au contexte, le cycle recommence (<strong>autorégressif</strong>).</p>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2">
+                <p style="font-size: var(--small-size); color: var(--text-secondary);">↻ Ce cycle se répète <strong>pour chaque token généré</strong> — le contexte entier est relu à chaque itération</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 4: PROBLÉMATIQUES DU CONTEXTE ==================== -->
+    <section class="slide" data-nav="Intro">
+        <span class="section-num">04</span>
+        <div class="slide-content">
+            <h2 class="reveal">Les Problématiques du Contexte</h2>
+            <p class="reveal reveal-d1" style="max-width: 700px; margin-bottom: clamp(0.5rem, 1.5vh, 1rem);">Plus le contexte grandit, plus ces phénomènes <span class="text-accent fw-700">dégradent la qualité</span> des réponses.</p>
+            <div class="grid-2 reveal reveal-d2" style="max-width: 900px;">
+                <div class="dark-card flex-col gap-1" style="border-left: 3px solid var(--red);">
+                    <h3 style="font-size: var(--body-size);">🎯 Lost in the Middle</h3>
+                    <p style="font-size: var(--small-size);">L'info placée au <strong>milieu</strong> du contexte est « oubliée ». Le modèle favorise le début et la fin. <span style="color: var(--text-dim);">(Liu et al., 2023)</span></p>
+                </div>
+                <div class="dark-card flex-col gap-1" style="border-left: 3px solid var(--yellow);">
+                    <h3 style="font-size: var(--body-size);">🔇 Dilution d'Attention</h3>
+                    <p style="font-size: var(--small-size);">Plus de tokens = scores d'attention <strong>dispersés</strong>. Le signal utile est noyé dans le bruit des données non pertinentes.</p>
+                </div>
+                <div class="dark-card flex-col gap-1" style="border-left: 3px solid var(--purple);">
+                    <h3 style="font-size: var(--body-size);">🔄 Context Rot</h3>
+                    <p style="font-size: var(--small-size);">Les allers-retours prompt↔réponse accumulent du <strong>contexte obsolète</strong> qui parasite l'attention sur les tours suivants.</p>
+                </div>
+                <div class="dark-card flex-col gap-1" style="border-left: 3px solid var(--card-accent);">
+                    <h3 style="font-size: var(--body-size);">📈 Coût Quadratique</h3>
+                    <p style="font-size: var(--small-size);"><strong>O(n²)</strong> en mémoire et calcul pour l'attention. 128K tokens coûte ~16× plus que 32K. Latence et facture explosent.</p>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2" style="max-width: 900px;">
+                <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: clamp(0.5rem, 1.5vh, 1rem) clamp(0.8rem, 2vw, 1.5rem); display: flex; align-items: center; gap: 0.8rem;">
+                    <span style="font-size: clamp(1.2rem, 2vw, 1.6rem);">💡</span>
+                    <p style="font-size: var(--small-size); margin: 0;"><strong>Conclusion :</strong> Réduire les tokens n'est pas qu'une question de coût — c'est <span class="text-accent fw-700">améliorer la qualité</span> des réponses en gardant un contexte propre et focalisé.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 5: L'APPROCHE ==================== -->
+    <section class="slide" data-nav="Intro">
+        <span class="section-num">05</span>
         <div class="slide-content">
             <h2 class="reveal">L'Approche : Extraction Chirurgicale</h2>
             <p class="reveal reveal-d1 mt-1" style="max-width: 600px;">Au lieu de lire des fichiers entiers, <span class="text-accent fw-700">extraire uniquement les champs nécessaires</span> en ligne de commande.</p>
@@ -456,9 +529,9 @@
         </div>
     </section>
 
-    <!-- ==================== SLIDE 4: LES OUTILS — VUE D'ENSEMBLE ==================== -->
+    <!-- ==================== SLIDE 6: LES OUTILS — VUE D'ENSEMBLE ==================== -->
     <section class="slide" data-nav="Outils">
-        <span class="section-num">04</span>
+        <span class="section-num">06</span>
         <div class="slide-content">
             <h2 class="reveal">4 Outils + 2 Synergies</h2>
             <div class="reveal reveal-d1 mt-1">
@@ -488,9 +561,9 @@
         </div>
     </section>
 
-    <!-- ==================== SLIDE 5: fd ==================== -->
+    <!-- ==================== SLIDE 7: fd ==================== -->
     <section class="slide" data-nav="Outils">
-        <span class="section-num">05</span>
+        <span class="section-num">07</span>
         <div class="split">
             <div>
                 <div class="reveal">
@@ -527,9 +600,9 @@
         </div>
     </section>
 
-    <!-- ==================== SLIDE 6: rg ==================== -->
+    <!-- ==================== SLIDE 8: rg ==================== -->
     <section class="slide" data-nav="Outils">
-        <span class="section-num">06</span>
+        <span class="section-num">08</span>
         <div class="split">
             <div>
                 <div class="reveal">
@@ -566,9 +639,9 @@
         </div>
     </section>
 
-    <!-- ==================== SLIDE 7: yq ==================== -->
+    <!-- ==================== SLIDE 9: yq ==================== -->
     <section class="slide" data-nav="Outils">
-        <span class="section-num">07</span>
+        <span class="section-num">09</span>
         <div class="split">
             <div>
                 <div class="reveal">
@@ -602,9 +675,9 @@
         </div>
     </section>
 
-    <!-- ==================== SLIDE 8: xq ==================== -->
+    <!-- ==================== SLIDE 10: xq ==================== -->
     <section class="slide" data-nav="Outils">
-        <span class="section-num">08</span>
+        <span class="section-num">10</span>
         <div class="split">
             <div>
                 <div class="reveal">
@@ -644,9 +717,9 @@
         </div>
     </section>
 
-    <!-- ==================== SLIDE 9: BATCH-CONFIG-AUDIT ==================== -->
+    <!-- ==================== SLIDE 11: BATCH-CONFIG-AUDIT ==================== -->
     <section class="slide" data-nav="Synergies">
-        <span class="section-num">09</span>
+        <span class="section-num">11</span>
         <div class="slide-content">
             <div class="reveal">
                 <span class="tag tag-green">Synergie</span>
@@ -681,9 +754,9 @@
         </div>
     </section>
 
-    <!-- ==================== SLIDE 10: STRUCTURAL-SEARCH ==================== -->
+    <!-- ==================== SLIDE 12: STRUCTURAL-SEARCH ==================== -->
     <section class="slide" data-nav="Synergies">
-        <span class="section-num">10</span>
+        <span class="section-num">12</span>
         <div class="slide-content">
             <div class="reveal">
                 <span class="tag tag-green">Synergie</span>
@@ -720,9 +793,9 @@
         </div>
     </section>
 
-    <!-- ==================== SLIDE 11: SNIP ==================== -->
+    <!-- ==================== SLIDE 13: SNIP ==================== -->
     <section class="slide" data-nav="Snip">
-        <span class="section-num">11</span>
+        <span class="section-num">13</span>
         <div class="split">
             <div>
                 <div class="reveal">
@@ -758,9 +831,9 @@
         </div>
     </section>
 
-    <!-- ==================== SLIDE 12: SNIP ARCHITECTURE ==================== -->
+    <!-- ==================== SLIDE 14: SNIP ARCHITECTURE ==================== -->
     <section class="slide" data-nav="Snip">
-        <span class="section-num">12</span>
+        <span class="section-num">14</span>
         <div class="slide-content">
             <h2 class="reveal">Architecture Snip</h2>
             <p class="reveal reveal-d1">3 couches, zéro duplication. Les skills se chaînent automatiquement.</p>
@@ -788,9 +861,9 @@
         </div>
     </section>
 
-    <!-- ==================== SLIDE 13: ARBRE DE DÉCISION ==================== -->
+    <!-- ==================== SLIDE 15: ARBRE DE DÉCISION ==================== -->
     <section class="slide" data-nav="Recap">
-        <span class="section-num">13</span>
+        <span class="section-num">15</span>
         <div class="slide-content">
             <h2 class="reveal">Quel outil pour quelle situation ?</h2>
             <div class="reveal reveal-d1 mt-2" style="max-width: 700px;">
@@ -810,9 +883,9 @@
         </div>
     </section>
 
-    <!-- ==================== SLIDE 14: INSTALLATION ==================== -->
+    <!-- ==================== SLIDE 16: INSTALLATION ==================== -->
     <section class="slide" data-nav="Recap">
-        <span class="section-num">14</span>
+        <span class="section-num">16</span>
         <div class="slide-content">
             <h2 class="reveal">Installation</h2>
             <p class="reveal reveal-d1">Une ligne de commande par OS. <code class="text-accent">xq</code> = <code>yq -p xml</code>, pas d'installation séparée.</p>
@@ -846,9 +919,9 @@
         </div>
     </section>
 
-    <!-- ==================== SLIDE 15: CONCLUSION ==================== -->
+    <!-- ==================== SLIDE 17: CONCLUSION ==================== -->
     <section class="slide" data-nav="Recap">
-        <span class="section-num">15</span>
+        <span class="section-num">17</span>
         <div class="split">
             <div>
                 <h2 class="reveal">Récapitulatif</h2>
@@ -883,6 +956,53 @@
                     <div style="font-size: var(--body-size); opacity: 0.7;">de tokens consommés</div>
                     <div style="margin-top: 1rem; font-size: var(--small-size); opacity: 0.5; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 0.5rem;">Copilot Primitives — github.com</div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 18: INTÉGRATION IA ==================== -->
+    <section class="slide" data-nav="Recap">
+        <span class="section-num">18</span>
+        <div class="slide-content" style="align-items: center; text-align: center;">
+            <h2 class="reveal">Intégrer dans votre Workflow IA</h2>
+            <p class="reveal reveal-d1" style="max-width: 650px;">3 mécanismes pour que vos agents utilisent ces CLI <span class="text-accent fw-700">automatiquement</span>.</p>
+            <div class="grid-3 mt-2 reveal reveal-d2" style="max-width: 950px; text-align: left;">
+                <div class="dark-card">
+                    <h3 style="font-size: var(--body-size);">🎯 Skills</h3>
+                    <p style="font-size: var(--small-size); color: var(--text-secondary);">.github/skills/*.md</p>
+                    <div class="code-block mt-1" style="font-size: calc(var(--code-size) * 0.9);">
+                        <div><span class="comment"># L'agent découvre et charge</span></div>
+                        <div><span class="comment"># selon le contexte</span></div>
+                        <div><span class="string">"Use when extracting</span></div>
+                        <div><span class="string">&nbsp;YAML fields..."</span></div>
+                    </div>
+                    <p class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">Copilot · Claude Code</p>
+                </div>
+                <div class="dark-card">
+                    <h3 style="font-size: var(--body-size);">⚡ Hooks</h3>
+                    <p style="font-size: var(--small-size); color: var(--text-secondary);">.github/hooks/*.json</p>
+                    <div class="code-block mt-1" style="font-size: calc(var(--code-size) * 0.9);">
+                        <div><span class="cmd">"PostToolUse"</span>: [{</div>
+                        <div>&nbsp;&nbsp;<span class="flag">"command"</span>:</div>
+                        <div>&nbsp;&nbsp;<span class="string">"npx prettier ..."</span></div>
+                        <div>}]</div>
+                    </div>
+                    <p class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">VS Code · Claude Code</p>
+                </div>
+                <div class="dark-card">
+                    <h3 style="font-size: var(--body-size);">🧩 Plugins</h3>
+                    <p style="font-size: var(--small-size); color: var(--text-secondary);">plugin.json + skills/</p>
+                    <div class="code-block mt-1" style="font-size: calc(var(--code-size) * 0.9);">
+                        <div><span class="comment"># Bundle complet :</span></div>
+                        <div><span class="result">skills + MCP connectors</span></div>
+                        <div><span class="result">+ slash commands</span></div>
+                        <div><span class="result">+ sub-agents</span></div>
+                    </div>
+                    <p class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">Claude · Cowork</p>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2" style="font-size: var(--small-size); color: var(--text-dim);">
+                Copilot Primitives — github.com
             </div>
         </div>
     </section>
