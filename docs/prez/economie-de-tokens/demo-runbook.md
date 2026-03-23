@@ -49,9 +49,11 @@ compare() {
 }
 ```
 
+Pour Powershell, on va créer le script `compare.ps1` dans $profile :
+
 ```powershell
 # Windows PowerShell — coller une seule fois
-function compare {
+function Compare-Tokens {
     $h = Get-History
     $cmd1 = $h[-2].CommandLine
     $cmd2 = $h[-1].CommandLine
@@ -72,6 +74,20 @@ function compare {
     Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     Write-Host "📊 Gain : -${pct}% ($t1 → $t2 tokens)"
 }
+
+# Alias pour appel rapide
+Set-Alias -Name cm -Value Compare-Tokens -Force
+
+```
+
+Et ajouter le load du script dans le profile de l'utilisateur :
+
+```powershell
+# Load compare function for token comparison
+if (Test-Path ".\compare.ps1") {
+    . "C:\Workspace\temp\todo-api\compare.ps1"
+}
+. ".\compare.ps1"  # Load compare function
 ```
 
 **Usage** (même workflow sur les deux OS) :
