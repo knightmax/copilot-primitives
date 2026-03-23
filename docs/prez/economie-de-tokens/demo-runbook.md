@@ -552,7 +552,7 @@ snip mvn dependency:tree     # output réduit
 ```
 
 > **💡 Installation** : `brew install snip` (macOS) / `scoop install snip` (Windows)
-> Les filtres YAML se trouvent dans `.github/skills/snip-jvm/filters/`
+> Les filtres YAML se trouvent dans `.github/skills/snip-install/filters/`
 
 ---
 

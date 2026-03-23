@@ -10,7 +10,7 @@ Enforced guidelines for specific architectures and patterns:
 - **Follow-up Questions** — Confidence-based clarification before code generation (`**`)
 
 ### 💡 Skills (`.github/skills/`)
-17 domain-specific workflows organized into four families:
+14 domain-specific workflows organized into four families:
 
 #### Token-Saving CLI Tools
 | Skill | Purpose | Token Savings |
@@ -31,11 +31,8 @@ Enforced guidelines for specific architectures and patterns:
 #### Snip CLI (Output Filtering)
 | Skill | Scope |
 |-------|-------|
-| **snip-core** | Installation & setup of [snip](https://github.com/edouard-claude/snip) |
-| **snip-filters-setup** | Shared YAML filter installer |
-| **snip-jvm** | Maven / mvnd output reduction (80-95%) |
-| **snip-dotnet** | dotnet CLI output reduction |
-| **snip-npm** | npm CLI output reduction |
+| **snip-install** | Install [snip](https://github.com/edouard-claude/snip) CLI + all filters (Maven/mvnd, npm, dotnet) |
+| **snip-auto** | Universal command proxy: always prefix with `snip` |
 | **setup-snip-hooks** | Full project hook scaffolding |
 
 #### Other Skills
@@ -73,7 +70,7 @@ skills:
   - fd
   - rg
   - yq
-  - snip-jvm
+  - snip-auto
   - hexagonal-architecture-audit
 ```
 
@@ -103,11 +100,8 @@ copilot-primitives/
 │       ├── structural-search/           (fd + rg synergy)
 │       ├── java-investigation/          (bytecode pipeline)
 │       ├── javap/                       (JDK bytecode tools)
-│       ├── snip-core/                   (snip install/setup)
-│       ├── snip-filters-setup/          (shared filter installer)
-│       ├── snip-jvm/                    (Maven/mvnd filters)
-│       ├── snip-dotnet/                 (dotnet filters)
-│       ├── snip-npm/                    (npm filters)
+│       ├── snip-install/                (snip CLI + all filters)
+│       ├── snip-auto/                   (universal snip proxy)
 │       ├── setup-snip-hooks/            (project hook scaffolding)
 │       ├── frontend-slides/             (HTML presentations)
 │       └── hexagonal-architecture-audit/
@@ -132,11 +126,11 @@ Agents find skills by matching keywords in the `description` field:
 - **SKILL.md** — Comprehensive reference loaded by agents (theory, edge cases, troubleshooting)
 - **README.md** — Quick start for humans (2-3 minutes)
 
-### Layered Snip Architecture
+### Snip Architecture
 ```
-snip-core → snip-filters-setup → snip-jvm / snip-dotnet / snip-npm
+snip-install (one-time setup) → snip-auto (every command)
 ```
-Each layer builds on the previous. `match.command` is exact: a `mvn` filter won't match `mvnd` — the shared installer handles aliases.
+All filters (Maven, npm, dotnet) are installed in one step. `snip-auto` instructs the agent to always prefix commands with `snip` — graceful degradation if no filter matches.
 
 ## 📄 License
 
@@ -144,4 +138,4 @@ Each layer builds on the previous. `match.command` is exact: a `mvn` filter won'
 
 ---
 
-**Built for daily AI-assisted development.** 17 skills, 2 instructions, tested patterns for reducing LLM token consumption by 90-99%.
+**Built for daily AI-assisted development.** 14 skills, 2 instructions, tested patterns for reducing LLM token consumption by 90-99%.

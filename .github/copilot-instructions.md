@@ -18,7 +18,7 @@ Enforced guidelines and rules that apply to specific code domains:
   - Applies to: `**`
 
 ### **Skills** (`.github/skills/`)
-17 domain-specific workflows organized into four families:
+14 domain-specific workflows organized into four families:
 
 #### Token-Saving CLI Tools
 - **`fd/`** — Find files by name, extension, path (40-60% savings)
@@ -33,11 +33,8 @@ Enforced guidelines and rules that apply to specific code domains:
 - **`java-investigation/`** — fd + jar + javap + rg: bytecode-level tracing pipeline (87-95% savings)
 
 #### Snip CLI (Output Filtering)
-- **`snip-core/`** — Installation & verification of [snip](https://github.com/edouard-claude/snip)
-- **`snip-filters-setup/`** — Shared YAML filter installer, handles command aliases (mvn → mvnd)
-- **`snip-jvm/`** — Maven / mvnd output reduction (80-95%)
-- **`snip-dotnet/`** — dotnet CLI output reduction
-- **`snip-npm/`** — npm CLI output reduction
+- **`snip-install/`** — Install [snip](https://github.com/edouard-claude/snip) CLI + all technology filters (Maven/mvnd, npm, dotnet)
+- **`snip-auto/`** — Universal command proxy: always prefix commands with `snip` for token reduction
 - **`setup-snip-hooks/`** — Full project hook scaffolding for Maven/Java
 
 #### Other Skills
@@ -102,11 +99,8 @@ copilot-primitives/
 │       ├── structural-search/           (fd + rg synergy)
 │       ├── java-investigation/          (bytecode pipeline)
 │       ├── javap/                       (JDK bytecode tools)
-│       ├── snip-core/                   (snip install/setup)
-│       ├── snip-filters-setup/          (shared filter installer)
-│       ├── snip-jvm/                    (Maven/mvnd filters)
-│       ├── snip-dotnet/                 (dotnet filters)
-│       ├── snip-npm/                    (npm filters)
+│       ├── snip-install/                (snip CLI + all filters)
+│       ├── snip-auto/                   (universal snip proxy)
 │       ├── setup-snip-hooks/            (project hook scaffolding)
 │       ├── frontend-slides/             (HTML presentations)
 │       └── hexagonal-architecture-audit/
