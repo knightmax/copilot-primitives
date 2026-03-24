@@ -1,0 +1,17 @@
+name: "mvn-package"
+version: 1
+description: "Maven package — filters JAR/WAR building output"
+
+match:
+  command: "mvn"
+  subcommand: "package"
+
+pipeline:
+  - action: "remove_lines"
+    pattern: "^\\[INFO\\]\\s+(Downloading|Downloaded|Building|Scanning)"
+  - action: "remove_lines"
+    pattern: "^\\[DEBUG\\]"
+  - action: "keep_lines"
+    pattern: "Building jar|Building war|BUILD|ERROR|SUCCESS|WARNING"
+
+on_error: "passthrough"

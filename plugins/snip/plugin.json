@@ -1,0 +1,7 @@
+{
+  "name": "snip",
+  "displayName": "Snip — Terminal Output Optimizer",
+  "description": "Reduces terminal output tokens by 80-99% using snip filters for Maven, npm, dotnet, and more. Includes automatic command proxying and one-step installation of all filters.",
+  "version": "1.0.0",
+  "publisher": "knightmax"
+}

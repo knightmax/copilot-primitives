@@ -1,0 +1,24 @@
+name: "mvn-test"
+version: 4
+description: "Maven Surefire test — keeps test results, errors, and build status"
+
+match:
+  command: "mvn"
+  subcommand: "test"
+
+pipeline:
+  - action: "strip_ansi"
+  - action: "keep_lines"
+    pattern: "Tests run:|Failures:|Errors:|Skipped:|BUILD SUCCESS|BUILD FAILURE|Running |PASS|FAIL|ERROR|\\[ERROR\\]|----.*.TESTS"
+  - action: "remove_lines"
+    pattern: "^\\[INFO\\]\\s+(Downloading|Downloaded|Scanning|Building|Loading|Copying|Generating|Saving)"
+  - action: "remove_lines"
+    pattern: "^\\[DEBUG\\]"
+  - action: "remove_lines"
+    pattern: "^\\[INFO\\] ---"
+  - action: "remove_lines"
+    pattern: "^\\[INFO\\]\\s*$|^\\s*$"
+  - action: "remove_lines"
+    pattern: "^WARNING:|^OpenJDK|^Picked up|^Shared archiv"
+
+on_error: "passthrough"

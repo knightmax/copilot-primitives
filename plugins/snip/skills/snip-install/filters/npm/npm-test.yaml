@@ -1,0 +1,18 @@
+name: "npm-test"
+version: 1
+description: "Condensed npm test output: keeps test summary, failures, and errors"
+
+match:
+  command: "npm"
+  subcommand: "test"
+
+pipeline:
+  - action: "strip_ansi"
+  - action: "remove_lines"
+    pattern: "^npm (notice|info)"
+  - action: "remove_lines"
+    pattern: "^\\s*$"
+  - action: "keep_lines"
+    pattern: "npm ERR!|npm WARN|Test Suites:|Tests:|Snapshots:|Time:|Ran all test suites|PASS|FAIL|passed|failed|error|errors|failing|\\d+ passing|\\d+ failing"
+
+on_error: "passthrough"

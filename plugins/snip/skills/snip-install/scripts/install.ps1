@@ -1,10 +1,10 @@
 #
-# install.ps1 — snip-install
-# ============================
+# install.ps1 — snip-install (plugin version)
+# ==============================================
 # Installs snip CLI (if missing) and deploys ALL technology filters.
 #
 # Usage:
-#   & '.\.github\skills\snip-install\scripts\install.ps1'
+#   & "${env:CLAUDE_PLUGIN_ROOT}\skills\snip-install\scripts\install.ps1"
 #
 # What it does:
 #   1. Checks snip is installed (or tells you how)
