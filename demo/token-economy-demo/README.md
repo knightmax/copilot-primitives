@@ -6,7 +6,7 @@ Projet multi-module Spring Boot conçu comme **jeu de données** pour la démons
 
 ```
 token-economy-demo/
-├── pom.xml                          # Parent POM (Spring Boot 3.2.5)
+├── pom.xml                          # Parent POM (Spring Boot 4.0.4)
 ├── core/                            # Domain — modèles, ports, services (0 dépendance framework)
 ├── infrastructure/                  # Adapters — JPA, entités, repositories
 ├── api/                             # Controllers REST
@@ -26,7 +26,7 @@ token-economy-demo/
 
 ## Prérequis
 
-- Java 17+
+- Java 25+
 - Maven 3.9+
 
 ## Compilation

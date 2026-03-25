@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.5</version>
+        <version>4.0.4</version>
         <relativePath/>
     </parent>
 
@@ -19,9 +19,9 @@
     <description>Multi-module Spring Boot project for CLI token economy demonstration</description>
 
     <properties>
-        <java.version>17</java.version>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <java.version>25</java.version>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lombok.version>1.18.32</lombok.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>

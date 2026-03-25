@@ -1,0 +1,42 @@
+name: Demo — Build & Compile
+
+on:
+  push:
+    branches: ["main", "copilot/**"]
+    paths:
+      - "demo/token-economy-demo/**"
+      - ".github/workflows/demo-build.yml"
+  pull_request:
+    paths:
+      - "demo/token-economy-demo/**"
+      - ".github/workflows/demo-build.yml"
+
+jobs:
+  build:
+    name: Java ${{ matrix.java }} / Spring Boot 4.0.4
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    strategy:
+      matrix:
+        java: [25]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java ${{ matrix.java }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: temurin
+          cache: maven
+
+      - name: Compile
+        working-directory: demo/token-economy-demo
+        run: mvn --batch-mode compile
+
+      - name: Test
+        working-directory: demo/token-economy-demo
+        run: mvn --batch-mode test
