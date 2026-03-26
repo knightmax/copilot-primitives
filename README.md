@@ -9,10 +9,24 @@ Enforced guidelines for specific architectures and patterns:
 - **Hexagonal Architecture** — Strict enforcement of ports & adapters for Java (`**/*.java`)
 - **Follow-up Questions** — Confidence-based clarification before code generation (`**`)
 
-### 💡 Skills (`.github/skills/`)
-14 domain-specific workflows organized into four families:
+### 💡 Skills (14 total)
+Skills are now split between **workspace-local skills** and **plugin-packaged skills**:
 
-#### Token-Saving CLI Tools
+#### Workspace-Local Skills (`.github/skills/`)
+| Skill | Purpose |
+|-------|---------|
+| **frontend-slides** | Animation-rich HTML presentations |
+| **hexagonal-architecture-audit** | Java architecture compliance scoring |
+| **setup-snip-hooks** | Project hook scaffolding for snip setup |
+
+#### Plugin-Packaged Skills (`plugins/*`)
+| Plugin | Skills |
+|-------|--------|
+| **token-saving-cli** | fd, rg, jq, xq, yq, batch-config-audit, structural-search |
+| **snip-plugin** | snip-auto, snip-install |
+| **java-utilities** | javap, java-investigation |
+
+#### Token-Saving CLI Tools (via `plugins/token-saving-cli`)
 | Skill | Purpose | Token Savings |
 |-------|---------|---------------|
 | **fd** | Find files by name, extension, path | 40-60% |
@@ -21,33 +35,24 @@ Enforced guidelines for specific architectures and patterns:
 | **xq** | Extract XML fields (pom.xml, .csproj) | 90-99% |
 | **jq** | Extract JSON fields | 90-99% |
 
-#### Synergy Patterns
+#### Synergy Patterns (via `plugins/token-saving-cli`)
 | Skill | Combination | Token Savings |
 |-------|-------------|---------------|
 | **batch-config-audit** | fd + yq/jq/xq — batch field extraction | 95-99% |
 | **structural-search** | fd + rg — bi-dimensional codebase search | 94-99% |
 | **java-investigation** | fd + jar + javap + rg — bytecode tracing | 87-95% |
 
-#### Snip CLI (Output Filtering)
+#### Snip CLI (via `plugins/snip-plugin`)
 | Skill | Scope |
 |-------|-------|
 | **snip-install** | Install [snip](https://github.com/edouard-claude/snip) CLI + all filters (Maven/mvnd, npm, dotnet) |
 | **snip-auto** | Universal command proxy: always prefix with `snip` |
-| **setup-snip-hooks** | Full project hook scaffolding |
-
-#### Other Skills
-| Skill | Purpose |
-|-------|---------|
-| **javap** | JDK bytecode analysis (jar, javap, jdeps) |
-| **frontend-slides** | Animation-rich HTML presentations |
-| **hexagonal-architecture-audit** | Java architecture compliance scoring |
 
 ### 📚 Documentation (`docs/`)
 Reference and training materials:
 
 - **`token-saving-skills/`** — Guides for fd, rg, yq, xq, batch-config-audit, structural-search
 - **`java-investigation/`** — Bytecode investigation guides (javap, pipeline, Blaze-Persistence case study)
-- **`snip/`** — snip CLI reference (YAML filters, Maven examples, implementation details)
 - **`snip-skills/`** — Snip skills architecture overview
 - **`prez/`** — HTML slide presentations
   - `economie-de-tokens.html` — Token economy overview (French, Bold Signal theme)
@@ -64,15 +69,17 @@ Drop into any project's `.github/instructions/` or reference in VS Code:
 ```
 
 ### Using Skills
-Skills are discovered automatically by Copilot agents via description keywords. Reference them in your agent configuration:
+Skills are discovered automatically by Copilot agents via description keywords. You can use workspace-local skills directly and package reusable sets through plugin manifests.
+
+Example skill references:
 ```yaml
 skills:
-  - fd
-  - rg
-  - yq
-  - snip-auto
+  - frontend-slides
+  - setup-snip-hooks
   - hexagonal-architecture-audit
 ```
+
+Plugin distribution metadata lives in `.github/plugin/marketplace.json`, with plugin manifests under `plugins/*/plugin.yaml`.
 
 ### Token-Saving Example
 ```bash
@@ -90,25 +97,20 @@ copilot-primitives/
 │   ├── instructions/
 │   │   ├── follow-up-question.instructions.md
 │   │   └── hexagonal-architecture.instructions.md
+│   ├── plugin/
+│   │   └── marketplace.json
 │   └── skills/
-│       ├── fd/                          (file finder)
-│       ├── rg/                          (ripgrep)
-│       ├── yq/                          (YAML/TOML extractor)
-│       ├── xq/                          (XML extractor)
-│       ├── jq/                          (JSON extractor)
-│       ├── batch-config-audit/          (fd + yq/jq/xq synergy)
-│       ├── structural-search/           (fd + rg synergy)
-│       ├── java-investigation/          (bytecode pipeline)
-│       ├── javap/                       (JDK bytecode tools)
-│       ├── snip-install/                (snip CLI + all filters)
-│       ├── snip-auto/                   (universal snip proxy)
-│       ├── setup-snip-hooks/            (project hook scaffolding)
 │       ├── frontend-slides/             (HTML presentations)
-│       └── hexagonal-architecture-audit/
+│       ├── hexagonal-architecture-audit/
+│       ├── setup-snip-hooks/            (project hook scaffolding)
+│       └── ...
+├── plugins/
+│   ├── token-saving-cli/                (fd, rg, jq, xq, yq, batch-config-audit, structural-search)
+│   ├── snip-plugin/                     (snip-auto, snip-install)
+│   └── java-utilities/                  (javap, java-investigation)
 ├── docs/
 │   ├── token-saving-skills/             (fd, rg, yq, xq guides)
 │   ├── java-investigation/              (bytecode guides)
-│   ├── snip/                            (snip reference docs)
 │   ├── snip-skills/                     (skills architecture)
 │   └── prez/                            (HTML slide decks)
 ├── README.md
@@ -138,4 +140,4 @@ All filters (Maven, npm, dotnet) are installed in one step. `snip-auto` instruct
 
 ---
 
-**Built for daily AI-assisted development.** 14 skills, 2 instructions, tested patterns for reducing LLM token consumption by 90-99%.
+**Built for daily AI-assisted development.** 14 skills, 2 instructions, and plugin-ready packaging for reusable Copilot workflows.

@@ -1,0 +1,11 @@
+name: java-utilities
+version: 1.0.0
+description: A plugin that provides utilities to invistigate and manipulate Java bytecode to help with reverse engineering, debugging and security research tasks.
+author: Maximilien CHEVALIER
+tags:
+  - java
+  - bytecode
+  - reverse-engineering
+skills:
+  - javap
+  - java-investigation

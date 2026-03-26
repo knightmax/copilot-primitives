@@ -1,0 +1,10 @@
+name: snip-plugin
+version: 1.0.0
+description: A plugin that reduce noise from commands launched by the AI development assistant, by automatically installing snip and using it to run commands.
+author: Maximilien CHEVALIER
+tags:
+  - cli
+  - context-efficiency
+skills:
+  - snip-auto
+  - snip-install

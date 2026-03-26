@@ -1,0 +1,13 @@
+name: token-saving-cli
+version: 1.0.0
+description: A plugin that provides a collection of efficient CLI tools and workflows optimized for minimal context usage and one-shot patterns with LLMs.
+  - cli
+  - context-efficiency
+skills:
+  - fd
+  - rg
+  - jq
+  - xq
+  - yq
+  - batch-config-audit$
+  - structural-search

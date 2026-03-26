@@ -1,0 +1,23 @@
+{
+  "name": "copilot-instructions-maximilien-chevalier",
+  "owner": {
+    "name": "Maximilien CHEVALIER"
+  },
+  "plugins": [
+    {
+      "name": "snip-plugin",
+      "source": "./plugins/snip-plugin",
+      "description": "A plugin that reduce noise from commands logs and outputs, by keeping only the most relevant information for LLMs, such as error messages, warnings, and key results."
+    },
+    {
+      "name": "token-saving-cli",
+      "source": "./plugins/token-saving-cli",
+      "description": "Collection of efficient CLI tools and workflows optimized for minimal context usage and one-shot patterns with LLMs"
+    },
+    {
+      "name": "java-utilities",
+      "source": "./plugins/java-utilities",
+      "description": "A plugin that provides utilities to investigate and manipulate Java bytecode to help with reverse engineering, debugging, and security research tasks."
+    }
+  ]
+}

@@ -17,36 +17,42 @@ Enforced guidelines and rules that apply to specific code domains:
 - **`follow-up-question.instructions.md`** — Confidence-based clarification before code generation
   - Applies to: `**`
 
-### **Skills** (`.github/skills/`)
-14 domain-specific workflows organized into four families:
+### **Skills** (14 total)
+Skills are split between workspace-local skills and plugin-packaged skills.
 
-#### Token-Saving CLI Tools
+#### Workspace-Local Skills (`.github/skills/`)
+- **`frontend-slides/`** — Zero-dependency, viewport-responsive HTML presentations
+- **`hexagonal-architecture-audit/`** — Seven-dimension architecture compliance scoring
+- **`setup-snip-hooks/`** — Full project hook scaffolding for Maven/Java
+
+#### Plugin-Packaged Skills (`plugins/*`)
+- **`plugins/token-saving-cli/`** — fd, rg, jq, xq, yq, batch-config-audit, structural-search
+- **`plugins/snip-plugin/`** — snip-auto, snip-install
+- **`plugins/java-utilities/`** — javap, java-investigation
+
+#### Token-Saving CLI Tools (via `plugins/token-saving-cli`)
 - **`fd/`** — Find files by name, extension, path (40-60% savings)
 - **`rg/`** — Search text content inside files with ripgrep (30-98% savings)
 - **`yq/`** — Extract YAML / TOML fields (90-98% savings)
 - **`xq/`** — Extract XML fields via `yq -p xml` (90-99% savings)
 - **`jq/`** — Extract JSON fields (90-99% savings)
 
-#### Synergy Patterns
+#### Synergy Patterns (via `plugins/token-saving-cli`)
 - **`batch-config-audit/`** — fd + yq/jq/xq: batch extraction of the same field from N config files (95-99% savings)
 - **`structural-search/`** — fd + rg: bi-dimensional search by structure AND content (94-99% savings)
+
+#### Java Utilities (via `plugins/java-utilities`)
+- **`javap/`** — JDK bytecode analysis reference (jar, javap, jdeps)
 - **`java-investigation/`** — fd + jar + javap + rg: bytecode-level tracing pipeline (87-95% savings)
 
-#### Snip CLI (Output Filtering)
+#### Snip CLI (Output Filtering, via `plugins/snip-plugin`)
 - **`snip-install/`** — Install [snip](https://github.com/edouard-claude/snip) CLI + all technology filters (Maven/mvnd, npm, dotnet)
 - **`snip-auto/`** — Universal command proxy: always prefix commands with `snip` for token reduction
-- **`setup-snip-hooks/`** — Full project hook scaffolding for Maven/Java
-
-#### Other Skills
-- **`javap/`** — JDK bytecode analysis reference (jar, javap, jdeps)
-- **`frontend-slides/`** — Zero-dependency, viewport-responsive HTML presentations
-- **`hexagonal-architecture-audit/`** — Seven-dimension architecture compliance scoring
 
 ### **Documentation** (`docs/`)
 Training materials, reference guides, and presentations:
 - **`token-saving-skills/`** — Guides for fd, rg, yq, xq, batch-config-audit, structural-search
 - **`java-investigation/`** — Bytecode investigation guides, Blaze-Persistence case study
-- **`snip/`** — snip CLI reference (YAML filters, Maven examples, implementation)
 - **`snip-skills/`** — Snip skills architecture overview
 - **`prez/`** — HTML slide presentations (French)
   - `economie-de-tokens.html` — Token economy (Bold Signal theme, 15 slides)
@@ -89,25 +95,19 @@ copilot-primitives/
 │   ├── instructions/
 │   │   ├── follow-up-question.instructions.md
 │   │   └── hexagonal-architecture.instructions.md
+│   ├── plugin/
+│   │   └── marketplace.json
 │   └── skills/
-│       ├── fd/                          (file finder)
-│       ├── rg/                          (ripgrep)
-│       ├── yq/                          (YAML/TOML extractor)
-│       ├── xq/                          (XML extractor)
-│       ├── jq/                          (JSON extractor)
-│       ├── batch-config-audit/          (fd + yq/jq/xq synergy)
-│       ├── structural-search/           (fd + rg synergy)
-│       ├── java-investigation/          (bytecode pipeline)
-│       ├── javap/                       (JDK bytecode tools)
-│       ├── snip-install/                (snip CLI + all filters)
-│       ├── snip-auto/                   (universal snip proxy)
-│       ├── setup-snip-hooks/            (project hook scaffolding)
 │       ├── frontend-slides/             (HTML presentations)
-│       └── hexagonal-architecture-audit/
+│       ├── hexagonal-architecture-audit/
+│       └── setup-snip-hooks/            (project hook scaffolding)
+├── plugins/
+│   ├── token-saving-cli/                (fd, rg, jq, xq, yq, batch-config-audit, structural-search)
+│   ├── snip-plugin/                     (snip-auto, snip-install)
+│   └── java-utilities/                  (javap, java-investigation)
 ├── docs/
 │   ├── token-saving-skills/             (fd, rg, yq, xq guides)
 │   ├── java-investigation/              (bytecode guides)
-│   ├── snip/                            (snip reference docs)
 │   ├── snip-skills/                     (skills architecture)
 │   └── prez/                            (HTML slide decks)
 ├── README.md
