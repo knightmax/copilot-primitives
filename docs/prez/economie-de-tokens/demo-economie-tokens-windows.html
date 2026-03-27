@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Démo Live — Économie de Contexte CLI (Windows)</title>
+    <title>Économie de Contexte CLI</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
     <style>
         /* =========================================== */
@@ -235,7 +235,6 @@
             <span>jq</span><span>·</span>
             <span>Synergies</span><span>·</span>
             <span>snip</span><span>·</span>
-            <span>Recap</span>
         </div>
         <div class="split">
             <div>
@@ -281,16 +280,16 @@
                 <div class="dark-card flex-col gap-1">
                     <h3 style="font-size: var(--body-size);">📄 4 × YAML configs</h3>
                     <p style="font-size: var(--small-size);">application*.yml</p>
-                    <span class="badge-before" style="align-self: flex-start;">~800 tokens</span>
+                    <span class="badge-before" style="align-self: flex-start;">~832 tokens</span>
                 </div>
                 <div class="dark-card flex-col gap-1">
                     <h3 style="font-size: var(--body-size);">📂 22 fichiers Java</h3>
                     <p style="font-size: var(--small-size);">Models, services, controllers</p>
-                    <span class="badge-before" style="align-self: flex-start;">~3 750 tokens</span>
+                    <span class="badge-before" style="align-self: flex-start;">~5 563 tokens</span>
                 </div>
             </div>
             <div class="reveal reveal-d3 mt-2">
-                <p style="font-size: var(--small-size);">Total si l'agent lit tout : <span class="text-accent fw-700">~174 000 tokens</span> — pour poser UNE question</p>
+                <p style="font-size: var(--small-size);">Total si l'agent lit tout : <span class="text-accent fw-700">~176 000 tokens</span> — pour poser UNE question</p>
             </div>
         </div>
     </section>
@@ -367,7 +366,7 @@
         <span class="section-num">05</span>
         <div class="slide-content">
             <h2 class="reveal">Le Projet de Démo</h2>
-            <p class="reveal reveal-d1" style="max-width: 600px;">Spring Boot 3.2.5 multi-module, architecture hexagonale. <span class="text-accent fw-700">22 fichiers Java, 4 modules Maven, 684 KB de données.</span></p>
+            <p class="reveal reveal-d1" style="max-width: 600px;">Spring Boot 4.0.4 multi-module, architecture hexagonale. <span class="text-accent fw-700">22 fichiers Java, 4 modules Maven, 684 KB de données.</span></p>
             <div class="reveal reveal-d2 mt-2 code-block" style="max-width: 700px; font-size: var(--code-size);">
                 <div><span class="cmd">token-economy-demo\</span></div>
                 <div><span class="comment">├── pom.xml</span> <span class="number">2.5 KB</span></div>
@@ -398,13 +397,6 @@
         <span class="section-num">06</span>
         <div class="slide-content">
             <h2 class="reveal">Setup</h2>
-            <p class="reveal reveal-d1" style="max-width: 600px;">Installer les 4 outils CLI via <span class="text-accent fw-700">winget</span>.</p>
-            <div class="reveal reveal-d2 mt-2 flex-col gap-2" style="max-width: 750px;">
-                <div class="cmd-block" data-cmd="winget install sharkdp.fd BurntSushi.ripgrep.MSVC MikeFarah.yq jqlang.jq">
-                    <code>winget install sharkdp.fd BurntSushi.ripgrep.MSVC MikeFarah.yq jqlang.jq</code>
-                    <span class="copy-icon">📋 copier</span>
-                </div>
-            </div>
             <div class="reveal reveal-d4 mt-2 flex-col gap-1" style="max-width: 750px;">
                 <p style="font-size: var(--small-size); color: var(--text-dim);">Fonction <code style="color: var(--green);">compare</code> — lance naïve puis skill, puis <code>cm</code> :</p>
                 <div class="reveal reveal-d2 mt-2 code-block" style="max-width: 700px; font-size: var(--code-size);">
@@ -424,9 +416,6 @@
                     <p style="color: var(--text-dim); line-height: 1.4;">Notre fonction utilise l'approximation <code style="color: var(--card-accent);">1 token ≈ 4 caractères</code>. En réalité, chaque provider a son propre tokenizer : <strong style="color: var(--text);">OpenAI</strong> utilise <em>tiktoken</em> (BPE), <strong style="color: var(--text);">Anthropic</strong> a son propre tokenizer. L'approximation suffit pour comparer les <strong style="color: var(--green);">gains relatifs</strong> entre commandes.</p>
                 </div>
             </div>
-            <div class="reveal reveal-d5 mt-1 dark-card" style="max-width: 750px;">
-                <p style="font-size: var(--small-size); color: var(--cyan);">💡 <strong>Note PowerShell :</strong> Pour les filtres jq/yq avec des pipes internes, on utilise <code style="color: var(--card-accent);">cmd /c</code> pour éviter les conflits d'échappement.</p>
-            </div>
         </div>
     </section>
 
@@ -442,7 +431,7 @@
                 <div class="flex-col gap-1">
                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                         <span class="tag tag-red" style="font-size: 0.65rem;">SANS SKILL</span>
-                        <span class="badge-before">~625 tokens</span>
+                        <span class="badge-before">~461 tokens</span>
                     </div>
                     <div class="cmd-block" data-cmd="Get-ChildItem -Recurse -Filter '*.java' | Select-Object FullName">
                         <code>Get-ChildItem -Recurse -Filter '*.java' | Select-Object FullName</code>
@@ -458,7 +447,7 @@
                 <div class="flex-col gap-1">
                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                         <span class="tag tag-green" style="font-size: 0.65rem;">AVEC SKILL</span>
-                        <span class="badge-after">~200 tokens</span>
+                        <span class="badge-after">~332 tokens</span>
                     </div>
                     <div class="cmd-block" data-cmd="fd -e java .">
                         <code>fd -e java .</code>
@@ -474,16 +463,16 @@
             </div>
             <div class="reveal reveal-d2 mt-2">
                 <div class="bar-container" style="max-width: 600px;">
-                    <div class="bar-label"><span>Get-ChildItem (625 tokens)</span><span class="text-red">100%</span></div>
+                    <div class="bar-label"><span>Get-ChildItem (461 tokens)</span><span class="text-red">100%</span></div>
                     <div class="bar-track"><div class="bar-fill red" data-width="100"></div></div>
                 </div>
                 <div class="bar-container" style="max-width: 600px;">
-                    <div class="bar-label"><span>fd (200 tokens)</span><span class="text-green">32%</span></div>
-                    <div class="bar-track"><div class="bar-fill green" data-width="32"></div></div>
+                    <div class="bar-label"><span>fd (332 tokens)</span><span class="text-green">72%</span></div>
+                    <div class="bar-track"><div class="bar-fill green" data-width="72"></div></div>
                 </div>
             </div>
             <div class="reveal reveal-d3 mt-1">
-                <p style="font-size: var(--body-size);"><span class="text-accent fw-700">Gain : -68%</span> — encore plus marqué que sur macOS grâce aux chemins absolus Windows.</p>
+                <p style="font-size: var(--body-size);"><span class="text-accent fw-700">Gain : -28%</span> — les chemins relatifs fd restent plus compacts.</p>
             </div>
         </div>
     </section>
@@ -536,7 +525,7 @@
                         <span class="badge-before">~86 243 tokens</span>
                     </div>
                     <div class="cmd-block" data-cmd="Get-Content app\src\main\resources\mocks\events.json">
-                        <code>Get-Content app\src\main\resources\mocks\events.json</code>
+                        <code>Get-Content app/src/main/resources/mocks/events.json</code>
                         <span class="copy-icon">📋</span>
                     </div>
                     <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
@@ -547,7 +536,7 @@
                 <div class="flex-col gap-1">
                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                         <span class="tag tag-green" style="font-size: 0.65rem;">AVEC SKILL</span>
-                        <span class="badge-after">~500 tokens</span>
+                        <span class="badge-after">~370 tokens</span>
                     </div>
                     <div class="cmd-block" data-cmd="rg &quot;ORDER_CREATED&quot; app\src\main\resources\mocks\events.json">
                         <code>rg "ORDER_CREATED" app\src\main\resources\mocks\events.json</code>
@@ -567,12 +556,12 @@
                     <div class="bar-track"><div class="bar-fill red" data-width="100"></div></div>
                 </div>
                 <div class="bar-container" style="max-width: 600px;">
-                    <div class="bar-label"><span>rg (500 tokens)</span><span class="text-green">0.6%</span></div>
+                    <div class="bar-label"><span>rg (370 tokens)</span><span class="text-green">0.4%</span></div>
                     <div class="bar-track"><div class="bar-fill green" data-width="0.6"></div></div>
                 </div>
             </div>
             <div class="reveal reveal-d3 mt-1">
-                <p style="font-size: var(--body-size);"><span class="text-accent fw-700">Gain : -99.4%</span></p>
+                <p style="font-size: var(--body-size);"><span class="text-accent fw-700">Gain : -99.6%</span></p>
             </div>
         </div>
     </section>
@@ -586,14 +575,14 @@
                 <h2 style="margin: 0;">Variantes utiles</h2>
             </div>
             <div class="reveal reveal-d1 flex-col gap-1 mt-1" style="max-width: 750px;">
-                <div class="cmd-block" data-cmd="rg -c &quot;ORDER_CREATED&quot; app\src\main\resources\mocks\events.json">
-                    <code>rg -c "ORDER_CREATED" app\src\main\resources\mocks\events.json</code>
+                <div class="cmd-block" data-cmd="rg -c &quot;ORDER_CREATED&quot; app/src/main/resources/mocks/events.json">
+                    <code>rg -c "ORDER_CREATED" app/src/main/resources/mocks/events.json</code>
                     <span class="copy-icon">📋</span>
                 </div>
                 <p style="font-size: var(--small-size); color: var(--text-dim); margin-left: 0.5rem;">-c = compter les occurrences → <span class="text-green fw-700">1 token</span></p>
 
-                <div class="cmd-block" data-cmd="rg -l &quot;userId&quot; app\src\main\resources\mocks\">
-                    <code>rg -l "userId" app\src\main\resources\mocks\</code>
+                <div class="cmd-block" data-cmd="rg -l &quot;userId&quot; app/src/main/resources/mocks\">
+                    <code>rg -l "userId" app/src/main/resources/mocks/</code>
                     <span class="copy-icon">📋</span>
                 </div>
                 <p style="font-size: var(--small-size); color: var(--text-dim); margin-left: 0.5rem;">-l = lister seulement les fichiers correspondants</p>
@@ -636,10 +625,10 @@
                 <div class="flex-col gap-1">
                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                         <span class="tag tag-green" style="font-size: 0.65rem;">AVEC SKILL</span>
-                        <span class="badge-after">~5 tokens</span>
+                        <span class="badge-after">~4 tokens</span>
                     </div>
-                    <div class="cmd-block" data-cmd="yq &quot;.spring.datasource.url&quot; app\src\main\resources\application.yml">
-                        <code>yq ".spring.datasource.url" app\src\main\resources\application.yml</code>
+                    <div class="cmd-block" data-cmd="yq &quot;.spring.datasource.url&quot; app/src/main/resources/application.yml">
+                        <code>yq ".spring.datasource.url" app/src/main/resources/application.yml</code>
                         <span class="copy-icon">📋</span>
                     </div>
                     <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
@@ -655,12 +644,12 @@
                     <div class="bar-track"><div class="bar-fill red" data-width="100"></div></div>
                 </div>
                 <div class="bar-container" style="max-width: 600px;">
-                    <div class="bar-label"><span>yq (5 tokens)</span><span class="text-green">2.3%</span></div>
-                    <div class="bar-track"><div class="bar-fill green" data-width="2.3"></div></div>
+                    <div class="bar-label"><span>yq (4 tokens)</span><span class="text-green">1.8%</span></div>
+                    <div class="bar-track"><div class="bar-fill green" data-width="1.8"></div></div>
                 </div>
             </div>
             <div class="reveal reveal-d3 mt-1">
-                <p style="font-size: var(--body-size);"><span class="text-accent fw-700">Gain : -97.7%</span></p>
+                <p style="font-size: var(--body-size);"><span class="text-accent fw-700">Gain : -98%</span></p>
             </div>
         </div>
     </section>
@@ -675,29 +664,29 @@
             </div>
             <p class="reveal reveal-d1" style="max-width: 600px; font-size: var(--small-size);">Même requête sur les 4 profils Spring (guillemets doubles obligatoires sur Windows) :</p>
             <div class="reveal reveal-d2 flex-col gap-1 mt-2" style="max-width: 750px;">
-                <div class="cmd-block" data-cmd="yq &quot;.spring.datasource.url&quot; app\src\main\resources\application.yml">
-                    <code>yq ".spring.datasource.url" app\src\main\resources\application.yml</code>
+                <div class="cmd-block" data-cmd="yq &quot;.spring.datasource.url&quot; app/src/main/resources/application.yml">
+                    <code>yq ".spring.datasource.url" app/src/main/resources/application.yml</code>
                     <span class="copy-icon">📋</span>
                 </div>
-                <div class="cmd-block" data-cmd="yq &quot;.spring.datasource.url&quot; app\src\main\resources\application-dev.yml">
-                    <code>yq ".spring.datasource.url" app\src\main\resources\application-dev.yml</code>
+                <div class="cmd-block" data-cmd="yq &quot;.spring.datasource.url&quot; app/src/main/resources/application-dev.yml">
+                    <code>yq ".spring.datasource.url" app/src/main/resources/application-dev.yml</code>
                     <span class="copy-icon">📋</span>
                 </div>
-                <div class="cmd-block" data-cmd="yq &quot;.spring.datasource.url&quot; app\src\main\resources\application-prod.yml">
-                    <code>yq ".spring.datasource.url" app\src\main\resources\application-prod.yml</code>
+                <div class="cmd-block" data-cmd="yq &quot;.spring.datasource.url&quot; app/src/main/resources/application-prod.yml">
+                    <code>yq ".spring.datasource.url" app/src/main/resources/application-prod.yml</code>
                     <span class="copy-icon">📋</span>
                 </div>
-                <div class="cmd-block" data-cmd="yq &quot;.spring.datasource.url&quot; app\src\main\resources\application-staging.yml">
-                    <code>yq ".spring.datasource.url" app\src\main\resources\application-staging.yml</code>
+                <div class="cmd-block" data-cmd="yq &quot;.spring.datasource.url&quot; app/src/main/resources/application-staging.yml">
+                    <code>yq ".spring.datasource.url" app/src/main/resources/application-staging.yml</code>
                     <span class="copy-icon">📋</span>
                 </div>
             </div>
             <div class="reveal reveal-d3 mt-2 dark-card" style="max-width: 750px; display: flex; align-items: center; gap: 1rem;">
                 <div>
-                    <p style="font-size: var(--small-size);">4 × <code>Get-Content</code> = <span class="text-red fw-700">~800 tokens</span></p>
-                    <p style="font-size: var(--small-size);">4 × <code>yq</code> = <span class="text-green fw-700">~20 tokens</span></p>
+                    <p style="font-size: var(--small-size);">4 × <code>Get-Content</code> = <span class="text-red fw-700">~832 tokens</span></p>
+                    <p style="font-size: var(--small-size);">4 × <code>yq</code> = <span class="text-green fw-700">~38 tokens</span></p>
                 </div>
-                <span class="stat-medium text-accent" style="margin-left: auto;">-97%</span>
+                <span class="stat-medium text-accent" style="margin-left: auto;">-95%</span>
             </div>
         </div>
     </section>
@@ -714,7 +703,7 @@
                 <div class="flex-col gap-1">
                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                         <span class="tag tag-red" style="font-size: 0.65rem;">SANS SKILL</span>
-                        <span class="badge-before">~620 tokens</span>
+                        <span class="badge-before">~619 tokens</span>
                     </div>
                     <div class="cmd-block" data-cmd="Get-Content pom.xml">
                         <code>Get-Content pom.xml</code>
@@ -727,7 +716,7 @@
                 <div class="flex-col gap-1">
                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                         <span class="tag tag-green" style="font-size: 0.65rem;">AVEC SKILL</span>
-                        <span class="badge-after">~15 tokens</span>
+                        <span class="badge-after">~7 tokens</span>
                     </div>
                     <div class="cmd-block" data-cmd="yq -p xml -oy &quot;.project.modules.module[]&quot; pom.xml">
                         <code>yq -p xml -oy ".project.modules.module[]" pom.xml</code>
@@ -743,12 +732,12 @@
             </div>
             <div class="reveal reveal-d2 mt-2">
                 <div class="bar-container" style="max-width: 600px;">
-                    <div class="bar-label"><span>Get-Content pom.xml (620 tokens)</span><span class="text-red">100%</span></div>
+                    <div class="bar-label"><span>Get-Content pom.xml (619 tokens)</span><span class="text-red">100%</span></div>
                     <div class="bar-track"><div class="bar-fill red" data-width="100"></div></div>
                 </div>
                 <div class="bar-container" style="max-width: 600px;">
-                    <div class="bar-label"><span>yq -p xml (15 tokens)</span><span class="text-green">2.4%</span></div>
-                    <div class="bar-track"><div class="bar-fill green" data-width="2.4"></div></div>
+                    <div class="bar-label"><span>yq -p xml (7 tokens)</span><span class="text-green">1.1%</span></div>
+                    <div class="bar-track"><div class="bar-fill green" data-width="1.1"></div></div>
                 </div>
             </div>
             <div class="reveal reveal-d3 mt-1 flex-col gap-1" style="max-width: 700px;">
@@ -790,16 +779,16 @@
                 <div class="flex-col gap-1">
                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                         <span class="tag tag-green" style="font-size: 0.65rem;">AVEC SKILL</span>
-                        <span class="badge-after">~1 token</span>
+                        <span class="badge-after">~4 tokens</span>
                     </div>
-                    <div class="cmd-block" data-cmd="cmd /c 'jq &quot;.[0].type&quot; app\src\main\resources\mocks\events.json'">
-                        <code>cmd /c 'jq ".[0].type" app\src\main\resources\mocks\events.json'</code>
+                    <div class="cmd-block" data-cmd="cmd /c 'jq &quot;.[0].type&quot; app/src/main/resources/mocks/events.json'">
+                        <code>cmd /c 'jq ".[0].type" app/src/main/resources/mocks/events.json'</code>
                         <span class="copy-icon">📋</span>
                     </div>
                     <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
                         <div><span class="result">"USER_LOGIN"</span></div>
                         <div><br></div>
-                        <div><span class="comment"># 1 token. Sur 86 243.</span></div>
+                        <div><span class="comment"># 4 tokens. Sur 86 243.</span></div>
                     </div>
                 </div>
             </div>
@@ -809,12 +798,12 @@
                     <div class="bar-track"><div class="bar-fill red" data-width="100"></div></div>
                 </div>
                 <div class="bar-container" style="max-width: 600px;">
-                    <div class="bar-label"><span>jq (1 token)</span><span class="text-green">0.001%</span></div>
+                    <div class="bar-label"><span>jq (4 tokens)</span><span class="text-green">0.005%</span></div>
                     <div class="bar-track"><div class="bar-fill green" data-width="0.3"></div></div>
                 </div>
             </div>
             <div class="reveal reveal-d3 mt-1">
-                <p style="font-size: var(--body-size);"><span class="text-accent fw-700">Gain : -99.999%</span></p>
+                <p style="font-size: var(--body-size);"><span class="text-accent fw-700">Gain : -99.995%</span></p>
             </div>
         </div>
     </section>
@@ -829,25 +818,22 @@
             </div>
             <div class="reveal reveal-d1 flex-col gap-1 mt-1" style="max-width: 750px;">
                 <p style="font-size: var(--small-size); color: var(--text-dim);">Compter les événements :</p>
-                <div class="cmd-block" data-cmd="cmd /c 'jq &quot;length&quot; app\src\main\resources\mocks\events.json'">
-                    <code>cmd /c 'jq "length" app\src\main\resources\mocks\events.json'</code>
+                <div class="cmd-block" data-cmd="jq &quot;length&quot; app\src\main\resources\mocks\events.json">
+                    <code>jq "length" app\src\main\resources\mocks\events.json</code>
                     <span class="copy-icon">📋</span>
                 </div>
 
                 <p style="font-size: var(--small-size); color: var(--text-dim); margin-top: 0.3rem;">Grouper par type (cmd /c pour le pipe interne) :</p>
-                <div class="cmd-block" data-cmd="cmd /c 'jq &quot;group_by(.type) | map({type: .[0].type, count: length})&quot; app\src\main\resources\mocks\events.json'">
-                    <code style="font-size: calc(var(--code-size) * 0.85);">cmd /c 'jq "group_by(.type) | map({type: .[0].type, count: length})" app\src\main\resources\mocks\events.json'</code>
+                <div class="cmd-block" data-cmd="jq &quot;group_by(.type) | map({type: .[0].type, count: length})&quot; app/src/main/resources/mocks/events.json">
+                    <code style="font-size: calc(var(--code-size) * 0.85);">jq "group_by(.type) | map({type: .[0].type, count: length})" app/src/main/resources/mocks/events.json</code>
                     <span class="copy-icon">📋</span>
                 </div>
 
                 <p style="font-size: var(--small-size); color: var(--text-dim); margin-top: 0.3rem;">Lister les sources uniques :</p>
-                <div class="cmd-block" data-cmd="cmd /c 'jq &quot;[.[].source] | unique&quot; app\src\main\resources\mocks\events.json'">
-                    <code>cmd /c 'jq "[.[].source] | unique" app\src\main\resources\mocks\events.json'</code>
+                <div class="cmd-block" data-cmd="jq &quot;[.[].source] | unique&quot; app/src/main/resources/mocks/events.json">
+                    <code>jq "[.[].source] | unique" app/src/main/resources/mocks/events.json</code>
                     <span class="copy-icon">📋</span>
                 </div>
-            </div>
-            <div class="reveal reveal-d2 mt-2 dark-card" style="max-width: 750px;">
-                <p style="font-size: var(--small-size); color: var(--cyan);">💡 <strong>Astuce PowerShell :</strong> les filtres jq contenant <code>|</code> (pipe) doivent être encapsulés dans <code style="color: var(--card-accent);">cmd /c</code> pour éviter l'interprétation par PowerShell.</p>
             </div>
         </div>
     </section>
@@ -879,7 +865,7 @@
                 <div class="flex-col gap-1">
                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                         <span class="tag tag-green" style="font-size: 0.65rem;">AVEC SKILL</span>
-                        <span class="badge-after">~20 tokens</span>
+                        <span class="badge-after">~21 tokens</span>
                     </div>
                     <div class="cmd-block" data-cmd="fd -g &quot;pom.xml&quot; . | ForEach-Object { $art = yq -p xml -oy &quot;.project.artifactId&quot; $_; $ver = yq -p xml -oy &quot;.project.version&quot; $_; &quot;$art`: $ver&quot; }">
                         <code style="font-size: calc(var(--code-size) * 0.75);">fd -g "pom.xml" . | ForEach-Object { $art = yq ...; "$art: $ver" }</code>
@@ -900,7 +886,7 @@
                     <div class="bar-track"><div class="bar-fill red" data-width="100"></div></div>
                 </div>
                 <div class="bar-container" style="max-width: 600px;">
-                    <div class="bar-label"><span>fd + xq (20 tokens)</span><span class="text-green">1.1%</span></div>
+                    <div class="bar-label"><span>fd + xq (21 tokens)</span><span class="text-green">1.1%</span></div>
                     <div class="bar-track"><div class="bar-fill green" data-width="1.1"></div></div>
                 </div>
                 <p class="mt-1" style="font-size: var(--body-size);"><span class="text-accent fw-700">Gain : -98.9%</span></p>
@@ -921,7 +907,7 @@
                 <div class="flex-col gap-1">
                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                         <span class="tag tag-red" style="font-size: 0.65rem;">SANS SKILL</span>
-                        <span class="badge-before">~3 750 tokens</span>
+                        <span class="badge-before">~5 563 tokens</span>
                     </div>
                     <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
                         <div><span class="comment"># Lire les 22 fichiers Java</span></div>
@@ -933,7 +919,7 @@
                 <div class="flex-col gap-1">
                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                         <span class="tag tag-green" style="font-size: 0.65rem;">AVEC SKILL</span>
-                        <span class="badge-after">~30 tokens</span>
+                        <span class="badge-after">~40 tokens</span>
                     </div>
                     <div class="cmd-block" data-cmd="rg -l &quot;@RestController&quot; -t java .">
                         <code>rg -l "@RestController" -t java .</code>
@@ -953,7 +939,7 @@
                     <code>fd -e java . core\ | ForEach-Object { rg -l "public interface" $_ }</code>
                     <span class="copy-icon">📋</span>
                 </div>
-                <p class="mt-1" style="font-size: var(--body-size);"><span class="text-accent fw-700">Gain : -99.2%</span></p>
+                <p class="mt-1" style="font-size: var(--body-size);"><span class="text-accent fw-700">Gain : -99.3%</span></p>
             </div>
         </div>
     </section>
@@ -971,7 +957,7 @@
                 <div class="flex-col gap-1">
                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                         <span class="tag tag-red" style="font-size: 0.65rem;">SANS SNIP</span>
-                        <span class="badge-before">~3 750 tokens</span>
+                        <span class="badge-before">~1 712 tokens</span>
                     </div>
                     <div class="cmd-block" data-cmd="mvn clean compile">
                         <code>mvn clean compile</code>
@@ -989,7 +975,7 @@
                 <div class="flex-col gap-1">
                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                         <span class="tag tag-green" style="font-size: 0.65rem;">AVEC SNIP</span>
-                        <span class="badge-after">~188 tokens</span>
+                        <span class="badge-after">~338 tokens</span>
                     </div>
                     <div class="cmd-block" data-cmd="snip mvn clean compile">
                         <code>snip mvn clean compile</code>
@@ -1006,49 +992,20 @@
             </div>
             <div class="reveal reveal-d3 mt-2">
                 <div class="bar-container" style="max-width: 600px;">
-                    <div class="bar-label"><span>mvn clean compile (3 750 tokens)</span><span class="text-red">100%</span></div>
+                    <div class="bar-label"><span>mvn clean compile (1 712 tokens)</span><span class="text-red">100%</span></div>
                     <div class="bar-track"><div class="bar-fill red" data-width="100"></div></div>
                 </div>
                 <div class="bar-container" style="max-width: 600px;">
-                    <div class="bar-label"><span>snip mvn clean compile (188 tokens)</span><span class="text-green">5%</span></div>
-                    <div class="bar-track"><div class="bar-fill green" data-width="5"></div></div>
+                    <div class="bar-label"><span>snip mvn clean compile (338 tokens)</span><span class="text-green">20%</span></div>
+                    <div class="bar-track"><div class="bar-fill green" data-width="20"></div></div>
                 </div>
             </div>
-            <div class="reveal reveal-d4 mt-1 dark-card" style="max-width: 700px; font-size: var(--small-size);">
-                <p style="color: var(--cyan);">💡 <code style="color: var(--card-accent);">snip</code> utilise des filtres YAML pour chaque commande. Fonctionne aussi avec <code>mvnd</code>, <code>dotnet</code>, <code>npm</code>.</p>
-                <p style="margin-top: 0.3rem;"><span style="color: var(--text-dim);">Install :</span> <code style="color: var(--green);">scoop install snip</code></p>
-            </div>
         </div>
     </section>
 
-    <!-- ==================== SLIDE 19: RÉCAPITULATIF ==================== -->
+    <!-- ==================== SLIDE 19: ARBRE DE DÉCISION ==================== -->
     <section class="slide" data-nav="Recap">
         <span class="section-num">19</span>
-        <div class="slide-content">
-            <h2 class="reveal">Récapitulatif des Gains</h2>
-            <div class="reveal reveal-d1 mt-1">
-                <table style="max-width: 900px;">
-                    <thead>
-                        <tr><th>Outil</th><th>Sans skill</th><th>Avec skill</th><th>Gain</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><span class="text-accent fw-700">fd</span></td><td><span class="text-red">~625 tokens</span></td><td><span class="text-green">~200 tokens</span></td><td><span class="fw-700">-68%</span></td></tr>
-                        <tr><td><span class="text-accent fw-700">rg</span></td><td><span class="text-red">~86 243 tokens</span></td><td><span class="text-green">~500 tokens</span></td><td><span class="fw-700">-99.4%</span></td></tr>
-                        <tr><td><span class="text-accent fw-700">yq</span></td><td><span class="text-red">~217 tokens</span></td><td><span class="text-green">~5 tokens</span></td><td><span class="fw-700">-97.7%</span></td></tr>
-                        <tr><td><span class="text-accent fw-700">yq -p xml</span></td><td><span class="text-red">~620 tokens</span></td><td><span class="text-green">~15 tokens</span></td><td><span class="fw-700">-97.6%</span></td></tr>
-                        <tr><td><span class="text-accent fw-700">jq</span></td><td><span class="text-red">~86 243 tokens</span></td><td><span class="text-green">~1 token</span></td><td><span class="fw-700">-99.999%</span></td></tr>
-                        <tr><td><span class="text-accent fw-700">fd + xq</span></td><td><span class="text-red">~1 852 tokens</span></td><td><span class="text-green">~20 tokens</span></td><td><span class="fw-700">-98.9%</span></td></tr>
-                        <tr><td><span class="text-accent fw-700">fd + rg</span></td><td><span class="text-red">~3 750 tokens</span></td><td><span class="text-green">~30 tokens</span></td><td><span class="fw-700">-99.2%</span></td></tr>
-                        <tr><td><span class="text-accent fw-700">snip</span> <span style="font-size: 0.7em; color: var(--text-dim);">(Maven)</span></td><td><span class="text-red">~3 750 tokens</span></td><td><span class="text-green">~188 tokens</span></td><td><span class="fw-700">-95%</span></td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==================== SLIDE 20: ARBRE DE DÉCISION ==================== -->
-    <section class="slide" data-nav="Recap">
-        <span class="section-num">20</span>
         <div class="split">
             <div>
                 <h2 class="reveal">Quel Outil Choisir ?</h2>
@@ -1063,22 +1020,12 @@
                     <li><strong>Output CLI</strong> trop verbeux → <span class="tool">snip</span></li>
                 </ul>
             </div>
-            <div style="align-items: center;">
-                <div class="accent-card reveal reveal-d2" style="max-width: 380px; width: 100%;">
-                    <div style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.2em; opacity: 0.6;">Installation</div>
-                    <div style="margin: clamp(0.5rem, 1.5vh, 1rem) 0; font-family: 'JetBrains Mono', 'SF Mono', monospace; font-size: var(--code-size); background: rgba(0,0,0,0.2); padding: 0.8rem; border-radius: 8px;">
-                        winget install sharkdp.fd<br>BurntSushi.ripgrep.MSVC<br>MikeFarah.yq jqlang.jq
-                    </div>
-                    <div style="font-size: var(--small-size); opacity: 0.6;">⚠️ yq = mikefarah/yq (Go)</div>
-                    <div style="margin-top: 1rem; font-size: var(--small-size); opacity: 0.5; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 0.5rem;">Copilot Primitives — github.com</div>
-                </div>
-            </div>
         </div>
     </section>
 
-    <!-- ==================== SLIDE 21: INTÉGRATION IA ==================== -->
+    <!-- ==================== SLIDE 20: INTÉGRATION IA ==================== -->
     <section class="slide" data-nav="Recap">
-        <span class="section-num">21</span>
+        <span class="section-num">20</span>
         <div class="slide-content" style="align-items: center; text-align: center;">
             <h2 class="reveal">Intégrer dans votre Workflow IA</h2>
             <p class="reveal reveal-d1" style="max-width: 650px;">3 mécanismes pour que vos agents utilisent ces CLI <span class="text-accent fw-700">automatiquement</span>.</p>
@@ -1110,11 +1057,9 @@
                     <p style="font-size: var(--small-size); color: var(--text-secondary);">plugin.json + skills/</p>
                     <div class="code-block mt-1" style="font-size: calc(var(--code-size) * 0.9);">
                         <div><span class="comment"># Bundle complet :</span></div>
-                        <div><span class="result">skills + MCP connectors</span></div>
-                        <div><span class="result">+ slash commands</span></div>
-                        <div><span class="result">+ sub-agents</span></div>
+                        <div><span class="result">skills + scripts</span></div>
                     </div>
-                    <p class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">Claude · Cowork</p>
+                    <p class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">Copilot · Claude Code</p>
                 </div>
             </div>
             <div class="reveal reveal-d3 mt-2" style="font-size: var(--small-size); color: var(--text-dim);">
