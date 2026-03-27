@@ -234,6 +234,7 @@
             <span>xq</span><span>·</span>
             <span>jq</span><span>·</span>
             <span>Synergies</span><span>·</span>
+            <span>snip</span><span>·</span>
             <span>Recap</span>
         </div>
         <div class="split">
@@ -246,6 +247,7 @@
                     <span class="tag tag-orange">yq</span>
                     <span class="tag tag-orange">xq</span>
                     <span class="tag tag-orange">jq</span>
+                    <span class="tag tag-orange">snip</span>
                 </div>
                 <p class="reveal reveal-d3 mt-2" style="font-size: var(--small-size); color: var(--text-dim);">Version <strong>Windows PowerShell</strong> — cliquez sur les commandes pour copier</p>
             </div>
@@ -402,23 +404,20 @@
                     <code>winget install sharkdp.fd BurntSushi.ripgrep.MSVC MikeFarah.yq jqlang.jq</code>
                     <span class="copy-icon">📋 copier</span>
                 </div>
-                <div class="cmd-block" data-cmd="yq --version">
-                    <code>yq --version</code>
-                    <span class="copy-icon">📋 copier</span>
-                </div>
-            </div>
-            <div class="reveal reveal-d3 mt-2 dark-card" style="max-width: 750px;">
-                <p style="font-size: var(--small-size); color: var(--yellow);">⚠️ yq doit être <strong>mikefarah/yq</strong> (Go), pas kislyuk/yq (Python).</p>
-                <p style="font-size: var(--small-size); margin-top: 0.3rem;">Attendu : <code style="color: var(--green);">yq (https://github.com/mikefarah/yq/) version v4.x</code></p>
             </div>
             <div class="reveal reveal-d4 mt-2 flex-col gap-1" style="max-width: 750px;">
-                <p style="font-size: var(--small-size); color: var(--text-dim);">Fonction <code style="color: var(--green);">compare</code> — lance naïve puis skill, puis <code>compare</code> :</p>
-                <div class="cmd-block" data-cmd="function compare { $h = Get-History; $cmd1 = $h[-2].CommandLine; $cmd2 = $h[-1].CommandLine; $out1 = (Invoke-Expression $cmd1 | Out-String); $out2 = (Invoke-Expression $cmd2 | Out-String); $c1 = [System.Text.Encoding]::UTF8.GetByteCount($out1); $c2 = [System.Text.Encoding]::UTF8.GetByteCount($out2); $t1 = [math]::Floor($c1 / 4); $t2 = [math]::Floor($c2 / 4); $pct = if ($t1 -gt 0) { [math]::Floor(($t1 - $t2) * 100 / $t1) } else { 0 }; Write-Host ''; Write-Host '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'; Write-Host \"📋 Naïve :  $cmd1\"; Write-Host \"   → ≈ $t1 tokens ($c1 chars)\"; Write-Host ''; Write-Host \"⚡ Skill :  $cmd2\"; Write-Host \"   → ≈ $t2 tokens ($c2 chars)\"; Write-Host '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'; Write-Host \"📊 Gain : -${pct}% ($t1 → $t2 tokens)\" }">
-                    <code>function compare { ... }  — <span style="color: var(--text-dim);">rejoue les 2 dernières commandes et calcule le gain</span></code>
-                    <span class="copy-icon">📋 copier</span>
-                </div>
+                <p style="font-size: var(--small-size); color: var(--text-dim);">Fonction <code style="color: var(--green);">compare</code> — lance naïve puis skill, puis <code>cm</code> :</p>
+                <div class="reveal reveal-d2 mt-2 code-block" style="max-width: 700px; font-size: var(--code-size);">
+                <div><span class="comment">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span></div>
+                <div><span class="comment">📋 Naïve :  ls</span></div>
+                <div><span class="comment">   → ≈ 296 tokens (1184 chars)</span></div>
+                <div><span class="comment">⚡ Skill :  Get-Content .\README.md</span></div>
+                <div><span class="comment">   → ≈ 1657 tokens (6629 chars)</span></div>
+                <div><span class="comment">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span></div>
+                <div><span class="comment">📊 Gain : --460% (296 → 1657 tokens)</span></div>
+            </div>
                 <div class="dark-card" style="font-size: var(--small-size);">
-                    <span style="color: var(--text-dim);">Usage :</span> commande naïve → commande skill → <code style="color: var(--green);">compare</code>
+                    <span style="color: var(--text-dim);">Usage :</span> commande naïve → commande skill → <code style="color: var(--green);">cm</code>
                 </div>
                 <div class="dark-card" style="font-size: calc(var(--small-size) * 0.9); margin-top: 0.4rem; border-left: 3px solid var(--cyan);">
                     <p style="color: var(--cyan); margin-bottom: 0.3rem;">ℹ️ <strong>Comment sont comptés les tokens ?</strong></p>
