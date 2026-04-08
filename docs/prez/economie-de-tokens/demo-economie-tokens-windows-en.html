@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Context Economy CLI</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
+    <style>
+        /* =========================================== */
+        /* RESET & CUSTOM PROPERTIES                   */
+        /* =========================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-gradient: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            --bg-card: #232323;
+            --card-accent: #FF5722;
+            --card-accent-dark: #E64A19;
+            --card-accent-glow: rgba(255, 87, 34, 0.25);
+            --green: #4CAF50;
+            --green-glow: rgba(76, 175, 80, 0.2);
+            --blue: #42A5F5;
+            --blue-glow: rgba(66, 165, 245, 0.15);
+            --cyan: #26C6DA;
+            --purple: #AB47BC;
+            --yellow: #FFC107;
+            --red: #EF5350;
+            --text-primary: #ffffff;
+            --text-secondary: #9e9e9e;
+            --text-dim: #666666;
+            --text-on-card: #1a1a1a;
+            --border: #333333;
+            --font-display: 'Archivo Black', sans-serif;
+            --font-body: 'Space Grotesk', sans-serif;
+            --title-size: clamp(2rem, 5vw, 4rem);
+            --h2-size: clamp(1.4rem, 3.5vw, 2.5rem);
+            --h3-size: clamp(1rem, 2vw, 1.5rem);
+            --body-size: clamp(0.75rem, 1.3vw, 1.05rem);
+            --small-size: clamp(0.6rem, 0.9vw, 0.8rem);
+            --code-size: clamp(0.65rem, 1vw, 0.85rem);
+            --slide-padding: clamp(1.5rem, 4vw, 4rem);
+            --content-gap: clamp(0.5rem, 2vw, 2rem);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* =========================================== */
+        /* VIEWPORT BASE                               */
+        /* =========================================== */
+        html, body { height: 100%; overflow-x: hidden; }
+        html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+
+        .slide {
+            width: 100vw; height: 100vh; height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex; flex-direction: column;
+            position: relative;
+            background: var(--bg-gradient);
+            font-family: var(--font-body);
+            color: var(--text-primary);
+        }
+
+        .slide-content {
+            flex: 1; display: flex; flex-direction: column;
+            justify-content: center;
+            max-height: 100%; overflow: hidden;
+            padding: var(--slide-padding);
+        }
+
+        /* =========================================== */
+        /* SECTION NUMBERS                             */
+        /* =========================================== */
+        .section-num {
+            font-family: var(--font-display);
+            font-size: clamp(4rem, 10vw, 10rem);
+            color: rgba(255, 255, 255, 0.03);
+            position: absolute;
+            top: clamp(0.5rem, 2vw, 2rem);
+            left: clamp(1.5rem, 4vw, 4rem);
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        /* =========================================== */
+        /* NAVIGATION                                  */
+        /* =========================================== */
+        .nav-bar {
+            position: absolute;
+            top: clamp(1.5rem, 3vw, 2.5rem);
+            right: clamp(1.5rem, 3vw, 3rem);
+            display: flex; gap: clamp(0.3rem, 0.5vw, 0.5rem);
+            font-size: var(--small-size);
+            color: var(--text-dim);
+            z-index: 5;
+        }
+        .nav-bar span { transition: color 0.3s; }
+        .nav-bar .active { color: var(--text-primary); font-weight: 700; }
+
+        /* =========================================== */
+        /* TYPOGRAPHY                                  */
+        /* =========================================== */
+        h1 { font-family: var(--font-display); font-size: var(--title-size); line-height: 1.1; }
+        h2 { font-family: var(--font-display); font-size: var(--h2-size); line-height: 1.15; margin-bottom: clamp(0.5rem, 1.5vh, 1.5rem); }
+        h3 { font-family: var(--font-display); font-size: var(--h3-size); line-height: 1.2; margin-bottom: clamp(0.3rem, 1vh, 0.75rem); }
+        p, li { font-size: var(--body-size); line-height: 1.5; color: var(--text-secondary); }
+
+        /* =========================================== */
+        /* CARDS                                       */
+        /* =========================================== */
+        .accent-card { background: var(--card-accent); border-radius: 16px; padding: clamp(1.2rem, 2.5vw, 2.5rem); color: var(--text-on-card); box-shadow: 0 20px 60px var(--card-accent-glow); }
+        .dark-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: clamp(1rem, 2vw, 2rem); }
+
+        /* =========================================== */
+        /* CODE / COMMAND BLOCKS                       */
+        /* =========================================== */
+        code, .code { font-family: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', monospace; font-size: var(--code-size); }
+        .code-block { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: clamp(0.6rem, 1.5vw, 1.2rem); overflow: hidden; line-height: 1.6; }
+        .code-block .prompt { color: #8b949e; }
+        .code-block .cmd { color: #c9d1d9; }
+        .code-block .flag { color: #79c0ff; }
+        .code-block .string { color: #a5d6ff; }
+        .code-block .comment { color: #8b949e; font-style: italic; }
+        .code-block .result { color: #39d353; }
+        .code-block .number { color: #FF5722; font-weight: 700; }
+
+        .cmd-block {
+            background: #0d1117; border: 1px solid #30363d; border-radius: 8px;
+            padding: clamp(0.5rem, 1vw, 0.8rem) clamp(0.8rem, 1.5vw, 1.2rem);
+            display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+            cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; position: relative;
+        }
+        .cmd-block:hover { border-color: var(--card-accent); box-shadow: 0 0 20px rgba(255, 87, 34, 0.1); }
+        .cmd-block:active { transform: scale(0.995); }
+        .cmd-block code { color: #c9d1d9; font-size: var(--code-size); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
+        .cmd-block .copy-icon { color: var(--text-dim); font-size: var(--small-size); flex-shrink: 0; transition: color 0.2s; }
+        .cmd-block:hover .copy-icon { color: var(--card-accent); }
+        .cmd-block.copied { border-color: var(--green); }
+        .cmd-block.copied .copy-icon { color: var(--green); }
+
+        /* =========================================== */
+        /* TAGS / BADGES                               */
+        /* =========================================== */
+        .tag { display: inline-block; padding: 0.25em 0.8em; border-radius: 6px; font-size: var(--small-size); font-weight: 600; letter-spacing: 0.03em; }
+        .tag-orange { background: var(--card-accent); color: var(--text-on-card); }
+        .tag-green { background: var(--green); color: #fff; }
+        .tag-blue { background: var(--blue); color: #fff; }
+        .tag-red { background: var(--red); color: #fff; }
+        .tag-purple { background: var(--purple); color: #fff; }
+        .tag-dim { background: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border); }
+
+        .badge-tokens { display: inline-flex; align-items: center; gap: 0.3em; padding: 0.2em 0.6em; border-radius: 20px; font-size: var(--small-size); font-weight: 700; }
+        .badge-before { background: rgba(239, 83, 80, 0.15); color: var(--red); border: 1px solid rgba(239, 83, 80, 0.3); }
+        .badge-after { background: rgba(76, 175, 80, 0.15); color: var(--green); border: 1px solid rgba(76, 175, 80, 0.3); }
+
+        /* =========================================== */
+        /* STAT / GRID / SPLIT / TABLE / TREE          */
+        /* =========================================== */
+        .stat-big { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 6rem); line-height: 1; }
+        .stat-medium { font-family: var(--font-display); font-size: clamp(1.5rem, 4vw, 3rem); line-height: 1; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(0.8rem, 2vw, 2rem); }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.6rem, 1.5vw, 1.5rem); }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(0.5rem, 1.2vw, 1.2rem); }
+        .split { display: grid; grid-template-columns: 1fr 1fr; height: 100%; }
+        .split > div { display: flex; flex-direction: column; justify-content: center; padding: var(--slide-padding); }
+        table { width: 100%; border-collapse: collapse; font-size: var(--body-size); }
+        th, td { padding: clamp(0.3rem, 0.8vh, 0.6rem) clamp(0.5rem, 1vw, 1rem); text-align: left; border-bottom: 1px solid var(--border); }
+        th { color: var(--text-primary); font-weight: 600; font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.1em; }
+        td { color: var(--text-secondary); }
+        .tree { list-style: none; }
+        .tree li { padding: clamp(0.25rem, 0.5vh, 0.4rem) 0; padding-left: clamp(1rem, 2vw, 1.5rem); border-left: 2px solid var(--border); position: relative; }
+        .tree li::before { content: '→'; position: absolute; left: clamp(0.2rem, 0.5vw, 0.4rem); color: var(--card-accent); font-weight: 700; }
+        .tree .tool { color: var(--card-accent); font-weight: 700; }
+
+        /* =========================================== */
+        /* BARS                                        */
+        /* =========================================== */
+        .bar-container { margin: clamp(0.3rem, 0.8vh, 0.5rem) 0; }
+        .bar-label { font-size: var(--small-size); color: var(--text-secondary); margin-bottom: 0.2rem; display: flex; justify-content: space-between; }
+        .bar-track { height: clamp(6px, 1vh, 10px); background: var(--bg-card); border-radius: 100px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 100px; transition: width 1.2s var(--ease-out-expo); width: 0%; }
+        .bar-fill.red { background: var(--red); }
+        .bar-fill.green { background: var(--green); }
+
+        /* =========================================== */
+        /* ANIMATIONS                                  */
+        /* =========================================== */
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo); }
+        .slide.visible .reveal { opacity: 1; transform: translateY(0); }
+        .reveal-d1 { transition-delay: 0.1s; }
+        .reveal-d2 { transition-delay: 0.2s; }
+        .reveal-d3 { transition-delay: 0.3s; }
+        .reveal-d4 { transition-delay: 0.4s; }
+
+        .os-badge { position: fixed; bottom: clamp(1rem, 2vw, 2rem); right: clamp(1rem, 2vw, 2rem); background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.3em 0.8em; font-size: var(--small-size); color: var(--text-dim); z-index: 50; display: flex; align-items: center; gap: 0.3em; }
+        .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--card-accent); z-index: 100; transition: width 0.3s ease; }
+
+        /* =========================================== */
+        /* RESPONSIVE                                  */
+        /* =========================================== */
+        @media (max-height: 700px) { :root { --slide-padding: clamp(0.75rem, 3vw, 2rem); --title-size: clamp(1.5rem, 4.5vw, 2.5rem); --h2-size: clamp(1.1rem, 3vw, 1.75rem); } }
+        @media (max-height: 600px) { :root { --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem); --title-size: clamp(1.1rem, 4vw, 2rem); --body-size: clamp(0.7rem, 1.2vw, 0.95rem); } .nav-bar, .decorative { display: none; } }
+        @media (max-width: 768px) { .split { grid-template-columns: 1fr; } .grid-3 { grid-template-columns: 1fr 1fr; } .grid-4 { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 600px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; } html { scroll-behavior: auto; } }
+
+        .mt-1 { margin-top: clamp(0.3rem, 1vh, 0.75rem); }
+        .mt-2 { margin-top: clamp(0.5rem, 1.5vh, 1.25rem); }
+        .mt-3 { margin-top: clamp(0.8rem, 2vh, 2rem); }
+        .gap-1 { gap: clamp(0.3rem, 0.8vh, 0.5rem); }
+        .gap-2 { gap: clamp(0.5rem, 1.5vh, 1rem); }
+        .flex-col { display: flex; flex-direction: column; }
+        .flex-row { display: flex; align-items: center; }
+        .text-accent { color: var(--card-accent); }
+        .text-green { color: var(--green); }
+        .text-blue { color: var(--blue); }
+        .text-red { color: var(--red); }
+        .text-white { color: var(--text-primary); }
+        .fw-700 { font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="os-badge">⊞ Windows / PowerShell</div>
+
+    <!-- ==================== SLIDE 1: TITLE ==================== -->
+    <section class="slide" data-nav="Intro">
+        <span class="section-num">01</span>
+        <div class="nav-bar">
+            <span class="active">Intro</span><span>·</span>
+            <span>fd</span><span>·</span>
+            <span>rg</span><span>·</span>
+            <span>yq</span><span>·</span>
+            <span>xq</span><span>·</span>
+            <span>jq</span><span>·</span>
+            <span>Synergies</span><span>·</span>
+            <span>snip</span><span>·</span>
+        </div>
+        <div class="split">
+            <div>
+                <h1 class="reveal" style="margin-bottom: clamp(0.5rem, 1.5vh, 1rem);">Context<br>Economy</h1>
+                <p class="reveal reveal-d1" style="max-width: 420px;">6 CLI tools to reduce 98% of tokens consumed by your AI agents — live demo on a Spring Boot project</p>
+                <div class="reveal reveal-d2 mt-2" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <span class="tag tag-orange">fd</span>
+                    <span class="tag tag-orange">rg</span>
+                    <span class="tag tag-orange">yq</span>
+                    <span class="tag tag-orange">xq</span>
+                    <span class="tag tag-orange">jq</span>
+                    <span class="tag tag-orange">snip</span>
+                </div>
+                <p class="reveal reveal-d3 mt-2" style="font-size: var(--small-size); color: var(--text-dim);"><strong>Windows PowerShell</strong> version — click on commands to copy</p>
+            </div>
+            <div style="align-items: center;">
+                <div class="accent-card reveal reveal-d2" style="max-width: 380px; width: 100%;">
+                    <div style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.2em; opacity: 0.6;">Measured reduction</div>
+                    <div class="stat-big" style="margin: clamp(0.3rem, 1vh, 0.5rem) 0;">-98%</div>
+                    <div style="font-size: var(--body-size); opacity: 0.7; font-weight: 500;">of tokens for a 696 KB project</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 2: THE PROBLEM ==================== -->
+    <section class="slide" data-nav="Intro">
+        <span class="section-num">02</span>
+        <div class="slide-content">
+            <h2 class="reveal">The Problem: the Context Window</h2>
+            <p class="reveal reveal-d1" style="max-width: 650px; margin-bottom: clamp(0.8rem, 2vh, 1.5rem);">An AI agent has a working memory <span class="text-accent fw-700">limited in tokens</span>. Every file read fills it up.</p>
+            <div class="grid-2 reveal reveal-d2" style="max-width: 900px;">
+                <div class="dark-card flex-col gap-1">
+                    <h3 style="font-size: var(--body-size);">📄 events.json</h3>
+                    <p style="font-size: var(--small-size);">11,223 lines · 345 KB</p>
+                    <span class="badge-before" style="align-self: flex-start;">~86,243 tokens</span>
+                </div>
+                <div class="dark-card flex-col gap-1">
+                    <h3 style="font-size: var(--body-size);">📄 5 × pom.xml</h3>
+                    <p style="font-size: var(--small-size);">5 Maven XML files</p>
+                    <span class="badge-before" style="align-self: flex-start;">~1,852 tokens</span>
+                </div>
+                <div class="dark-card flex-col gap-1">
+                    <h3 style="font-size: var(--body-size);">📄 4 × YAML configs</h3>
+                    <p style="font-size: var(--small-size);">application*.yml</p>
+                    <span class="badge-before" style="align-self: flex-start;">~832 tokens</span>
+                </div>
+                <div class="dark-card flex-col gap-1">
+                    <h3 style="font-size: var(--body-size);">📂 22 Java files</h3>
+                    <p style="font-size: var(--small-size);">Models, services, controllers</p>
+                    <span class="badge-before" style="align-self: flex-start;">~5,563 tokens</span>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2">
+                <p style="font-size: var(--small-size);">Total if the agent reads everything: <span class="text-accent fw-700">~176,000 tokens</span> — to ask ONE question</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 3: PIPELINE — A PROMPT'S JOURNEY ==================== -->
+    <section class="slide" data-nav="Intro">
+        <span class="section-num">03</span>
+        <div class="slide-content">
+            <h2 class="reveal">Under the Hood: A Prompt's Journey</h2>
+            <p class="reveal reveal-d1" style="max-width: 700px; margin-bottom: clamp(0.5rem, 1.5vh, 1rem);">Each message goes through <span class="text-accent fw-700">4 steps</span> before a single word is generated.</p>
+            <div class="grid-4 reveal reveal-d2" style="max-width: 960px;">
+                <div class="dark-card flex-col gap-1" style="border-top: 3px solid var(--card-accent);">
+                    <div style="font-size: clamp(1.2rem, 2vw, 1.8rem);">①</div>
+                    <h3 style="font-size: var(--body-size); color: var(--card-accent);">Tokenization</h3>
+                    <p style="font-size: var(--small-size);">Text → subwords → integer IDs via <strong>BPE</strong> (GPT) or SentencePiece. This is where the <em>cost</em> is decided: <span class="text-accent fw-700">~1 token ≈ 4 characters</span></p>
+                </div>
+                <div class="dark-card flex-col gap-1" style="border-top: 3px solid var(--blue);">
+                    <div style="font-size: clamp(1.2rem, 2vw, 1.8rem);">②</div>
+                    <h3 style="font-size: var(--body-size); color: var(--blue);">Embedding</h3>
+                    <p style="font-size: var(--small-size);">Each ID → high-dimensional vector (e.g., 4,096d). A <strong>positional encoding</strong> (RoPE) is added so the model knows word order.</p>
+                </div>
+                <div class="dark-card flex-col gap-1" style="border-top: 3px solid var(--purple);">
+                    <div style="font-size: clamp(1.2rem, 2vw, 1.8rem);">③</div>
+                    <h3 style="font-size: var(--body-size); color: var(--purple);">Self-Attention</h3>
+                    <p style="font-size: var(--small-size);">Each token "looks at" all others via <strong>Q·K·V</strong> matrices (multi-head). <span class="text-accent fw-700">O(n²) complexity</span> — doubling tokens = 4× the cost.</p>
+                </div>
+                <div class="dark-card flex-col gap-1" style="border-top: 3px solid var(--green);">
+                    <div style="font-size: clamp(1.2rem, 2vw, 1.8rem);">④</div>
+                    <h3 style="font-size: var(--body-size); color: var(--green);">Generation</h3>
+                    <p style="font-size: var(--small-size);">Softmax → vocabulary probabilities → 1 token chosen. Added to context, the cycle repeats (<strong>autoregressive</strong>).</p>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2">
+                <p style="font-size: var(--small-size); color: var(--text-secondary);">↻ This cycle repeats <strong>for each generated token</strong> — the entire context is re-read at each iteration</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 4: CONTEXT CHALLENGES ==================== -->
+    <section class="slide" data-nav="Intro">
+        <span class="section-num">04</span>
+        <div class="slide-content">
+            <h2 class="reveal">Context Challenges</h2>
+            <p class="reveal reveal-d1" style="max-width: 700px; margin-bottom: clamp(0.5rem, 1.5vh, 1rem);">The larger the context grows, the more these phenomena <span class="text-accent fw-700">degrade the quality</span> of responses.</p>
+            <div class="grid-2 reveal reveal-d2" style="max-width: 900px;">
+                <div class="dark-card flex-col gap-1" style="border-left: 3px solid var(--red);">
+                    <h3 style="font-size: var(--body-size);">🎯 Lost in the Middle</h3>
+                    <p style="font-size: var(--small-size);">Information placed in the <strong>middle</strong> of the context is "forgotten". The model favors the beginning and end. <span style="color: var(--text-dim);">(Liu et al., 2023)</span></p>
+                </div>
+                <div class="dark-card flex-col gap-1" style="border-left: 3px solid var(--yellow);">
+                    <h3 style="font-size: var(--body-size);">🔇 Attention Dilution</h3>
+                    <p style="font-size: var(--small-size);">More tokens = <strong>scattered</strong> attention scores. The useful signal is drowned in noise from irrelevant data.</p>
+                </div>
+                <div class="dark-card flex-col gap-1" style="border-left: 3px solid var(--purple);">
+                    <h3 style="font-size: var(--body-size);">🔄 Context Rot</h3>
+                    <p style="font-size: var(--small-size);">Back-and-forth prompt↔response exchanges accumulate <strong>stale context</strong> that pollutes attention in subsequent turns.</p>
+                </div>
+                <div class="dark-card flex-col gap-1" style="border-left: 3px solid var(--card-accent);">
+                    <h3 style="font-size: var(--body-size);">📈 Quadratic Cost</h3>
+                    <p style="font-size: var(--small-size);"><strong>O(n²)</strong> in memory and computation for attention. 128K tokens costs ~16× more than 32K. Latency and cost explode.</p>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2" style="max-width: 900px;">
+                <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: clamp(0.5rem, 1.5vh, 1rem) clamp(0.8rem, 2vw, 1.5rem); display: flex; align-items: center; gap: 0.8rem;">
+                    <span style="font-size: clamp(1.2rem, 2vw, 1.6rem);">💡</span>
+                    <p style="font-size: var(--small-size); margin: 0;"><strong>Conclusion:</strong> Reducing tokens is not just a cost issue — it's about <span class="text-accent fw-700">improving the quality</span> of responses by keeping a clean and focused context.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 5: THE PROJECT ==================== -->
+    <section class="slide" data-nav="Intro">
+        <span class="section-num">05</span>
+        <div class="slide-content">
+            <h2 class="reveal">The Demo Project</h2>
+            <p class="reveal reveal-d1" style="max-width: 600px;">Spring Boot 4.0.4 multi-module, hexagonal architecture. <span class="text-accent fw-700">22 Java files, 4 Maven modules, 684 KB of data.</span></p>
+            <div class="reveal reveal-d2 mt-2 code-block" style="max-width: 700px; font-size: var(--code-size);">
+                <div><span class="cmd">token-economy-demo\</span></div>
+                <div><span class="comment">├── pom.xml</span> <span class="number">2.5 KB</span></div>
+                <div><span class="comment">├── core\</span> <span class="result">← pure domain (0 deps)</span></div>
+                <div><span class="comment">├── infrastructure\</span> <span class="result">← JPA adapters</span></div>
+                <div><span class="comment">├── api\</span> <span class="result">← REST controllers</span></div>
+                <div><span class="comment">├── app\</span></div>
+                <div><span class="comment">│   ├── resources\</span></div>
+                <div><span class="comment">│   │   ├── application.yml</span> <span class="number">0.9 KB</span></div>
+                <div><span class="comment">│   │   ├── application-prod.yml</span> <span class="number">1.1 KB</span></div>
+                <div><span class="comment">│   │   └── mocks\</span></div>
+                <div><span class="comment">│   │       ├── users.json</span> <span class="number">65 KB</span></div>
+                <div><span class="comment">│   │       ├── products.json</span> <span class="number">60 KB</span></div>
+                <div><span class="comment">│   │       ├── orders.json</span> <span class="number">215 KB</span></div>
+                <div><span class="comment">│   │       └── events.json</span> <span class="number">345 KB</span></div>
+                <div><span class="comment">│   └── ...</span></div>
+                <div><span class="comment">└── docker-compose.yml</span></div>
+            </div>
+            <div class="reveal reveal-d3 mt-1 cmd-block" data-cmd="cd demo\token-economy-demo" style="max-width: 700px;">
+                <code>cd demo\token-economy-demo</code>
+                <span class="copy-icon">📋 copy</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 6: SETUP ==================== -->
+    <section class="slide" data-nav="Intro">
+        <span class="section-num">06</span>
+        <div class="slide-content">
+            <h2 class="reveal">Setup</h2>
+            <div class="reveal reveal-d4 mt-2 flex-col gap-1" style="max-width: 750px;">
+                <p style="font-size: var(--small-size); color: var(--text-dim);"><code style="color: var(--green);">compare</code> function — runs naive then skill, then <code>cm</code>:</p>
+                <div class="reveal reveal-d2 mt-2 code-block" style="max-width: 700px; font-size: var(--code-size);">
+                <div><span class="comment">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span></div>
+                <div><span class="comment">📋 Naive:  ls</span></div>
+                <div><span class="comment">   → ≈ 296 tokens (1184 chars)</span></div>
+                <div><span class="comment">⚡ Skill:  Get-Content .\README.md</span></div>
+                <div><span class="comment">   → ≈ 1657 tokens (6629 chars)</span></div>
+                <div><span class="comment">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span></div>
+                <div><span class="comment">📊 Gain: --460% (296 → 1657 tokens)</span></div>
+            </div>
+                <div class="dark-card" style="font-size: var(--small-size);">
+                    <span style="color: var(--text-dim);">Usage:</span> naive command → skill command → <code style="color: var(--green);">cm</code>
+                </div>
+                <div class="dark-card" style="font-size: calc(var(--small-size) * 0.9); margin-top: 0.4rem; border-left: 3px solid var(--cyan);">
+                    <p style="color: var(--cyan); margin-bottom: 0.3rem;">ℹ️ <strong>How are tokens counted?</strong></p>
+                    <p style="color: var(--text-dim); line-height: 1.4;">Our function uses the approximation <code style="color: var(--card-accent);">1 token ≈ 4 characters</code>. In reality, each provider has its own tokenizer: <strong style="color: var(--text);">OpenAI</strong> uses <em>tiktoken</em> (BPE), <strong style="color: var(--text);">Anthropic</strong> has its own tokenizer. The approximation is sufficient to compare <strong style="color: var(--green);">relative gains</strong> between commands.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 7: fd — WITHOUT vs WITH ==================== -->
+    <section class="slide" data-nav="fd">
+        <span class="section-num">07</span>
+        <div class="slide-content">
+            <div class="reveal" style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: clamp(0.3rem, 1vh, 0.5rem);">
+                <span class="tag tag-orange">fd</span>
+                <h2 style="margin: 0;">Finding files</h2>
+            </div>
+            <div class="grid-2 reveal reveal-d1" style="max-width: 1000px;">
+                <div class="flex-col gap-1">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="tag tag-red" style="font-size: 0.65rem;">WITHOUT SKILL</span>
+                        <span class="badge-before">~865 tokens</span>
+                    </div>
+                    <div class="cmd-block" data-cmd="Get-ChildItem -Recurse -Filter '*.java' | Select-Object FullName">
+                        <code>Get-ChildItem -Recurse -Filter '*.java' | Select-Object FullName</code>
+                        <span class="copy-icon">📋</span>
+                    </div>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
+                        <div><span class="comment"># 22 results, long absolute paths</span></div>
+                        <div><span class="cmd">C:\Users\...\core\src\...\User.java</span></div>
+                        <div><span class="cmd">C:\Users\...\core\src\...\Product.java</span></div>
+                        <div><span class="comment"># ... 20 more lines</span></div>
+                    </div>
+                </div>
+                <div class="flex-col gap-1">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="tag tag-green" style="font-size: 0.65rem;">WITH SKILL</span>
+                        <span class="badge-after">~332 tokens</span>
+                    </div>
+                    <div class="cmd-block" data-cmd="fd -e java .">
+                        <code>fd -e java .</code>
+                        <span class="copy-icon">📋</span>
+                    </div>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
+                        <div><span class="comment"># 22 results, short relative paths</span></div>
+                        <div><span class="result">core\src\main\...\User.java</span></div>
+                        <div><span class="result">core\src\main\...\Product.java</span></div>
+                        <div><span class="comment"># Ignores .gitignore, target\...</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal reveal-d2 mt-2">
+                <div class="bar-container" style="max-width: 600px;">
+                    <div class="bar-label"><span>Get-ChildItem (865 tokens)</span><span class="text-red">100%</span></div>
+                    <div class="bar-track"><div class="bar-fill red" data-width="100"></div></div>
+                </div>
+                <div class="bar-container" style="max-width: 600px;">
+                    <div class="bar-label"><span>fd (337 tokens)</span><span class="text-green">39%</span></div>
+                    <div class="bar-track"><div class="bar-fill green" data-width="39"></div></div>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-1">
+                <p style="font-size: var(--body-size);"><span class="text-accent fw-700">Gain: -61%</span> — fd relative paths remain more compact.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 8: fd — BONUS ==================== -->
+    <section class="slide" data-nav="fd">
+        <span class="section-num">08</span>
+        <div class="slide-content">
+            <div class="reveal" style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: clamp(0.3rem, 1vh, 0.5rem);">
+                <span class="tag tag-orange">fd</span>
+                <h2 style="margin: 0;">Useful variants</h2>
+            </div>
+            <div class="reveal reveal-d1 flex-col gap-1 mt-1" style="max-width: 700px;">
+                <div class="cmd-block" data-cmd="fd -e yml .">
+                    <code>fd -e yml .</code>
+                    <span class="copy-icon">📋</span>
+                </div>
+                <div class="cmd-block" data-cmd="fd -g &quot;pom.xml&quot; .">
+                    <code>fd -g "pom.xml" .</code>
+                    <span class="copy-icon">📋</span>
+                </div>
+                <div class="cmd-block" data-cmd="fd -e json . app\src\main\resources\mocks">
+                    <code>fd -e json . app\src\main\resources\mocks</code>
+                    <span class="copy-icon">📋</span>
+                </div>
+                <div class="cmd-block" data-cmd="(fd -e java .).Count">
+                    <code>(fd -e java .).Count</code>
+                    <span class="copy-icon">📋</span>
+                </div>
+            </div>
+            <div class="reveal reveal-d2 mt-2 dark-card" style="max-width: 700px;">
+                <p style="font-size: var(--body-size); color: var(--text-primary);">fd works <span class="text-accent fw-700">identically</span> on macOS and Windows.</p>
+                <p style="font-size: var(--small-size); margin-top: 0.3rem;">Only difference: displayed path separators (<code>\</code> instead of <code>/</code>).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 9: rg — WITHOUT vs WITH ==================== -->
+    <section class="slide" data-nav="rg">
+        <span class="section-num">09</span>
+        <div class="slide-content">
+            <div class="reveal" style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: clamp(0.3rem, 1vh, 0.5rem);">
+                <span class="tag tag-orange">rg</span>
+                <h2 style="margin: 0;">Searching in content</h2>
+            </div>
+            <div class="grid-2 reveal reveal-d1" style="max-width: 1000px;">
+                <div class="flex-col gap-1">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="tag tag-red" style="font-size: 0.65rem;">WITHOUT SKILL</span>
+                        <span class="badge-before">~89,048 tokens</span>
+                    </div>
+                    <div class="cmd-block" data-cmd="Get-Content app\src\main\resources\mocks\events.json">
+                        <code>Get-Content app/src/main/resources/mocks/events.json</code>
+                        <span class="copy-icon">📋</span>
+                    </div>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
+                        <div><span class="comment"># 11,223 lines, 345 KB</span></div>
+                        <div><span class="comment"># THE ENTIRE FILE in context</span></div>
+                    </div>
+                </div>
+                <div class="flex-col gap-1">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="tag tag-green" style="font-size: 0.65rem;">WITH SKILL</span>
+                        <span class="badge-after">~370 tokens</span>
+                    </div>
+                    <div class="cmd-block" data-cmd="rg &quot;ORDER_CREATED&quot; app\src\main\resources\mocks\events.json">
+                        <code>rg "ORDER_CREATED" app\src\main\resources\mocks\events.json</code>
+                        <span class="copy-icon">📋</span>
+                    </div>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
+                        <div><span class="comment"># Only the relevant lines</span></div>
+                        <div><span class="result">142: "type": "ORDER_CREATED",</span></div>
+                        <div><span class="result">183: "type": "ORDER_CREATED",</span></div>
+                        <div><span class="comment"># ~60-80 lines instead of 11,223</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal reveal-d2 mt-2">
+                <div class="bar-container" style="max-width: 600px;">
+                    <div class="bar-label"><span>Get-Content (89,048 tokens)</span><span class="text-red">100%</span></div>
+                    <div class="bar-track"><div class="bar-fill red" data-width="100"></div></div>
+                </div>
+                <div class="bar-container" style="max-width: 600px;">
+                    <div class="bar-label"><span>rg (382 tokens)</span><span class="text-green">0.4%</span></div>
+                    <div class="bar-track"><div class="bar-fill green" data-width="0.4"></div></div>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-1">
+                <p style="font-size: var(--body-size);"><span class="text-accent fw-700">Gain: -99.6%</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 10: rg — BONUS ==================== -->
+    <section class="slide" data-nav="rg">
+        <span class="section-num">10</span>
+        <div class="slide-content">
+            <div class="reveal" style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: clamp(0.3rem, 1vh, 0.5rem);">
+                <span class="tag tag-orange">rg</span>
+                <h2 style="margin: 0;">Useful variants</h2>
+            </div>
+            <div class="reveal reveal-d1 flex-col gap-1 mt-1" style="max-width: 750px;">
+                <div class="cmd-block" data-cmd="rg -c &quot;ORDER_CREATED&quot; app/src/main/resources/mocks/events.json">
+                    <code>rg -c "ORDER_CREATED" app/src/main/resources/mocks/events.json</code>
+                    <span class="copy-icon">📋</span>
+                </div>
+                <p style="font-size: var(--small-size); color: var(--text-dim); margin-left: 0.5rem;">-c = count occurrences → <span class="text-green fw-700">1 token</span></p>
+
+                <div class="cmd-block" data-cmd="rg -l &quot;userId&quot; app/src/main/resources/mocks\">
+                    <code>rg -l "userId" app/src/main/resources/mocks/</code>
+                    <span class="copy-icon">📋</span>
+                </div>
+                <p style="font-size: var(--small-size); color: var(--text-dim); margin-left: 0.5rem;">-l = list only matching files</p>
+
+                <div class="cmd-block" data-cmd="rg &quot;@RestController&quot; -t java .">
+                    <code>rg "@RestController" -t java .</code>
+                    <span class="copy-icon">📋</span>
+                </div>
+                <p style="font-size: var(--small-size); color: var(--text-dim); margin-left: 0.5rem;">-t java = filter by file type</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 11: yq — WITHOUT vs WITH ==================== -->
+    <section class="slide" data-nav="yq">
+        <span class="section-num">11</span>
+        <div class="slide-content">
+            <div class="reveal" style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: clamp(0.3rem, 1vh, 0.5rem);">
+                <span class="tag tag-orange">yq</span>
+                <h2 style="margin: 0;">Extracting YAML</h2>
+            </div>
+            <div class="grid-2 reveal reveal-d1" style="max-width: 1000px;">
+                <div class="flex-col gap-1">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="tag tag-red" style="font-size: 0.65rem;">WITHOUT SKILL</span>
+                        <span class="badge-before">~217 tokens</span>
+                    </div>
+                    <div class="cmd-block" data-cmd="Get-Content app\src\main\resources\application.yml">
+                        <code>Get-Content app\src\main\resources\application.yml</code>
+                        <span class="copy-icon">📋</span>
+                    </div>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
+                        <div><span class="comment"># 44 lines of the complete file</span></div>
+                        <div><span class="cmd">spring:</span></div>
+                        <div><span class="cmd">&nbsp;&nbsp;datasource:</span></div>
+                        <div><span class="cmd">&nbsp;&nbsp;&nbsp;&nbsp;url: jdbc:h2:mem:demodb</span></div>
+                        <div><span class="comment"># ... 40 more lines</span></div>
+                    </div>
+                </div>
+                <div class="flex-col gap-1">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="tag tag-green" style="font-size: 0.65rem;">WITH SKILL</span>
+                        <span class="badge-after">~4 tokens</span>
+                    </div>
+                    <div class="cmd-block" data-cmd="yq &quot;.spring.datasource.url&quot; app/src/main/resources/application.yml">
+                        <code>yq ".spring.datasource.url" app/src/main/resources/application.yml</code>
+                        <span class="copy-icon">📋</span>
+                    </div>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
+                        <div><span class="result">jdbc:h2:mem:demodb</span></div>
+                        <div><br></div>
+                        <div><span class="comment"># 1 single value. Surgical.</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal reveal-d2 mt-2">
+                <div class="bar-container" style="max-width: 600px;">
+                    <div class="bar-label"><span>Get-Content (229 tokens)</span><span class="text-red">100%</span></div>
+                    <div class="bar-track"><div class="bar-fill red" data-width="100"></div></div>
+                </div>
+                <div class="bar-container" style="max-width: 600px;">
+                    <div class="bar-label"><span>yq (5 tokens)</span><span class="text-green">1.8%</span></div>
+                    <div class="bar-track"><div class="bar-fill green" data-width="1.8"></div></div>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-1">
+                <p style="font-size: var(--body-size);"><span class="text-accent fw-700">Gain: -98%</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 12: yq — MULTI-PROFILE ==================== -->
+    <section class="slide" data-nav="yq">
+        <span class="section-num">12</span>
+        <div class="slide-content">
+            <div class="reveal" style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: clamp(0.3rem, 1vh, 0.5rem);">
+                <span class="tag tag-orange">yq</span>
+                <h2 style="margin: 0;">Comparing profiles</h2>
+            </div>
+            <p class="reveal reveal-d1" style="max-width: 600px; font-size: var(--small-size);">Same query on all 4 Spring profiles (double quotes required on Windows):</p>
+            <div class="reveal reveal-d2 flex-col gap-1 mt-2" style="max-width: 750px;">
+                <div class="cmd-block" data-cmd="yq &quot;.spring.datasource.url&quot; app/src/main/resources/application.yml">
+                    <code>yq ".spring.datasource.url" app/src/main/resources/application.yml</code>
+                    <span class="copy-icon">📋</span>
+                </div>
+                <div class="cmd-block" data-cmd="yq &quot;.spring.datasource.url&quot; app/src/main/resources/application-dev.yml">
+                    <code>yq ".spring.datasource.url" app/src/main/resources/application-dev.yml</code>
+                    <span class="copy-icon">📋</span>
+                </div>
+                <div class="cmd-block" data-cmd="yq &quot;.spring.datasource.url&quot; app/src/main/resources/application-prod.yml">
+                    <code>yq ".spring.datasource.url" app/src/main/resources/application-prod.yml</code>
+                    <span class="copy-icon">📋</span>
+                </div>
+                <div class="cmd-block" data-cmd="yq &quot;.spring.datasource.url&quot; app/src/main/resources/application-staging.yml">
+                    <code>yq ".spring.datasource.url" app/src/main/resources/application-staging.yml</code>
+                    <span class="copy-icon">📋</span>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2 dark-card" style="max-width: 750px; display: flex; align-items: center; gap: 1rem;">
+                <div>
+                    <p style="font-size: var(--small-size);">4 × <code>Get-Content</code> = <span class="text-red fw-700">~832 tokens</span></p>
+                    <p style="font-size: var(--small-size);">4 × <code>yq</code> = <span class="text-green fw-700">~38 tokens</span></p>
+                </div>
+                <span class="stat-medium text-accent" style="margin-left: auto;">-95%</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 13: xq — WITHOUT vs WITH ==================== -->
+    <section class="slide" data-nav="xq">
+        <span class="section-num">13</span>
+        <div class="slide-content">
+            <div class="reveal" style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: clamp(0.3rem, 1vh, 0.5rem);">
+                <span class="tag tag-orange">yq -p xml</span>
+                <h2 style="margin: 0;">Extracting XML (pom.xml)</h2>
+            </div>
+            <div class="grid-2 reveal reveal-d1" style="max-width: 1000px;">
+                <div class="flex-col gap-1">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="tag tag-red" style="font-size: 0.65rem;">WITHOUT SKILL</span>
+                        <span class="badge-before">~636 tokens</span>
+                    </div>
+                    <div class="cmd-block" data-cmd="Get-Content pom.xml">
+                        <code>Get-Content pom.xml</code>
+                        <span class="copy-icon">📋</span>
+                    </div>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
+                        <div><span class="comment"># 67 lines of Maven XML</span></div>
+                    </div>
+                </div>
+                <div class="flex-col gap-1">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="tag tag-green" style="font-size: 0.65rem;">WITH SKILL</span>
+                        <span class="badge-after">~7 tokens</span>
+                    </div>
+                    <div class="cmd-block" data-cmd="yq -p xml -oy &quot;.project.modules.module[]&quot; pom.xml">
+                        <code>yq -p xml -oy ".project.modules.module[]" pom.xml</code>
+                        <span class="copy-icon">📋</span>
+                    </div>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
+                        <div><span class="result">core</span></div>
+                        <div><span class="result">infrastructure</span></div>
+                        <div><span class="result">api</span></div>
+                        <div><span class="result">app</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal reveal-d2 mt-2">
+                <div class="bar-container" style="max-width: 600px;">
+                    <div class="bar-label"><span>Get-Content pom.xml (636 tokens)</span><span class="text-red">100%</span></div>
+                    <div class="bar-track"><div class="bar-fill red" data-width="100"></div></div>
+                </div>
+                <div class="bar-container" style="max-width: 600px;">
+                    <div class="bar-label"><span>yq -p xml (7 tokens)</span><span class="text-green">1.1%</span></div>
+                    <div class="bar-track"><div class="bar-fill green" data-width="1.1"></div></div>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-1 flex-col gap-1" style="max-width: 700px;">
+                <p style="font-size: var(--small-size); color: var(--text-dim);">Other extractions:</p>
+                <div class="cmd-block" data-cmd="yq -p xml -oy &quot;.project.parent.version&quot; pom.xml">
+                    <code>yq -p xml -oy ".project.parent.version" pom.xml</code>
+                    <span class="copy-icon">📋</span>
+                </div>
+                <div class="cmd-block" data-cmd="yq -p xml -oy &quot;.project.dependencies.dependency[].artifactId&quot; infrastructure\pom.xml">
+                    <code>yq -p xml -oy ".project.dependencies.dependency[].artifactId" infrastructure\pom.xml</code>
+                    <span class="copy-icon">📋</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 14: jq — WITHOUT vs WITH ==================== -->
+    <section class="slide" data-nav="jq">
+        <span class="section-num">14</span>
+        <div class="slide-content">
+            <div class="reveal" style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: clamp(0.3rem, 1vh, 0.5rem);">
+                <span class="tag tag-orange">jq</span>
+                <h2 style="margin: 0;">Extracting JSON</h2>
+            </div>
+            <div class="grid-2 reveal reveal-d1" style="max-width: 1000px;">
+                <div class="flex-col gap-1">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="tag tag-red" style="font-size: 0.65rem;">WITHOUT SKILL</span>
+                        <span class="badge-before">~86,243 tokens</span>
+                    </div>
+                    <div class="cmd-block" data-cmd="Get-Content app\src\main\resources\mocks\events.json">
+                        <code>Get-Content app\src\main\resources\mocks\events.json</code>
+                        <span class="copy-icon">📋</span>
+                    </div>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
+                        <div><span class="comment"># 11,223 lines, 345 KB</span></div>
+                    </div>
+                </div>
+                <div class="flex-col gap-1">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="tag tag-green" style="font-size: 0.65rem;">WITH SKILL</span>
+                        <span class="badge-after">~4 tokens</span>
+                    </div>
+                    <div class="cmd-block" data-cmd="jq &quot;.[0].type&quot; app/src/main/resources/mocks/events.json">
+                        <code>jq ".[0].type" app/src/main/resources/mocks/events.json</code>
+                        <span class="copy-icon">📋</span>
+                    </div>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
+                        <div><span class="result">"USER_LOGIN"</span></div>
+                        <div><br></div>
+                        <div><span class="comment"># 4 tokens. Out of 86,243.</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal reveal-d2 mt-2">
+                <div class="bar-container" style="max-width: 600px;">
+                    <div class="bar-label"><span>Get-Content events.json (86,243 tokens)</span><span class="text-red">100%</span></div>
+                    <div class="bar-track"><div class="bar-fill red" data-width="100"></div></div>
+                </div>
+                <div class="bar-container" style="max-width: 600px;">
+                    <div class="bar-label"><span>jq (4 tokens)</span><span class="text-green">0.005%</span></div>
+                    <div class="bar-track"><div class="bar-fill green" data-width="0.3"></div></div>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-1">
+                <p style="font-size: var(--body-size);"><span class="text-accent fw-700">Gain: -99.995%</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 15: jq — BONUS ==================== -->
+    <section class="slide" data-nav="jq">
+        <span class="section-num">15</span>
+        <div class="slide-content">
+            <div class="reveal" style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: clamp(0.3rem, 1vh, 0.5rem);">
+                <span class="tag tag-orange">jq</span>
+                <h2 style="margin: 0;">Advanced queries</h2>
+            </div>
+            <div class="reveal reveal-d1 flex-col gap-1 mt-1" style="max-width: 750px;">
+                <p style="font-size: var(--small-size); color: var(--text-dim);">Count events:</p>
+                <div class="cmd-block" data-cmd="jq &quot;length&quot; app\src\main\resources\mocks\events.json">
+                    <code>jq "length" app\src\main\resources\mocks\events.json</code>
+                    <span class="copy-icon">📋</span>
+                </div>
+
+                <p style="font-size: var(--small-size); color: var(--text-dim); margin-top: 0.3rem;">Group by type (cmd /c for internal pipe):</p>
+                <div class="cmd-block" data-cmd="jq &quot;group_by(.type) | map({type: .[0].type, count: length})&quot; app/src/main/resources/mocks/events.json">
+                    <code style="font-size: calc(var(--code-size) * 0.85);">jq "group_by(.type) | map({type: .[0].type, count: length})" app/src/main/resources/mocks/events.json</code>
+                    <span class="copy-icon">📋</span>
+                </div>
+
+                <p style="font-size: var(--small-size); color: var(--text-dim); margin-top: 0.3rem;">List unique sources:</p>
+                <div class="cmd-block" data-cmd="jq &quot;[.[].source] | unique&quot; app/src/main/resources/mocks/events.json">
+                    <code>jq "[.[].source] | unique" app/src/main/resources/mocks/events.json</code>
+                    <span class="copy-icon">📋</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 16: SYNERGY BATCH ==================== -->
+    <section class="slide" data-nav="Synergies">
+        <span class="section-num">16</span>
+        <div class="slide-content">
+            <div class="reveal" style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: clamp(0.3rem, 1vh, 0.5rem);">
+                <span class="tag tag-green">Synergy</span>
+                <h2 style="margin: 0;">fd + xq: Batch audit</h2>
+            </div>
+            <p class="reveal reveal-d1" style="max-width: 650px; font-size: var(--body-size);">All pom.xml files in the project in <span class="text-accent fw-700">one PowerShell loop</span>:</p>
+            <div class="grid-2 reveal reveal-d2 mt-1" style="max-width: 1000px;">
+                <div class="flex-col gap-1">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="tag tag-red" style="font-size: 0.65rem;">WITHOUT SKILL</span>
+                        <span class="badge-before">~1,852 tokens</span>
+                    </div>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
+                        <div><span class="prompt">PS&gt;</span> <span class="cmd">Get-Content pom.xml</span></div>
+                        <div><span class="prompt">PS&gt;</span> <span class="cmd">Get-Content core\pom.xml</span></div>
+                        <div><span class="prompt">PS&gt;</span> <span class="cmd">Get-Content infra...\pom.xml</span></div>
+                        <div><span class="prompt">PS&gt;</span> <span class="cmd">Get-Content api\pom.xml</span></div>
+                        <div><span class="prompt">PS&gt;</span> <span class="cmd">Get-Content app\pom.xml</span></div>
+                        <div><span class="comment"># 5 × complete file</span></div>
+                    </div>
+                </div>
+                <div class="flex-col gap-1">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="tag tag-green" style="font-size: 0.65rem;">WITH SKILL</span>
+                        <span class="badge-after">~21 tokens</span>
+                    </div>
+                    <div class="cmd-block" data-cmd="fd -g &quot;pom.xml&quot; . | ForEach-Object { $art = yq -p xml -oy &quot;.project.artifactId&quot; $_; $ver = yq -p xml -oy &quot;.project.version&quot; $_; &quot;$art`: $ver&quot; }">
+                        <code style="font-size: calc(var(--code-size) * 0.75);">fd -g "pom.xml" . | ForEach-Object { $art = yq ...; "$art: $ver" }</code>
+                        <span class="copy-icon">📋</span>
+                    </div>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
+                        <div><span class="result">token-economy-demo: 1.0.0-SNAPSHOT</span></div>
+                        <div><span class="result">core: null</span></div>
+                        <div><span class="result">infrastructure: null</span></div>
+                        <div><span class="result">api: null</span></div>
+                        <div><span class="result">app: null</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2">
+                <div class="bar-container" style="max-width: 600px;">
+                    <div class="bar-label"><span>5 × Get-Content (1,852 tokens)</span><span class="text-red">100%</span></div>
+                    <div class="bar-track"><div class="bar-fill red" data-width="100"></div></div>
+                </div>
+                <div class="bar-container" style="max-width: 600px;">
+                    <div class="bar-label"><span>fd + xq (21 tokens)</span><span class="text-green">1.1%</span></div>
+                    <div class="bar-track"><div class="bar-fill green" data-width="1.1"></div></div>
+                </div>
+                <p class="mt-1" style="font-size: var(--body-size);"><span class="text-accent fw-700">Gain: -98.9%</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 17: SYNERGY STRUCTURAL ==================== -->
+    <section class="slide" data-nav="Synergies">
+        <span class="section-num">17</span>
+        <div class="slide-content">
+            <div class="reveal" style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: clamp(0.3rem, 1vh, 0.5rem);">
+                <span class="tag tag-green">Synergy</span>
+                <h2 style="margin: 0;">fd + rg: Structural search</h2>
+            </div>
+            <p class="reveal reveal-d1" style="max-width: 650px; font-size: var(--body-size);"><span class="text-accent fw-700">Two-dimensional</span> search: filter (WHERE) + search (WHAT).</p>
+            <div class="grid-2 reveal reveal-d2 mt-1" style="max-width: 1000px;">
+                <div class="flex-col gap-1">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="tag tag-red" style="font-size: 0.65rem;">WITHOUT SKILL</span>
+                        <span class="badge-before">~5,563 tokens</span>
+                    </div>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
+                        <div><span class="comment"># Read the 22 Java files</span></div>
+                        <div><span class="prompt">PS&gt;</span> <span class="cmd">Get-Content ...\UserController.java</span></div>
+                        <div><span class="prompt">PS&gt;</span> <span class="cmd">Get-Content ...\ProductController.java</span></div>
+                        <div><span class="comment"># ... and 20 other files</span></div>
+                    </div>
+                </div>
+                <div class="flex-col gap-1">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="tag tag-green" style="font-size: 0.65rem;">WITH SKILL</span>
+                        <span class="badge-after">~40 tokens</span>
+                    </div>
+                    <div class="cmd-block" data-cmd="rg -l &quot;@RestController&quot; -t java .">
+                        <code>rg -l "@RestController" -t java .</code>
+                        <span class="copy-icon">📋</span>
+                    </div>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
+                        <div><span class="result">api\...\UserController.java</span></div>
+                        <div><span class="result">api\...\ProductController.java</span></div>
+                        <div><span class="result">api\...\OrderController.java</span></div>
+                        <div><span class="comment"># 3 lines. Not 22 files.</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2 flex-col gap-1" style="max-width: 700px;">
+                <p style="font-size: var(--small-size); color: var(--text-dim);">Find the ports (domain interfaces):</p>
+                <div class="cmd-block" data-cmd="fd -e java . core\ | ForEach-Object { rg -l &quot;public interface&quot; $_ }">
+                    <code>fd -e java . core\ | ForEach-Object { rg -l "public interface" $_ }</code>
+                    <span class="copy-icon">📋</span>
+                </div>
+                <p class="mt-1" style="font-size: var(--body-size);"><span class="text-accent fw-700">Gain: -99.3%</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 18: SNIP — FILTERING CLI OUTPUT ==================== -->
+    <section class="slide" data-nav="snip">
+        <span class="section-num">18</span>
+        <div class="slide-content">
+            <div class="reveal" style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: clamp(0.3rem, 1vh, 0.5rem);">
+                <span class="tag tag-purple">snip</span>
+                <h2 style="margin: 0;">Filtering CLI output (Maven)</h2>
+            </div>
+            <p class="reveal reveal-d1" style="max-width: 700px; font-size: var(--body-size);">The previous tools target <strong>files</strong>. <code style="color: var(--card-accent);">snip</code> targets <span class="text-accent fw-700">command output</span>.</p>
+            <div class="grid-2 reveal reveal-d2 mt-1" style="max-width: 1000px;">
+                <div class="flex-col gap-1">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="tag tag-red" style="font-size: 0.65rem;">WITHOUT SNIP</span>
+                        <span class="badge-before">~1,752 tokens</span>
+                    </div>
+                    <div class="cmd-block" data-cmd="mvn clean compile">
+                        <code>mvn clean compile</code>
+                        <span class="copy-icon">📋</span>
+                    </div>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.8);">
+                        <div><span class="comment">[INFO] Scanning for projects...</span></div>
+                        <div><span class="comment">[INFO] Downloading from central: ...</span></div>
+                        <div><span class="comment">[INFO] Downloaded  (1.2 MB at 3.4 MB/s)</span></div>
+                        <div><span class="comment">[INFO] Compiling 22 source files...</span></div>
+                        <div><span class="comment"># ~200 lines of noise</span></div>
+                        <div><span class="result">[INFO] BUILD SUCCESS</span></div>
+                    </div>
+                </div>
+                <div class="flex-col gap-1">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="tag tag-green" style="font-size: 0.65rem;">WITH SNIP</span>
+                        <span class="badge-after">~338 tokens</span>
+                    </div>
+                    <div class="cmd-block" data-cmd="snip mvn clean compile">
+                        <code>snip mvn clean compile</code>
+                        <span class="copy-icon">📋</span>
+                    </div>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.8);">
+                        <div><span class="result">[INFO] BUILD SUCCESS</span></div>
+                        <div><span class="result">[INFO] Total time:  4.2 s</span></div>
+                        <div><br></div>
+                        <div><span class="comment"># Only errors, warnings</span></div>
+                        <div><span class="comment"># and the BUILD result remain</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2">
+                <div class="bar-container" style="max-width: 600px;">
+                    <div class="bar-label"><span>mvn clean compile (1,752 tokens)</span><span class="text-red">100%</span></div>
+                    <div class="bar-track"><div class="bar-fill red" data-width="100"></div></div>
+                </div>
+                <div class="bar-container" style="max-width: 600px;">
+                    <div class="bar-label"><span>snip mvn clean compile (338 tokens)</span><span class="text-green">20%</span></div>
+                    <div class="bar-track"><div class="bar-fill green" data-width="20"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 19: DECISION TREE ==================== -->
+    <section class="slide" data-nav="Recap">
+        <span class="section-num">19</span>
+        <div class="split">
+            <div>
+                <h2 class="reveal">Which Tool to Use?</h2>
+                <ul class="tree reveal reveal-d1 mt-1">
+                    <li><strong>Files</strong> (names, extensions) → <span class="tool">fd</span></li>
+                    <li><strong>Text</strong> inside files → <span class="tool">rg</span></li>
+                    <li>A field in a <strong>YAML</strong> → <span class="tool">yq</span></li>
+                    <li>A field in an <strong>XML</strong> → <span class="tool">yq -p xml</span></li>
+                    <li>A field in a <strong>JSON</strong> → <span class="tool">jq</span></li>
+                    <li>The same field across <strong>N files</strong> → <span class="tool">fd + yq/jq/xq</span></li>
+                    <li>Files <strong>+</strong> their content → <span class="tool">fd + rg</span></li>
+                    <li><strong>CLI output</strong> too verbose → <span class="tool">snip</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 20: AI INTEGRATION ==================== -->
+    <section class="slide" data-nav="Recap">
+        <span class="section-num">20</span>
+        <div class="slide-content" style="align-items: center; text-align: center;">
+            <h2 class="reveal">Integrate into your AI Workflow</h2>
+            <p class="reveal reveal-d1" style="max-width: 650px;">3 mechanisms for your agents to use these CLI tools <span class="text-accent fw-700">automatically</span>.</p>
+            <div class="grid-3 mt-2 reveal reveal-d2" style="max-width: 950px; text-align: left;">
+                <div class="dark-card">
+                    <h3 style="font-size: var(--body-size);">🎯 Skills</h3>
+                    <p style="font-size: var(--small-size); color: var(--text-secondary);">.github/skills/*.md</p>
+                    <div class="code-block mt-1" style="font-size: calc(var(--code-size) * 0.9);">
+                        <div><span class="comment"># The agent discovers and loads</span></div>
+                        <div><span class="comment"># according to context</span></div>
+                        <div><span class="string">"Use when extracting</span></div>
+                        <div><span class="string">&nbsp;YAML fields..."</span></div>
+                    </div>
+                    <p class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">Copilot · Claude Code</p>
+                </div>
+                <div class="dark-card">
+                    <h3 style="font-size: var(--body-size);">⚡ Hooks</h3>
+                    <p style="font-size: var(--small-size); color: var(--text-secondary);">.github/hooks/*.json</p>
+                    <div class="code-block mt-1" style="font-size: calc(var(--code-size) * 0.9);">
+                        <div><span class="cmd">"PostToolUse"</span>: [{</div>
+                        <div>&nbsp;&nbsp;<span class="flag">"command"</span>:</div>
+                        <div>&nbsp;&nbsp;<span class="string">"npx prettier ..."</span></div>
+                        <div>}]</div>
+                    </div>
+                    <p class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">VS Code · Claude Code</p>
+                </div>
+                <div class="dark-card">
+                    <h3 style="font-size: var(--body-size);">🧩 Plugins</h3>
+                    <p style="font-size: var(--small-size); color: var(--text-secondary);">plugin.json + skills/</p>
+                    <div class="code-block mt-1" style="font-size: calc(var(--code-size) * 0.9);">
+                        <div><span class="comment"># Complete bundle:</span></div>
+                        <div><span class="result">skills + scripts</span></div>
+                    </div>
+                    <p class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">Copilot · Claude Code</p>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2" style="font-size: var(--small-size); color: var(--text-dim);">
+                Copilot Primitives — github.com
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        class SlidePresentation {
+            constructor() {
+                this.slides = document.querySelectorAll('.slide');
+                this.currentSlide = 0;
+                this.setupIntersectionObserver();
+                this.setupKeyboardNav();
+                this.setupTouchNav();
+                this.setupProgressBar();
+                this.setupCopyButtons();
+            }
+
+            setupIntersectionObserver() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            this.currentSlide = [...this.slides].indexOf(entry.target);
+                            this.updateProgressBar();
+                            this.updateNav();
+                            this.animateBars(entry.target);
+                        }
+                    });
+                }, { threshold: 0.5 });
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    if (['ArrowDown', 'ArrowRight', 'Space', 'PageDown'].includes(e.code)) {
+                        e.preventDefault();
+                        this.goToSlide(this.currentSlide + 1);
+                    } else if (['ArrowUp', 'ArrowLeft', 'PageUp'].includes(e.code)) {
+                        e.preventDefault();
+                        this.goToSlide(this.currentSlide - 1);
+                    } else if (e.code === 'Home') {
+                        e.preventDefault();
+                        this.goToSlide(0);
+                    } else if (e.code === 'End') {
+                        e.preventDefault();
+                        this.goToSlide(this.slides.length - 1);
+                    }
+                });
+            }
+
+            setupTouchNav() {
+                let startY = 0;
+                document.addEventListener('touchstart', (e) => { startY = e.touches[0].clientY; });
+                document.addEventListener('touchend', (e) => {
+                    const diff = startY - e.changedTouches[0].clientY;
+                    if (Math.abs(diff) > 50) {
+                        this.goToSlide(this.currentSlide + (diff > 0 ? 1 : -1));
+                    }
+                });
+            }
+
+            goToSlide(index) {
+                if (index >= 0 && index < this.slides.length) {
+                    this.slides[index].scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+
+            setupProgressBar() {
+                this.progressBar = document.getElementById('progressBar');
+                this.updateProgressBar();
+            }
+
+            updateProgressBar() {
+                if (this.progressBar) {
+                    const progress = ((this.currentSlide + 1) / this.slides.length) * 100;
+                    this.progressBar.style.width = progress + '%';
+                }
+            }
+
+            updateNav() {
+                const currentNav = this.slides[this.currentSlide]?.dataset.nav;
+                document.querySelectorAll('.nav-bar').forEach(nav => {
+                    nav.querySelectorAll('span').forEach(span => {
+                        if (span.textContent === '·') return;
+                        span.classList.toggle('active', span.textContent === currentNav);
+                    });
+                });
+            }
+
+            animateBars(slide) {
+                slide.querySelectorAll('.bar-fill').forEach(bar => {
+                    const width = bar.dataset.width;
+                    if (width) {
+                        setTimeout(() => { bar.style.width = width + '%'; }, 300);
+                    }
+                });
+            }
+
+            setupCopyButtons() {
+                document.querySelectorAll('.cmd-block[data-cmd]').forEach(block => {
+                    block.addEventListener('click', () => {
+                        const cmd = block.dataset.cmd;
+                        navigator.clipboard.writeText(cmd).then(() => {
+                            block.classList.add('copied');
+                            const icon = block.querySelector('.copy-icon');
+                            const originalText = icon.textContent;
+                            icon.textContent = '✅ copied!';
+                            setTimeout(() => {
+                                block.classList.remove('copied');
+                                icon.textContent = originalText;
+                            }, 1500);
+                        });
+                    });
+                });
+            }
+        }
+
+        new SlidePresentation();
+    </script>
+</body>
+</html>
