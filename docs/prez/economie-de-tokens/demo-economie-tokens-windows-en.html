@@ -1068,6 +1068,146 @@
         </div>
     </section>
 
+    <!-- ==================== SLIDE 21: BEYOND — OUTPUT COMPRESSION ==================== -->
+    <section class="slide" data-nav="Beyond">
+        <span class="section-num">21</span>
+        <div class="slide-content">
+            <div class="reveal" style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: clamp(0.3rem, 1vh, 0.5rem);">
+                <span class="tag tag-orange">Beyond</span>
+                <h2 style="margin: 0;">Response Compression</h2>
+            </div>
+            <p class="reveal reveal-d1" style="max-width: 750px; font-size: var(--body-size);">Reduce <span class="text-accent fw-700">output tokens</span> by teaching the agent to speak less — same accuracy, fewer words.</p>
+            <div class="grid-2 reveal reveal-d2 mt-2" style="max-width: 1000px;">
+                <div class="dark-card">
+                    <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem;">
+                        <span style="font-size: 1.5rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480"
+                                width="21" height="21"
+                                shape-rendering="crispEdges" image-rendering="pixelated">
+                            <title>Caveman Rock</title>
+                            <g><rect x="16" y="256" width="16" height="16" fill="#2c2a26"/><rect x="32" y="256" width="16" height="16" fill="#6b6964"/><rect x="16" y="272" width="16" height="16" fill="#2c2a26"/><rect x="32" y="272" width="16" height="16" fill="#6b6964"/><rect x="16" y="288" width="16" height="16" fill="#2c2a26"/><rect x="432" y="256" width="16" height="16" fill="#6b6964"/><rect x="448" y="256" width="16" height="16" fill="#2c2a26"/><rect x="432" y="272" width="16" height="16" fill="#6b6964"/><rect x="448" y="272" width="16" height="16" fill="#2c2a26"/><rect x="448" y="288" width="16" height="16" fill="#2c2a26"/><rect x="160" y="128" width="16" height="16" fill="#2c2a26"/><rect x="176" y="128" width="16" height="16" fill="#2c2a26"/><rect x="192" y="128" width="16" height="16" fill="#2c2a26"/><rect x="208" y="128" width="16" height="16" fill="#2c2a26"/><rect x="224" y="128" width="16" height="16" fill="#2c2a26"/><rect x="240" y="128" width="16" height="16" fill="#2c2a26"/><rect x="256" y="128" width="16" height="16" fill="#2c2a26"/><rect x="272" y="128" width="16" height="16" fill="#2c2a26"/><rect x="128" y="144" width="16" height="16" fill="#2c2a26"/><rect x="144" y="144" width="16" height="16" fill="#c2beb4"/><rect x="160" y="144" width="16" height="16" fill="#a8a49a"/><rect x="176" y="144" width="16" height="16" fill="#a8a49a"/><rect x="192" y="144" width="16" height="16" fill="#a8a49a"/><rect x="208" y="144" width="16" height="16" fill="#a8a49a"/><rect x="224" y="144" width="16" height="16" fill="#a8a49a"/><rect x="240" y="144" width="16" height="16" fill="#8a877f"/><rect x="256" y="144" width="16" height="16" fill="#d8d4ca"/><rect x="272" y="144" width="16" height="16" fill="#8a877f"/><rect x="288" y="144" width="16" height="16" fill="#8a877f"/><rect x="304" y="144" width="16" height="16" fill="#2c2a26"/><rect x="96" y="160" width="16" height="16" fill="#2c2a26"/><rect x="112" y="160" width="16" height="16" fill="#c2beb4"/><rect x="128" y="160" width="16" height="16" fill="#c2beb4"/><rect x="144" y="160" width="16" height="16" fill="#d8d4ca"/><rect x="160" y="160" width="16" height="16" fill="#a8a49a"/><rect x="176" y="160" width="16" height="16" fill="#a8a49a"/><rect x="192" y="160" width="16" height="16" fill="#a8a49a"/><rect x="208" y="160" width="16" height="16" fill="#a8a49a"/><rect x="224" y="160" width="16" height="16" fill="#8a877f"/><rect x="240" y="160" width="16" height="16" fill="#8a877f"/><rect x="256" y="160" width="16" height="16" fill="#8a877f"/><rect x="272" y="160" width="16" height="16" fill="#8a877f"/><rect x="288" y="160" width="16" height="16" fill="#8a877f"/><rect x="304" y="160" width="16" height="16" fill="#8a877f"/><rect x="320" y="160" width="16" height="16" fill="#2c2a26"/><rect x="96" y="176" width="16" height="16" fill="#2c2a26"/><rect x="112" y="176" width="16" height="16" fill="#c2beb4"/><rect x="128" y="176" width="16" height="16" fill="#c2beb4"/><rect x="144" y="176" width="16" height="16" fill="#a8a49a"/><rect x="160" y="176" width="16" height="16" fill="#a8a49a"/><rect x="176" y="176" width="16" height="16" fill="#a8a49a"/><rect x="192" y="176" width="16" height="16" fill="#a8a49a"/><rect x="208" y="176" width="16" height="16" fill="#a8a49a"/><rect x="224" y="176" width="16" height="16" fill="#c2beb4"/><rect x="240" y="176" width="16" height="16" fill="#8a877f"/><rect x="256" y="176" width="16" height="16" fill="#8a877f"/><rect x="272" y="176" width="16" height="16" fill="#8a877f"/><rect x="288" y="176" width="16" height="16" fill="#8a877f"/><rect x="304" y="176" width="16" height="16" fill="#8a877f"/><rect x="320" y="176" width="16" height="16" fill="#4a4844"/><rect x="336" y="176" width="16" height="16" fill="#2c2a26"/><rect x="80" y="192" width="16" height="16" fill="#2c2a26"/><rect x="96" y="192" width="16" height="16" fill="#c2beb4"/><rect x="112" y="192" width="16" height="16" fill="#c2beb4"/><rect x="128" y="192" width="16" height="16" fill="#c2beb4"/><rect x="144" y="192" width="16" height="16" fill="#a8a49a"/><rect x="160" y="192" width="16" height="16" fill="#a8a49a"/><rect x="176" y="192" width="16" height="16" fill="#a8a49a"/><rect x="192" y="192" width="16" height="16" fill="#8a877f"/><rect x="208" y="192" width="16" height="16" fill="#8a877f"/><rect x="224" y="192" width="16" height="16" fill="#8a877f"/><rect x="240" y="192" width="16" height="16" fill="#8a877f"/><rect x="256" y="192" width="16" height="16" fill="#8a877f"/><rect x="272" y="192" width="16" height="16" fill="#8a877f"/><rect x="288" y="192" width="16" height="16" fill="#8a877f"/><rect x="304" y="192" width="16" height="16" fill="#8a877f"/><rect x="320" y="192" width="16" height="16" fill="#8a877f"/><rect x="336" y="192" width="16" height="16" fill="#8a877f"/><rect x="352" y="192" width="16" height="16" fill="#2c2a26"/><rect x="64" y="208" width="16" height="16" fill="#2c2a26"/><rect x="80" y="208" width="16" height="16" fill="#c2beb4"/><rect x="96" y="208" width="16" height="16" fill="#c2beb4"/><rect x="112" y="208" width="16" height="16" fill="#c2beb4"/><rect x="128" y="208" width="16" height="16" fill="#a8a49a"/><rect x="144" y="208" width="16" height="16" fill="#a8a49a"/><rect x="160" y="208" width="16" height="16" fill="#a8a49a"/><rect x="176" y="208" width="16" height="16" fill="#a8a49a"/><rect x="192" y="208" width="16" height="16" fill="#8a877f"/><rect x="208" y="208" width="16" height="16" fill="#8a877f"/><rect x="224" y="208" width="16" height="16" fill="#8a877f"/><rect x="240" y="208" width="16" height="16" fill="#8a877f"/><rect x="256" y="208" width="16" height="16" fill="#8a877f"/><rect x="272" y="208" width="16" height="16" fill="#8a877f"/><rect x="288" y="208" width="16" height="16" fill="#8a877f"/><rect x="304" y="208" width="16" height="16" fill="#8a877f"/><rect x="320" y="208" width="16" height="16" fill="#8a877f"/><rect x="336" y="208" width="16" height="16" fill="#8a877f"/><rect x="352" y="208" width="16" height="16" fill="#8a877f"/><rect x="368" y="208" width="16" height="16" fill="#2c2a26"/><rect x="64" y="224" width="16" height="16" fill="#2c2a26"/><rect x="80" y="224" width="16" height="16" fill="#c2beb4"/><rect x="96" y="224" width="16" height="16" fill="#c2beb4"/><rect x="112" y="224" width="16" height="16" fill="#c2beb4"/><rect x="128" y="224" width="16" height="16" fill="#8a877f"/><rect x="144" y="224" width="16" height="16" fill="#8a877f"/><rect x="160" y="224" width="16" height="16" fill="#8a877f"/><rect x="176" y="224" width="16" height="16" fill="#8a877f"/><rect x="192" y="224" width="16" height="16" fill="#181816"/><rect x="208" y="224" width="16" height="16" fill="#181816"/><rect x="224" y="224" width="16" height="16" fill="#8a877f"/><rect x="240" y="224" width="16" height="16" fill="#8a877f"/><rect x="256" y="224" width="16" height="16" fill="#181816"/><rect x="272" y="224" width="16" height="16" fill="#181816"/><rect x="288" y="224" width="16" height="16" fill="#8a877f"/><rect x="304" y="224" width="16" height="16" fill="#8a877f"/><rect x="320" y="224" width="16" height="16" fill="#6b6964"/><rect x="336" y="224" width="16" height="16" fill="#6b6964"/><rect x="352" y="224" width="16" height="16" fill="#6b6964"/><rect x="368" y="224" width="16" height="16" fill="#6b6964"/><rect x="384" y="224" width="16" height="16" fill="#2c2a26"/><rect x="48" y="240" width="16" height="16" fill="#2c2a26"/><rect x="64" y="240" width="16" height="16" fill="#c2beb4"/><rect x="80" y="240" width="16" height="16" fill="#c2beb4"/><rect x="96" y="240" width="16" height="16" fill="#c2beb4"/><rect x="112" y="240" width="16" height="16" fill="#8a877f"/><rect x="128" y="240" width="16" height="16" fill="#8a877f"/><rect x="144" y="240" width="16" height="16" fill="#8a877f"/><rect x="160" y="240" width="16" height="16" fill="#8a877f"/><rect x="176" y="240" width="16" height="16" fill="#8a877f"/><rect x="192" y="240" width="16" height="16" fill="#181816"/><rect x="208" y="240" width="16" height="16" fill="#181816"/><rect x="224" y="240" width="16" height="16" fill="#8a877f"/><rect x="240" y="240" width="16" height="16" fill="#8a877f"/><rect x="256" y="240" width="16" height="16" fill="#181816"/><rect x="272" y="240" width="16" height="16" fill="#181816"/><rect x="288" y="240" width="16" height="16" fill="#8a877f"/><rect x="304" y="240" width="16" height="16" fill="#8a877f"/><rect x="320" y="240" width="16" height="16" fill="#6b6964"/><rect x="336" y="240" width="16" height="16" fill="#6b6964"/><rect x="352" y="240" width="16" height="16" fill="#6b6964"/><rect x="368" y="240" width="16" height="16" fill="#6b6964"/><rect x="384" y="240" width="16" height="16" fill="#6b6964"/><rect x="400" y="240" width="16" height="16" fill="#2c2a26"/><rect x="48" y="256" width="16" height="16" fill="#2c2a26"/><rect x="64" y="256" width="16" height="16" fill="#8a877f"/><rect x="80" y="256" width="16" height="16" fill="#8a877f"/><rect x="96" y="256" width="16" height="16" fill="#8a877f"/><rect x="112" y="256" width="16" height="16" fill="#4a4844"/><rect x="128" y="256" width="16" height="16" fill="#8a877f"/><rect x="144" y="256" width="16" height="16" fill="#8a877f"/><rect x="160" y="256" width="16" height="16" fill="#8a877f"/><rect x="176" y="256" width="16" height="16" fill="#8a877f"/><rect x="192" y="256" width="16" height="16" fill="#8a877f"/><rect x="208" y="256" width="16" height="16" fill="#8a877f"/><rect x="224" y="256" width="16" height="16" fill="#8a877f"/><rect x="240" y="256" width="16" height="16" fill="#8a877f"/><rect x="256" y="256" width="16" height="16" fill="#8a877f"/><rect x="272" y="256" width="16" height="16" fill="#8a877f"/><rect x="288" y="256" width="16" height="16" fill="#8a877f"/><rect x="304" y="256" width="16" height="16" fill="#8a877f"/><rect x="320" y="256" width="16" height="16" fill="#6b6964"/><rect x="336" y="256" width="16" height="16" fill="#6b6964"/><rect x="352" y="256" width="16" height="16" fill="#4a4844"/><rect x="368" y="256" width="16" height="16" fill="#4a4844"/><rect x="384" y="256" width="16" height="16" fill="#4a4844"/><rect x="400" y="256" width="16" height="16" fill="#2c2a26"/><rect x="48" y="272" width="16" height="16" fill="#2c2a26"/><rect x="64" y="272" width="16" height="16" fill="#8a877f"/><rect x="80" y="272" width="16" height="16" fill="#8a877f"/><rect x="96" y="272" width="16" height="16" fill="#8a877f"/><rect x="112" y="272" width="16" height="16" fill="#8a877f"/><rect x="128" y="272" width="16" height="16" fill="#8a877f"/><rect x="144" y="272" width="16" height="16" fill="#8a877f"/><rect x="160" y="272" width="16" height="16" fill="#8a877f"/><rect x="176" y="272" width="16" height="16" fill="#8a877f"/><rect x="192" y="272" width="16" height="16" fill="#8a877f"/><rect x="208" y="272" width="16" height="16" fill="#8a877f"/><rect x="224" y="272" width="16" height="16" fill="#8a877f"/><rect x="240" y="272" width="16" height="16" fill="#8a877f"/><rect x="256" y="272" width="16" height="16" fill="#8a877f"/><rect x="272" y="272" width="16" height="16" fill="#8a877f"/><rect x="288" y="272" width="16" height="16" fill="#6b6964"/><rect x="304" y="272" width="16" height="16" fill="#6b6964"/><rect x="320" y="272" width="16" height="16" fill="#6b6964"/><rect x="336" y="272" width="16" height="16" fill="#6b6964"/><rect x="352" y="272" width="16" height="16" fill="#4a4844"/><rect x="368" y="272" width="16" height="16" fill="#4a4844"/><rect x="384" y="272" width="16" height="16" fill="#4a4844"/><rect x="400" y="272" width="16" height="16" fill="#4a4844"/><rect x="416" y="272" width="16" height="16" fill="#2c2a26"/><rect x="48" y="288" width="16" height="16" fill="#2c2a26"/><rect x="64" y="288" width="16" height="16" fill="#8a877f"/><rect x="80" y="288" width="16" height="16" fill="#8a877f"/><rect x="96" y="288" width="16" height="16" fill="#8a877f"/><rect x="112" y="288" width="16" height="16" fill="#8a877f"/><rect x="128" y="288" width="16" height="16" fill="#8a877f"/><rect x="144" y="288" width="16" height="16" fill="#8a877f"/><rect x="160" y="288" width="16" height="16" fill="#8a877f"/><rect x="176" y="288" width="16" height="16" fill="#8a877f"/><rect x="192" y="288" width="16" height="16" fill="#8a877f"/><rect x="208" y="288" width="16" height="16" fill="#181816"/><rect x="224" y="288" width="16" height="16" fill="#8a877f"/><rect x="240" y="288" width="16" height="16" fill="#8a877f"/><rect x="256" y="288" width="16" height="16" fill="#181816"/><rect x="272" y="288" width="16" height="16" fill="#8a877f"/><rect x="288" y="288" width="16" height="16" fill="#6b6964"/><rect x="304" y="288" width="16" height="16" fill="#6b6964"/><rect x="320" y="288" width="16" height="16" fill="#6b6964"/><rect x="336" y="288" width="16" height="16" fill="#6b6964"/><rect x="352" y="288" width="16" height="16" fill="#4a4844"/><rect x="368" y="288" width="16" height="16" fill="#4a4844"/><rect x="384" y="288" width="16" height="16" fill="#4a4844"/><rect x="400" y="288" width="16" height="16" fill="#4a4844"/><rect x="416" y="288" width="16" height="16" fill="#2c2a26"/><rect x="64" y="304" width="16" height="16" fill="#2c2a26"/><rect x="80" y="304" width="16" height="16" fill="#8a877f"/><rect x="96" y="304" width="16" height="16" fill="#8a877f"/><rect x="112" y="304" width="16" height="16" fill="#8a877f"/><rect x="128" y="304" width="16" height="16" fill="#8a877f"/><rect x="144" y="304" width="16" height="16" fill="#4a4844"/><rect x="160" y="304" width="16" height="16" fill="#8a877f"/><rect x="176" y="304" width="16" height="16" fill="#8a877f"/><rect x="192" y="304" width="16" height="16" fill="#8a877f"/><rect x="208" y="304" width="16" height="16" fill="#8a877f"/><rect x="224" y="304" width="16" height="16" fill="#181816"/><rect x="240" y="304" width="16" height="16" fill="#181816"/><rect x="256" y="304" width="16" height="16" fill="#8a877f"/><rect x="272" y="304" width="16" height="16" fill="#8a877f"/><rect x="288" y="304" width="16" height="16" fill="#6b6964"/><rect x="304" y="304" width="16" height="16" fill="#6b6964"/><rect x="320" y="304" width="16" height="16" fill="#6b6964"/><rect x="336" y="304" width="16" height="16" fill="#6b6964"/><rect x="352" y="304" width="16" height="16" fill="#4a4844"/><rect x="368" y="304" width="16" height="16" fill="#4a4844"/><rect x="384" y="304" width="16" height="16" fill="#4a4844"/><rect x="400" y="304" width="16" height="16" fill="#2c2a26"/><rect x="80" y="320" width="16" height="16" fill="#2c2a26"/><rect x="96" y="320" width="16" height="16" fill="#6b6964"/><rect x="112" y="320" width="16" height="16" fill="#6b6964"/><rect x="128" y="320" width="16" height="16" fill="#6b6964"/><rect x="144" y="320" width="16" height="16" fill="#6b6964"/><rect x="160" y="320" width="16" height="16" fill="#6b6964"/><rect x="176" y="320" width="16" height="16" fill="#6b6964"/><rect x="192" y="320" width="16" height="16" fill="#6b6964"/><rect x="208" y="320" width="16" height="16" fill="#6b6964"/><rect x="224" y="320" width="16" height="16" fill="#6b6964"/><rect x="240" y="320" width="16" height="16" fill="#6b6964"/><rect x="256" y="320" width="16" height="16" fill="#6b6964"/><rect x="272" y="320" width="16" height="16" fill="#4a4844"/><rect x="288" y="320" width="16" height="16" fill="#6b6964"/><rect x="304" y="320" width="16" height="16" fill="#6b6964"/><rect x="320" y="320" width="16" height="16" fill="#6b6964"/><rect x="336" y="320" width="16" height="16" fill="#4a4844"/><rect x="352" y="320" width="16" height="16" fill="#4a4844"/><rect x="368" y="320" width="16" height="16" fill="#4a4844"/><rect x="384" y="320" width="16" height="16" fill="#2c2a26"/><rect x="128" y="336" width="16" height="16" fill="#2c2a26"/><rect x="144" y="336" width="16" height="16" fill="#2c2a26"/><rect x="160" y="336" width="16" height="16" fill="#2c2a26"/><rect x="176" y="336" width="16" height="16" fill="#2c2a26"/><rect x="192" y="336" width="16" height="16" fill="#2c2a26"/><rect x="208" y="336" width="16" height="16" fill="#2c2a26"/><rect x="224" y="336" width="16" height="16" fill="#2c2a26"/><rect x="240" y="336" width="16" height="16" fill="#2c2a26"/><rect x="256" y="336" width="16" height="16" fill="#2c2a26"/><rect x="272" y="336" width="16" height="16" fill="#2c2a26"/><rect x="288" y="336" width="16" height="16" fill="#2c2a26"/><rect x="304" y="336" width="16" height="16" fill="#2c2a26"/><rect x="320" y="336" width="16" height="16" fill="#2c2a26"/><rect x="336" y="336" width="16" height="16" fill="#2c2a26"/><rect x="352" y="336" width="16" height="16" fill="#2c2a26"/></g>
+                            </svg>
+                        </span>
+                        <h3 style="font-size: var(--h3-size); margin: 0;">caveman</h3>
+                        <span class="badge-after" style="font-size: 0.6rem;">63k ★</span>
+                    </div>
+                    <p style="font-size: var(--body-size); color: var(--text-secondary); margin-bottom: 0.8rem;">
+                        "Why use many token when few do trick." AI skill that makes agents talk in compressed, caveman-style output.
+                    </p>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
+                        <div><span class="comment"># Normal: 1,214 tokens avg</span></div>
+                        <div><span class="comment"># Caveman: 294 tokens avg</span></div>
+                        <div><span class="result">Savings: ~65% output tokens</span></div>
+                    </div>
+                    <p class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">github.com/JuliusBrussee/caveman</p>
+                </div>
+                <div class="dark-card">
+                    <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem;">
+                        <span style="font-size: 1.5rem;">Λ</span>
+                        <h3 style="font-size: var(--h3-size); margin: 0;">laconic</h3>
+                    </div>
+                    <p style="font-size: var(--body-size); color: var(--text-secondary); margin-bottom: 0.8rem;">
+                        Terse, professional style. Trusts context, skips what the reader already knows. 300-word skill inspired by Sparta.
+                    </p>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
+                        <div><span class="comment"># Normal: 1,547 tokens avg</span></div>
+                        <div><span class="comment"># Laconic: 139 tokens avg</span></div>
+                        <div><span class="result">Savings: ~90% output tokens</span></div>
+                    </div>
+                    <p class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">github.com/GabrielBarberini/laconic</p>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2" style="font-size: var(--small-size); color: var(--text-dim);">
+                Approach: prompt engineering — the model thinks the same, writes less.
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 22: BEYOND — CODE INTELLIGENCE ==================== -->
+    <section class="slide" data-nav="Beyond">
+        <span class="section-num">22</span>
+        <div class="slide-content">
+            <div class="reveal" style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: clamp(0.3rem, 1vh, 0.5rem);">
+                <span class="tag tag-orange">Beyond</span>
+                <h2 style="margin: 0;">Code Intelligence Servers</h2>
+            </div>
+            <p class="reveal reveal-d1" style="max-width: 750px; font-size: var(--body-size);">Reduce <span class="text-accent fw-700">input tokens</span> by giving the agent a structural map — it reads only what matters.</p>
+            <div class="grid-2 reveal reveal-d2 mt-2" style="max-width: 1000px;">
+                <div class="dark-card">
+                    <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem;">
+                        <span style="font-size: 1.5rem;">🌳</span>
+                        <h3 style="font-size: var(--h3-size); margin: 0;">code-review-graph</h3>
+                        <span class="badge-after" style="font-size: 0.6rem;">17k ★</span>
+                    </div>
+                    <p style="font-size: var(--body-size); color: var(--text-secondary); margin-bottom: 0.8rem;">
+                        Tree-sitter AST → SQLite graph. Blast-radius analysis tells the agent which files are actually affected by a change.
+                    </p>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
+                        <div><span class="comment"># 27,700 files in monorepo</span></div>
+                        <div><span class="comment"># Agent reads only ~15 files</span></div>
+                        <div><span class="result">Savings: 8.2× fewer tokens (avg)</span></div>
+                    </div>
+                    <p class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">github.com/tirth8205/code-review-graph</p>
+                </div>
+                <div class="dark-card">
+                    <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem;">
+                        <span style="font-size: 1.5rem;">⚡</span>
+                        <h3 style="font-size: var(--h3-size); margin: 0;">codedb</h3>
+                        <span class="badge-after" style="font-size: 0.6rem;">821 ★</span>
+                    </div>
+                    <p style="font-size: var(--body-size); color: var(--text-secondary); margin-bottom: 0.8rem;">
+                        Zig code intelligence server. MCP native. Trigram index + word index + dependency graph. Zero dependencies.
+                    </p>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85);">
+                        <div><span class="comment"># Pre-indexed MCP queries</span></div>
+                        <div><span class="comment"># Sub-millisecond latency</span></div>
+                        <div><span class="result">Savings: 1,628× fewer tokens (search)</span></div>
+                    </div>
+                    <p class="mt-1" style="font-size: var(--small-size); color: var(--text-dim);">github.com/justrach/codedb</p>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2" style="font-size: var(--small-size); color: var(--text-dim);">
+                Approach: structural indexing — agent queries a graph instead of scanning raw files.
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 23: CONCLUSION ==================== -->
+    <section class="slide" data-nav="Beyond">
+        <span class="section-num">23</span>
+        <div class="slide-content" style="align-items: center; text-align: center;">
+            <h2 class="reveal">Why This Matters Now</h2>
+            <p class="reveal reveal-d1" style="max-width: 700px; font-size: var(--body-size);">These are some ways to reduce token consumption. There are certainly others — and the ecosystem is evolving fast.</p>
+            <div class="reveal reveal-d2 mt-2" style="max-width: 800px;">
+                <div class="dark-card" style="text-align: left;">
+                    <h3 style="font-size: var(--h3-size); margin-bottom: 0.8rem;">The pricing reality</h3>
+                    <div style="display: flex; gap: clamp(1rem, 3vw, 3rem); flex-wrap: wrap; justify-content: center; margin-bottom: 1rem;">
+                        <div style="text-align: center;">
+                            <div class="stat-medium text-accent">×15</div>
+                            <p style="font-size: var(--small-size); color: var(--text-dim); margin-top: 0.3rem;">Opus 4.7 multiplier<br>vs Sonnet</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div class="stat-medium" style="color: var(--yellow);">×?</div>
+                            <p style="font-size: var(--small-size); color: var(--text-dim); margin-top: 0.3rem;">Next-gen models<br>even higher</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div class="stat-medium" style="color: var(--red);">↗</div>
+                            <p style="font-size: var(--small-size); color: var(--text-dim); margin-top: 0.3rem;">Cost trend<br>on premium tiers</p>
+                        </div>
+                    </div>
+                    <p style="font-size: var(--body-size); color: var(--text-secondary);">
+                        With pricing multipliers growing at every model generation, token optimization is no longer a nice-to-have — it's a <span class="text-accent fw-700">cost discipline</span>.
+                    </p>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2" style="max-width: 700px;">
+                <p style="font-size: var(--body-size); color: var(--text-secondary);">
+                    Start thinking about how to <span class="text-accent fw-700">optimize usage</span> and make LLM behavior more <span class="text-accent fw-700">predictable</span> — before the bill does the thinking for you.
+                </p>
+            </div>
+        </div>
+    </section>
+
     <!-- ==================== JAVASCRIPT ==================== -->
     <script>
         class SlidePresentation {
