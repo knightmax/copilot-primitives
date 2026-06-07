@@ -1208,6 +1208,209 @@
         </div>
     </section>
 
+    <!-- ==================== SLIDE 24: COST OF AUTOMATION ==================== -->
+    <section class="slide" data-nav="Beyond">
+        <span class="section-num">24</span>
+        <div class="slide-content">
+            <div class="reveal" style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: clamp(0.5rem, 1.5vh, 1rem);">
+                <span class="tag tag-orange">The Instruction</span>
+                <h2 style="margin: 0;">Taking Back Control</h2>
+            </div>
+            <p class="reveal reveal-d1" style="max-width: 750px; font-size: var(--body-size); margin-bottom: 1rem; font-style: italic; color: var(--text-accent);">
+                "Never execute build, test, compile, or install commands automatically. Instead, always propose the command to the user for manual execution."
+            </p>
+
+            <div class="grid-3 reveal reveal-d2 mt-2" style="max-width: 1150px;">
+                <!-- 6 months ago -->
+                <div class="dark-card" style="border: 1px solid rgba(100, 100, 100, 0.3); background: rgba(100, 100, 100, 0.05);">
+                    <h4 style="font-size: var(--body-size); margin-bottom: 0.8rem; color: var(--text-primary);">📅 6 Months Ago</h4>
+                    <p style="font-size: var(--body-size); color: var(--text-secondary); margin-bottom: 0.8rem;">
+                        We ran tests manually. LLMs analyzed the results. Control in human hands, but slower workflow.
+                    </p>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85); text-align: left;">
+                        <div><span class="prompt">$</span> <span class="cmd">npm test</span></div>
+                        <div class="mt-1" style="margin-top: 0.6rem;"><span class="comment">// Human reads output</span></div>
+                        <div><span class="comment">// Then pastes to LLM</span></div>
+                    </div>
+                </div>
+
+                <!-- The LLM Hype Era -->
+                <div class="dark-card" style="border: 2px solid rgba(255, 87, 34, 0.4); background: rgba(255, 87, 34, 0.08);">
+                    <h4 style="font-size: var(--body-size); margin-bottom: 0.8rem; color: var(--text-accent);">⚡ The Hype Era</h4>
+                    <p style="font-size: var(--body-size); color: var(--text-secondary); margin-bottom: 0.8rem;">
+                        LLMs got good. We automated everything. Agent runs tests, reads all output (~18k tokens), analyzes inline.
+                    </p>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85); text-align: left;">
+                        <div><span class="prompt">$</span> <span class="cmd">npm test</span> <span class="comment"># auto</span></div>
+                        <div class="mt-1" style="margin-top: 0.6rem;"><span class="comment">// 23,400 lines ingested</span></div>
+                        <div><span class="comment">// Agent processes all</span></div>
+                    </div>
+                </div>
+
+                <!-- Today: Taking Back -->
+                <div class="dark-card" style="border: 1px solid rgba(76, 175, 80, 0.3); background: rgba(76, 175, 80, 0.05);">
+                    <h4 style="font-size: var(--body-size); margin-bottom: 0.8rem; color: var(--text-primary);">🎯 Today</h4>
+                    <p style="font-size: var(--body-size); color: var(--text-secondary); margin-bottom: 0.8rem;">
+                        Costs exploded. We take back control. Agent proposes; you run and decide what matters.
+                    </p>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85); text-align: left;">
+                        <div><span class="comment"># Agent: "Run this:"</span></div>
+                        <div><div class="cmd-block" style="display: flex; gap: 0.6rem; padding: 0.5rem 0.6rem; align-items: center; margin-top: 0.4rem;"><code>npm test</code><span class="copy-icon" style="font-size: 0.8rem;">📋</span></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal reveal-d3 mt-2" style="max-width: 900px;">
+                <div class="dark-card" style="text-align: left; background: var(--bg-card);">
+                    <h4 style="font-size: var(--body-size); margin-bottom: 0.8rem; color: var(--text-primary);">💡 Why Regain Control?</h4>
+                    <ul style="font-size: var(--body-size); color: var(--text-secondary); margin: 0; padding-left: 1.5rem;">
+                        <li><span class="text-accent fw-700">You know what matters</span> — You filter noise; only feed relevant errors to LLM</li>
+                        <li><span class="text-accent fw-700">Massive token savings</span> — 18,000 → 180 tokens (–99%)</li>
+                        <li><span class="text-accent fw-700">Strategic automation</span> — Delegate when value is clear, retain control when cost/benefit is unclear</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 25: STRATEGY OVER ABUNDANCE ==================== -->
+    <section class="slide" data-nav="Beyond">
+        <span class="section-num">25</span>
+        <div class="slide-content" style="align-items: center; text-align: center;">
+            <div class="reveal" style="display: flex; align-items: center; justify-content: center; gap: 0.8rem; margin-bottom: clamp(0.5rem, 1.5vh, 1rem);">
+                <span class="tag tag-orange">Maturity</span>
+                <h2 style="margin: 0;">Strategy Over Abundance</h2>
+            </div>
+            <p class="reveal reveal-d1" style="max-width: 700px; font-size: var(--body-size); margin-bottom: 1.5rem;">The free-ride era is over. Now, every LLM interaction is a <span class="text-accent fw-700">deliberate investment</span>.</p>
+            <div class="grid-3 reveal reveal-d2 mt-2" style="max-width: 1100px;">
+                <div class="dark-card">
+                    <h3 style="font-size: var(--h3-size); margin-bottom: 0.8rem;">📋 Spec-Driven Dev</h3>
+                    <p style="font-size: var(--body-size); color: var(--text-secondary); margin-bottom: 1rem;">
+                        Write clear requirements <strong>first</strong>. Better specs = fewer iterations = lower cost per delivery.
+                    </p>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85); text-align: left;">
+                        <div><span class="comment"># ✅ Specific context</span></div>
+                        <div><span class="comment"># ✅ Edge cases noted</span></div>
+                        <div><span class="comment"># ✅ Constraints explicit</span></div>
+                    </div>
+                </div>
+                <div class="dark-card">
+                    <h3 style="font-size: var(--h3-size); margin-bottom: 0.8rem;">🎯 Right Tool</h3>
+                    <p style="font-size: var(--body-size); color: var(--text-secondary); margin-bottom: 1rem;">
+                        Stop asking "what if AI could do this?" — ask "does AI need to do this?"
+                    </p>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85); text-align: left;">
+                        <div><span class="comment"># ✅ CLI tools for simple tasks</span></div>
+                        <div><span class="comment"># ✅ LLM only for reasoning</span></div>
+                        <div><span class="comment"># ✅ Avoid overengineering</span></div>
+                    </div>
+                </div>
+                <div class="dark-card">
+                    <h3 style="font-size: var(--h3-size); margin-bottom: 0.8rem;">💰 Deliberate Cost</h3>
+                    <p style="font-size: var(--body-size); color: var(--text-secondary); margin-bottom: 1rem;">
+                        Track and justify each LLM call. Build cost consciousness into team culture.
+                    </p>
+                    <div class="code-block" style="font-size: calc(var(--code-size) * 0.85); text-align: left;">
+                        <div><span class="comment"># ✅ Log token usage</span></div>
+                        <div><span class="comment"># ✅ Monthly cost reviews</span></div>
+                        <div><span class="comment"># ✅ Optimize iteratively</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal reveal-d3 mt-2" style="max-width: 700px;">
+                <p style="font-size: var(--body-size); color: var(--text-secondary);">
+                    This isn't scarcity — it's <span class="text-accent fw-700">maturity</span>. Strategic AI is more powerful than random AI.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 26: INFRASTRUCTURE REALITY ==================== -->
+    <section class="slide" data-nav="Beyond">
+        <span class="section-num">26</span>
+        <div class="slide-content" style="align-items: center; text-align: center;">
+            <div class="reveal" style="display: flex; align-items: center; justify-content: center; gap: 0.8rem; margin-bottom: clamp(0.5rem, 1.5vh, 1rem);">
+                <span class="tag tag-orange">Reality</span>
+                <h2 style="margin: 0;">The Real Cost (2026)</h2>
+            </div>
+            <p class="reveal reveal-d1" style="max-width: 750px; font-size: var(--body-size); margin-bottom: 1.5rem;">What happens behind the API: tokens → electricity → CO₂ → planet.</p>
+
+            <div class="grid-3 reveal reveal-d2 mt-2" style="max-width: 1200px;">
+                <!-- Example A: Email -->
+                <div class="dark-card">
+                    <h4 style="font-size: var(--body-size); margin-bottom: 1rem; color: var(--text-primary);">📧 Standard Email</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div>
+                            <p style="font-size: var(--small-size); color: var(--text-secondary); margin-bottom: 0.3rem;">Tokens</p>
+                            <p style="font-size: var(--h3-size); color: var(--text-accent); font-weight: 700; margin: 0;">1.5k</p>
+                        </div>
+                        <div>
+                            <p style="font-size: var(--small-size); color: var(--text-secondary); margin-bottom: 0.3rem;">Cost</p>
+                            <p style="font-size: var(--body-size); font-weight: 600; margin: 0;">$0.0006</p>
+                        </div>
+                        <div style="border-top: 1px solid var(--border); padding-top: 0.6rem;">
+                            <p style="font-size: var(--small-size); color: var(--text-secondary); margin-bottom: 0.3rem;">CO₂</p>
+                            <p style="font-size: var(--body-size); font-weight: 600; margin: 0;">~0.15g CO₂e</p>
+                            <p style="font-size: var(--small-size); color: var(--text-dim);">= 6 sec fridge run</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example C: Code Debug -->
+                <div class="dark-card">
+                    <h4 style="font-size: var(--body-size); margin-bottom: 1rem; color: var(--text-primary);">🐛 Code Debug (o4-mini)</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div>
+                            <p style="font-size: var(--small-size); color: var(--text-secondary); margin-bottom: 0.3rem;">Tokens</p>
+                            <p style="font-size: var(--h3-size); color: var(--text-accent); font-weight: 700; margin: 0;">8k+</p>
+                        </div>
+                        <div>
+                            <p style="font-size: var(--small-size); color: var(--text-secondary); margin-bottom: 0.3rem;">Cost</p>
+                            <p style="font-size: var(--body-size); font-weight: 600; margin: 0;">$0.05</p>
+                        </div>
+                        <div style="border-top: 1px solid var(--border); padding-top: 0.6rem;">
+                            <p style="font-size: var(--small-size); color: var(--text-secondary); margin-bottom: 0.3rem;">CO₂</p>
+                            <p style="font-size: var(--body-size); font-weight: 600; margin: 0;">~9g CO₂e</p>
+                            <p style="font-size: var(--small-size); color: var(--text-dim);">= 15 min Netflix</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example D: Deep Research -->
+                <div class="dark-card" style="border: 2px solid rgba(255, 87, 34, 0.3); background: rgba(255, 87, 34, 0.05);">
+                    <h4 style="font-size: var(--body-size); margin-bottom: 1rem; color: var(--text-accent); font-weight: 600;">🔍 Deep Research Agent</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div>
+                            <p style="font-size: var(--small-size); color: var(--text-secondary); margin-bottom: 0.3rem;">Tokens</p>
+                            <p style="font-size: var(--h3-size); color: var(--text-accent); font-weight: 700; margin: 0;">300k+</p>
+                        </div>
+                        <div>
+                            <p style="font-size: var(--small-size); color: var(--text-secondary); margin-bottom: 0.3rem;">Cost</p>
+                            <p style="font-size: var(--body-size); font-weight: 600; margin: 0;">$3.25</p>
+                        </div>
+                        <div style="border-top: 1px solid var(--border); padding-top: 0.6rem;">
+                            <p style="font-size: var(--small-size); color: var(--text-secondary); margin-bottom: 0.3rem;">CO₂</p>
+                            <p style="font-size: var(--body-size); font-weight: 600; margin: 0;">~54g CO₂e</p>
+                            <p style="font-size: var(--small-size); color: var(--text-dim);">= 2 km car drive</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal reveal-d3 mt-2" style="max-width: 900px;">
+                <div class="dark-card" style="text-align: left; background: var(--bg-card);">
+                    <h4 style="font-size: var(--h3-size); margin-bottom: 0.8rem; color: var(--text-primary);">🏭 Behind the Scenes</h4>
+                    <p style="font-size: var(--body-size); color: var(--text-secondary); margin-bottom: 0.8rem;">
+                        One NVIDIA H100/B200 server: <span class="text-accent fw-700">10–12 kW</span> continuous power draw. Eight GPUs burning electricity per token.
+                    </p>
+                    <p style="font-size: var(--body-size); color: var(--text-secondary);">
+                        API prices fell 90% since 2024, but <span class="text-accent fw-700">total volume exploded</span>. Global AI CO₂ emissions: tens of millions of tonnes yearly.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ==================== JAVASCRIPT ==================== -->
     <script>
         class SlidePresentation {
