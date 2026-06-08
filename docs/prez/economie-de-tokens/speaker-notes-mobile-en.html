@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Speaker Notes - Mobile</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --line: #e6e6e6;
+      --accent: #0b57d0;
+      --pad: 20px;
+      --max: 760px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      overscroll-behavior-y: contain;
+    }
+
+    body {
+      overflow: hidden;
+      scroll-snap-type: y mandatory;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      line-height: 1.45;
+    }
+
+    .note {
+      min-height: 100svh;
+      min-height: 100vh;
+      scroll-snap-align: start;
+      padding: calc(env(safe-area-inset-top, 0px) + var(--pad)) var(--pad) calc(env(safe-area-inset-bottom, 0px) + var(--pad));
+      display: flex;
+      justify-content: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .card {
+      width: 100%;
+      max-width: var(--max);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .slide-meta {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    h1 {
+      font-size: clamp(24px, 6vw, 34px);
+      line-height: 1.2;
+      margin-top: 2px;
+    }
+
+    .cue {
+      font-size: clamp(16px, 4.2vw, 21px);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .quote {
+      margin: 2px 0 2px;
+      padding: 10px 12px;
+      border-left: 3px solid var(--accent);
+      background: #f7faff;
+      color: #1b3f86;
+      font-size: clamp(16px, 4.1vw, 20px);
+      line-height: 1.35;
+      font-style: italic;
+    }
+
+    ul {
+      padding-left: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: clamp(18px, 4.7vw, 24px);
+    }
+
+    li {
+      color: var(--text);
+    }
+
+    .hint {
+      margin-top: auto;
+      font-size: clamp(13px, 3.3vw, 16px);
+      color: var(--muted);
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+    }
+
+    @media (min-width: 900px) {
+      body {
+        background: #f7f7f7;
+      }
+
+      .note {
+        padding: 28px;
+      }
+
+      .card {
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="note" id="slide-1">
+    <article class="card">
+      <div class="slide-meta">Slide 1 · Intro</div>
+      <h1>Context Economy</h1>
+      <p class="cue">Open strong: AI is useful, but now expensive.</p>
+      <blockquote class="quote">"Welcome everyone. Today is about one simple idea: AI is powerful, but tokens are expensive, so we need to use them with intent."</blockquote>
+      <ul>
+        <li>Welcome everyone and set the theme: cost discipline with AI.</li>
+        <li>Say this is practical, not theory: you will show concrete commands.</li>
+        <li>Call out the key promise: reduce tokens without reducing quality.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-2">
+    <article class="card">
+      <div class="slide-meta">Slide 2 · Intro</div>
+      <h1>The Problem: the Context Window</h1>
+      <p class="cue">Big files fill memory and burn budget quickly.</p>
+      <blockquote class="quote">"The problem is not AI quality, it is context waste. We often spend huge token budgets to answer very small questions."</blockquote>
+      <ul>
+        <li>Point to the token totals: one question can cost huge context.</li>
+        <li>Explain: the model reads tokens, not business value.</li>
+        <li>Bridge to next: first understand the pipeline, then optimize it.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-3">
+    <article class="card">
+      <div class="slide-meta">Slide 3 · Intro</div>
+      <h1>Under the Hood: A Prompt's Journey</h1>
+      <p class="cue">Every generated token repeats expensive computation.</p>
+      <blockquote class="quote">"Every prompt goes through tokenization, embedding, attention, and generation. More tokens means more computation, and attention cost grows fast."</blockquote>
+      <ul>
+        <li>Walk through 4 steps: tokenization, embeddings, attention, generation.</li>
+        <li>Stress the key idea: attention cost scales quadratically with context size.</li>
+        <li>Conclusion: reducing tokens is a technical optimization, not only finance.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-4">
+    <article class="card">
+      <div class="slide-meta">Slide 4 · Intro</div>
+      <h1>Context Challenges</h1>
+      <p class="cue">More context can mean worse answers.</p>
+      <blockquote class="quote">"Large context does not always improve answers. It can dilute focus, hide key facts, and reduce response quality."</blockquote>
+      <ul>
+        <li>Highlight lost-in-the-middle and attention dilution.</li>
+        <li>Explain context rot in long chat sessions.</li>
+        <li>Takeaway: keep context focused to improve quality and speed.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-5">
+    <article class="card">
+      <div class="slide-meta">Slide 5 · Intro</div>
+      <h1>The Demo Project</h1>
+      <p class="cue">Real project, real files, real token pressure.</p>
+      <blockquote class="quote">"This demo uses a real multi-module project, with Java, YAML, XML, and large JSON files. So the token pressure is realistic."</blockquote>
+      <ul>
+        <li>State scope: multi-module Spring Boot, JSON mocks, YAML, XML, Java.</li>
+        <li>Emphasize file sizes: one large JSON dominates token costs.</li>
+        <li>Set expectation: same questions, better extraction strategy.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-6">
+    <article class="card">
+      <div class="slide-meta">Slide 6 · Intro</div>
+      <h1>Setup</h1>
+      <p class="cue">Measure before and after for each command.</p>
+      <blockquote class="quote">"For each example, I compare a naive command and a focused command. The goal is not perfect math, but clear relative gains."</blockquote>
+      <ul>
+        <li>Explain your compare method: naive command vs focused command.</li>
+        <li>Use the simple approximation: 1 token is about 4 characters.</li>
+        <li>Tell audience: absolute values vary by model, relative gains remain valid.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-7">
+    <article class="card">
+      <div class="slide-meta">Slide 7 · fd</div>
+      <h1>Finding files</h1>
+      <p class="cue">Use fd instead of recursive directory dumps.</p>
+      <blockquote class="quote">"For file discovery, fd is cleaner than recursive listing. Same result, fewer noisy paths, fewer tokens."</blockquote>
+      <ul>
+        <li>Show the waste: long absolute path output from recursive listing.</li>
+        <li>Show fd output: compact, relevant, token-light.</li>
+        <li>Key line: we cut file discovery cost by around 61%.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-8">
+    <article class="card">
+      <div class="slide-meta">Slide 8 · fd</div>
+      <h1>Useful variants</h1>
+      <p class="cue">fd covers most file discovery cases fast.</p>
+      <blockquote class="quote">"fd scales well across extensions, folders, and quick counts. It is a simple habit with immediate payoff."</blockquote>
+      <ul>
+        <li>Call out extensions, glob search, folder scope, and counting files.</li>
+        <li>Mention cross-platform consistency: same command logic on macOS and Windows.</li>
+        <li>Transition: now move from file names to file content.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-9">
+    <article class="card">
+      <div class="slide-meta">Slide 9 · rg</div>
+      <h1>Searching in content</h1>
+      <p class="cue">Never read a 345 KB file to find one string.</p>
+      <blockquote class="quote">"Reading a full 345 KB file to find one string is pure waste. rg gives only what matters."</blockquote>
+      <ul>
+        <li>WITHOUT: full file read, huge token spend.</li>
+        <li>WITH rg: only matching lines, tiny output.</li>
+        <li>Punchline: around 99.6% token reduction for this query.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-10">
+    <article class="card">
+      <div class="slide-meta">Slide 10 · rg</div>
+      <h1>Useful variants</h1>
+      <p class="cue">Count, list files, and type-filter with rg flags.</p>
+      <blockquote class="quote">"With rg -c, rg -l, and type filters, you can answer most search questions with minimal output."</blockquote>
+      <ul>
+        <li>-c gives counts with almost no output noise.</li>
+        <li>-l lists only filenames, ideal before deeper inspection.</li>
+        <li>-t java targets language-specific search quickly.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-11">
+    <article class="card">
+      <div class="slide-meta">Slide 11 · yq</div>
+      <h1>Extracting YAML</h1>
+      <p class="cue">Query one key, not the whole config file.</p>
+      <blockquote class="quote">"For YAML, query the exact field. Don't send the whole config when one key is enough."</blockquote>
+      <ul>
+        <li>Show direct key extraction for datasource URL.</li>
+        <li>Contrast with full file read to highlight wasted context.</li>
+        <li>Result: about 98% fewer tokens for this need.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-12">
+    <article class="card">
+      <div class="slide-meta">Slide 12 · yq</div>
+      <h1>Comparing profiles</h1>
+      <p class="cue">Repeat the same focused query across environments.</p>
+      <blockquote class="quote">"Profile comparison becomes easy when you run the same focused query across dev, staging, and prod."</blockquote>
+      <ul>
+        <li>Explain why profile drift matters: dev, prod, staging differences.</li>
+        <li>Use one exact query per file, keep output compact.</li>
+        <li>Conclusion: multi-profile checks stay readable and cheap.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-13">
+    <article class="card">
+      <div class="slide-meta">Slide 13 · xq</div>
+      <h1>Extracting XML (pom.xml)</h1>
+      <p class="cue">Use structured XML queries for Maven metadata.</p>
+      <blockquote class="quote">"For Maven XML, use structured extraction. You can pull modules or versions directly, no manual scanning."</blockquote>
+      <ul>
+        <li>Show module extraction from root pom in one line.</li>
+        <li>Mention other useful fields: parent version and dependencies.</li>
+        <li>Takeaway: no need to parse big XML manually in chat context.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-14">
+    <article class="card">
+      <div class="slide-meta">Slide 14 · jq</div>
+      <h1>Extracting JSON</h1>
+      <p class="cue">jq gives exact JSON fields with near-zero noise.</p>
+      <blockquote class="quote">"In JSON, jq is one of the biggest wins: exact field, almost zero noise."</blockquote>
+      <ul>
+        <li>Compare first event type extraction with full JSON file load.</li>
+        <li>Show the dramatic delta: from tens of thousands of tokens to single digits.</li>
+        <li>Key message: this is one of the highest ROI habits.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-15">
+    <article class="card">
+      <div class="slide-meta">Slide 15 · jq</div>
+      <h1>Advanced queries</h1>
+      <p class="cue">Use jq for analysis, not only field lookup.</p>
+      <blockquote class="quote">"jq is not just lookup. It can count, group, and summarize data before AI even sees it."</blockquote>
+      <ul>
+        <li>Count records quickly to size datasets.</li>
+        <li>Group by type to summarize behavior in one output.</li>
+        <li>Extract unique values to inspect dimensions fast.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-16">
+    <article class="card">
+      <div class="slide-meta">Slide 16 · Synergies</div>
+      <h1>fd + xq: Batch audit</h1>
+      <p class="cue">First find files, then extract the same field from all of them.</p>
+      <blockquote class="quote">"Now combine tools: fd finds files, then structured queries extract the same field everywhere. One loop, one compact report."</blockquote>
+      <ul>
+        <li>Explain the batch mindset: one loop, complete overview.</li>
+        <li>Use artifact/version extraction as concrete audit example.</li>
+        <li>Result: strong savings and a cleaner report for the model.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-17">
+    <article class="card">
+      <div class="slide-meta">Slide 17 · Synergies</div>
+      <h1>fd + rg: Structural search</h1>
+      <p class="cue">Two-dimensional search: WHERE plus WHAT.</p>
+      <blockquote class="quote">"Structural search is two-dimensional: where to look, then what to match. That is smarter than brute-force reading."</blockquote>
+      <ul>
+        <li>Use fd to scope candidate files, then rg to match content.</li>
+        <li>Show architecture use case: find interfaces or controllers quickly.</li>
+        <li>This is how you reduce input before asking deeper AI questions.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-18">
+    <article class="card">
+      <div class="slide-meta">Slide 18 · snip</div>
+      <h1>Filtering CLI output (Maven)</h1>
+      <p class="cue">Files are one side. Command logs are the other.</p>
+      <blockquote class="quote">"Files are one side of the problem. Verbose command output is the other. snip keeps logs readable and cheap."</blockquote>
+      <ul>
+        <li>Without filtering, build output is verbose and expensive in context.</li>
+        <li>With snip, keep only essential lines for diagnostics.</li>
+        <li>Emphasize workflow gain: faster reading, faster AI follow-up.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-19">
+    <article class="card">
+      <div class="slide-meta">Slide 19 · Recap</div>
+      <h1>Which Tool to Use?</h1>
+      <p class="cue">Give the audience a simple decision tree they can reuse tomorrow.</p>
+      <blockquote class="quote">"Use this as your decision tree: fd for files, rg for text, yq or xq or jq for structured fields, snip for noisy terminal output."</blockquote>
+      <ul>
+        <li>Files: fd. Text: rg. YAML: yq. XML: yq -p xml. JSON: jq.</li>
+        <li>Across many files: combine fd with a structured extractor.</li>
+        <li>Verbose terminal output: snip.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-20">
+    <article class="card">
+      <div class="slide-meta">Slide 20 · Recap</div>
+      <h1>Integrate into your AI Workflow</h1>
+      <p class="cue">Token economy should be built into team habits.</p>
+      <blockquote class="quote">"To scale this in teams, integrate it into skills, hooks, and plugins so good behavior is automatic."</blockquote>
+      <ul>
+        <li>Skills: discoverable behaviors agents can call by context.</li>
+        <li>Hooks: automatic post-processing to keep output concise.</li>
+        <li>Plugins: package and share these practices across teams.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-21">
+    <article class="card">
+      <div class="slide-meta">Slide 21 · Beyond</div>
+      <h1>Response Compression</h1>
+      <p class="cue">Now optimize output tokens too, not only input.</p>
+      <blockquote class="quote">"Next step: compress responses too. Same reasoning quality, fewer words, lower output cost."</blockquote>
+      <ul>
+        <li>Explain tools like Caveman and Laconic as style constraints for responses.</li>
+        <li>Say clearly: same reasoning, fewer words, less cost.</li>
+        <li>This is a mindset shift: deliberate verbosity control.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-22">
+    <article class="card">
+      <div class="slide-meta">Slide 22 · Beyond</div>
+      <h1>Code Intelligence Servers</h1>
+      <p class="cue">Large codebases need structure, not brute-force reading.</p>
+      <blockquote class="quote">"For large codebases, indexing beats scanning. Give the model structure so it reads only relevant files."</blockquote>
+      <ul>
+        <li>Describe graph/index approaches: read 15 relevant files instead of 27,000.</li>
+        <li>Position this as infrastructure for serious teams.</li>
+        <li>Message: better retrieval means better answers and lower spend.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-23">
+    <article class="card">
+      <div class="slide-meta">Slide 23 · Beyond</div>
+      <h1>Why This Matters Now</h1>
+      <p class="cue">Pricing changed. Strategy is no longer optional.</p>
+      <blockquote class="quote">"This matters now because pricing changed. Cost control is no longer optional, it is operational."</blockquote>
+      <ul>
+        <li>State the reality: premium reasoning models are much more expensive.</li>
+        <li>Say optimization alone is not enough; decisions and governance matter.</li>
+        <li>Transition: this leads to a practical operating model.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-24">
+    <article class="card">
+      <div class="slide-meta">Slide 24 · Beyond</div>
+      <h1>Taking Back Control</h1>
+      <p class="cue">Middle path: propose first, execute by decision.</p>
+      <blockquote class="quote">"The new model is simple: propose first, execute by decision. This is not distrust, this is disciplined automation."</blockquote>
+      <ul>
+        <li>Frame the timeline: manual era, full automation hype, disciplined control now.</li>
+        <li>Use your core line: this is trust with cost governance, not distrust.</li>
+        <li>Emphasize operational impact: fewer wasted runs, fewer wasted tokens.</li>
+      </ul>
+      <p class="hint">Swipe down for next slide. Swipe up to go back.</p>
+    </article>
+  </section>
+
+  <section class="note" id="slide-25">
+    <article class="card">
+      <div class="slide-meta">Slide 25 · Beyond</div>
+      <h1>Strategy Over Abundance</h1>
+      <p class="cue">Close optimistic: this is maturity, not slowdown.</p>
+      <blockquote class="quote">"Final message: strategy over abundance. Clear specs, right tools, and visible cost tracking will define high-performing AI teams."</blockquote>
+      <ul>
+        <li>Reinforce three pillars: clear specs, right tool choice, visible cost tracking.</li>
+        <li>Call to action: if your team does not track AI spend, start now.</li>
+        <li>Final close: the strategic age of AI has begun, be intentional.</li>
+      </ul>
+      <p class="hint">End. Swipe up to revisit any slide.</p>
+    </article>
+  </section>
+
+  <script>
+    (function () {
+      const notes = Array.from(document.querySelectorAll('.note'));
+      let index = 0;
+      let startY = null;
+      const threshold = 40;
+
+      function goTo(nextIndex) {
+        if (nextIndex < 0 || nextIndex >= notes.length) {
+          return;
+        }
+        index = nextIndex;
+        notes[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      document.addEventListener('touchstart', function (event) {
+        if (event.touches && event.touches.length > 0) {
+          startY = event.touches[0].clientY;
+        }
+      }, { passive: true });
+
+      document.addEventListener('touchend', function (event) {
+        if (startY === null || !event.changedTouches || event.changedTouches.length === 0) {
+          return;
+        }
+        const endY = event.changedTouches[0].clientY;
+        const deltaY = endY - startY;
+
+        // Requirement: swipe down => next, swipe up => previous.
+        if (deltaY > threshold) {
+          goTo(index + 1);
+        } else if (deltaY < -threshold) {
+          goTo(index - 1);
+        }
+
+        startY = null;
+      }, { passive: true });
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'ArrowDown') {
+          goTo(index + 1);
+        } else if (event.key === 'ArrowUp') {
+          goTo(index - 1);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
